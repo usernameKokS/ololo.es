@@ -1,0 +1,21 @@
+{
+  "message": "hello i18n !!",
+  "card": {
+    "cardHolder": "Titular de la tarjeta",
+    "fullName": "Nombre completo",
+    "expires": "Expira",
+    "MM": "MM",
+    "YY": "AA"
+  },
+  "cardForm": {
+    "cardNumber": "Número de tarjeta",
+    "cardName": "Nombre de tarjeta",
+    "expirationDate": "Fecha de caducidad",
+    "month": "Mes",
+    "year": "Año",
+    "CVV": "CVV",
+    "submit": "Comprar",
+    "invalidCardNumber": "Numero de tarjeta invalido",
+	"fieldRequired": "Se requiere campo"
+  }
+}

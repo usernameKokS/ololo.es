@@ -1,0 +1,54 @@
+.appmodal {
+    .modal-container {
+        padding-left: 30px;
+        padding-right: 30px;
+
+        @include media-breakpoint-down(md) {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+
+    .modal-header {
+        padding-top: 32px;
+        padding-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include media-breakpoint-down(md) {
+            padding-top: 20px;
+            padding-bottom: 18x;
+        }
+
+        h3 {
+            font-size: 22px;
+            font-family: $fextra;
+            text-transform: uppercase;
+        }
+
+        img {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+        }
+    }
+
+    .modal-body {
+        padding-top: 20px;
+        padding-bottom: 50px;
+
+        @include media-breakpoint-down(md) {
+            padding-top: 20px;
+            padding-bottom: 38px;
+        }
+        .btn-width-set{
+            margin: 30px auto 0px;
+        }
+    }
+}
+
+.v--modal{
+	border-radius: 0px;
+}
+

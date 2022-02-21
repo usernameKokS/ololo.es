@@ -1,0 +1,103 @@
+.section-edit-map{
+		padding-bottom: 110px;
+	
+		@include media-breakpoint-down(md) {
+			padding-bottom: 36px;
+		}
+	
+		.map-wrapper {
+			.map-desc {
+				padding-bottom: 0px;
+				padding-top: 16px;
+				@include media-breakpoint-down(lg) {
+					padding-bottom: 0px;
+				}
+			}
+		}
+
+		.map-input{
+			padding-top: 40px;
+			padding-bottom: 40px;
+			display: flex;
+			align-items: center;
+			button{
+				margin-left: 15px;
+			}
+			@include media-breakpoint-down(md) {
+				padding-top: 22px;
+				padding-bottom: 26px;
+				flex-direction: column;
+				align-items: flex-start;
+				button{
+					margin-left: 0px;
+					margin-top: 20px;
+				}
+			}
+		}
+
+		.input-fw-map{
+			width: 100%;
+		}
+
+		#mapsearch{
+			position: relative;
+		}
+
+	.wrap-icon8 {
+        position: absolute;
+        background-image: url('/img/address.svg');
+		left: -28px;
+		top: -36px;
+        background-repeat: no-repeat;
+        background-size: 100%;
+		height: 365px;
+		width: 244px;
+
+        @include media-breakpoint-down(lg) {
+			left: -92px;
+			top: -37px;
+		}
+		@include media-breakpoint-down(md) {
+			left: -47px;
+			top: -37px;
+        }
+	}
+	
+	.map-area{
+		height: 480px;
+		@include media-breakpoint-down(md) {
+			height: 240px;
+        }
+	}
+
+	.search-map-box{
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border: 1px solid $space;
+		position: absolute;
+		width: 100%;
+		z-index: 1001;
+		background-color: white;
+		box-shadow: 0 3px 6px 0 rgba(0,0,0,.15);
+	}
+	.map-result{
+		height: auto;
+		padding-top: 8px;
+		padding-bottom: 8px;
+		font-size: 14px;
+		cursor: pointer;
+		padding-left: 10px;
+		display: flex;
+		align-items: center;
+		&:hover{
+			background-color: $green;
+			color: white;
+		}
+	}
+	
+}
+
+.edit-submit-section{
+	padding-top: 36px;
+	padding-bottom: 60px;
+}

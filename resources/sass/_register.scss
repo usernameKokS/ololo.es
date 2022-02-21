@@ -1,0 +1,115 @@
+.register{
+	// width: 690px;
+	.header-box{
+		display: flex;
+		align-items: center;
+		padding-bottom: 26px;
+		@include media-breakpoint-down(sm) {
+			justify-content: center;
+		}
+		img{
+			width: 20px;
+			height: 20px;
+			margin-right: 8px;
+		}
+		h5{
+			font-size: 15px;
+			font-family: $fbold;
+			text-transform: uppercase;
+		}
+	}
+	.input{
+		width: 260px;
+	}
+	.input-wrapers{
+		padding-bottom: 15px;
+		@include media-breakpoint-down(sm) {
+			display: flex;
+    justify-content: center;
+		}
+	}
+	.last-input{
+		padding-bottom: 30px;
+	}
+
+	.custom-checkbox{
+		padding-left: 25px;
+		@include media-breakpoint-down(sm) {
+			margin: 0 auto;
+		}
+	}
+	.remeber-areame{
+		margin-top: 8px;
+	}
+
+	.remeber-area{
+		display: flex;
+		align-items: center;
+		// justify-content: space-between;
+		a{
+			padding-left: 10px;
+			text-decoration: underline;
+		}
+	}
+	.forget-password{
+		font-size: 13px;
+		font-family: $fregular;
+		color: $grey;
+		&:hover{
+			color: $grey;
+		}
+	}
+	.login-area{
+		border-right: 1px solid $space;
+		width: 376px;
+		@include media-breakpoint-down(sm) {
+			width: 320px;
+			margin: 0 auto;
+			border-right: 0px;
+			border-bottom: 1px solid $space;
+			padding-bottom: 18px;
+		}
+
+		.btn-green{
+			margin-top: 30px;
+			@include media-breakpoint-down(sm) {
+				margin: 30px auto 0px;
+			}
+		}
+	}
+	.register-email{
+		width: 376px;
+		padding-left: 40px;
+		
+
+		@include media-breakpoint-down(sm) {
+			padding-left: 0px;
+			width: 320px;
+			margin: 0 auto;
+			padding-top: 20px;
+		}
+
+		p{
+			font-size: 13px;
+			font-family: $fregular;
+			padding-bottom: 16px;
+			@include media-breakpoint-down(md) {
+				text-align: center;
+			}
+		}
+		.btn-pink-width{
+			margin-top: 30px;
+			@include media-breakpoint-down(sm) {
+				margin: 30px auto;
+			}
+		}
+	}
+
+	.open-policy{
+		color: $pink;
+		padding-left: 0px !important;
+		&:hover{
+			color: $pink;
+		}
+	}
+}

@@ -1,0 +1,447 @@
+.tariff {
+    position: relative;
+    z-index: 1;
+    padding-top: 50px;
+    @include media-breakpoint-down(md) {
+        padding-top: 13px;
+    }
+
+    .plan-content-after-line:after{
+        content: '';
+        width: 0;
+        height: 202px;
+        position: absolute;
+        border: 0.1px solid $space;
+        bottom: 128px;
+        left: 50%;
+        @include media-breakpoint-down(md) {
+            display: none;
+        }
+    }
+
+    .tarif-svg {
+        z-index: 1;
+        position: absolute;
+        background-image: url('/img/checklist22.svg');
+        left: 29px;
+        top: 144px;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        height: 350px;
+        width: 167px;
+
+        @include media-breakpoint-down(md) {
+            left: -62px;
+            top: -37px;
+        }
+    }
+    .tariff_name-area {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        padding-left: 84px;
+
+        @include media-breakpoint-down(md) {
+            padding-left: 0;
+        }
+        h1 {
+            font-size: 35px;
+            font-family: $fextra;
+            text-transform: uppercase;
+            line-height: 1.2;
+            @include media-breakpoint-down(md) {
+                font-size: 19px;
+            }
+
+        }
+        p {
+            font-size: 20px;
+            font-family: $fbold;
+            padding-top: 20px;
+            @include media-breakpoint-down(md) {
+                font-size: 14px;
+                padding-top: 12px;
+                padding-bottom: 27px;
+            }
+        }
+    }
+    .frame-video {
+        position: relative;
+        z-index: 2;
+        height: 420px;
+        @include media-breakpoint-down(md) {
+            height: 214px;
+        }
+    }
+
+
+
+}
+
+.paysystems-list
+{
+	.item-paysystem
+	{
+		margin-bottom: 15px;
+		cursor: pointer;
+	}
+	
+	img
+	{
+		max-width: 160px;
+		margin-left: 20px;
+	}
+}
+
+.fix-index
+{
+	position: relative;
+	z-index: 0;
+}
+
+.text-center
+{
+	text-align: center;
+}
+
+.card-input__error
+{
+	color: #e55576;
+    margin: 3px;
+    font-size: 13px;
+}
+
+.plans {
+
+	.col-lg-4{
+        margin-bottom: 80px;
+        @include media-breakpoint-down(md) {
+            padding-left: 30px !important;
+            padding-right: 30px !important;
+        }
+	}
+
+    padding-top: 120px;
+    @include media-breakpoint-down(md) {
+        padding-top: 75px;
+    }
+
+    .plan-item {
+		margin-bottom: 80px;
+        position: relative;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+    }
+
+    .plan-item__silver {
+        border: 1px solid $space;
+    }
+    .plan-item__gold {
+        border: 2px solid #f8aa27;
+    }
+
+    .plan-image {
+        position: absolute;
+        left: -23px;
+        top: 2px;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        height: 80px;
+        width: 130px;
+    }
+    .plan-image__silver {
+        background-image: url('/img/crown1.png');
+    }
+    .plan-image__gold {
+        background-image: url('/img/crown2.png');
+        top: 12px;
+	}
+	.plan-image__diamond {
+        background-image: url('/img/crown3.png');
+        top: 12px;
+    }
+
+    .plan-image__border {
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        width: 96px;
+        height: 96px;
+    }
+    .plan-image__border__silver {
+        border-left: 10px solid #868586;
+        border-top: 10px solid #868586;
+    }
+    .plan-image__border__gold {
+
+        border-left: 10px solid #f8aa27;
+        border-top: 10px solid #f8aa27;
+	}
+
+	.plan-image__border__diamond {
+
+        border-left: 10px solid #afbcc5;
+        border-top: 10px solid #afbcc5;
+    }
+
+    .plan-content {
+        padding-top: 30px;
+    }
+
+
+    .plan-title {
+        text-transform: uppercase;
+        padding-left: 120px;
+        .plan-name {
+            line-height: 1;
+            font-family: $fextra;
+            font-size: 35px;
+        }
+        .plan-des {
+            font-family: $fextra;
+            font-size: 21px;
+        }
+    }
+
+    .plan-title__silver {
+        span {
+            background: url('/img/planback1.png') center/cover;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+    }
+
+    .plan-title__gold {
+        span {
+            background: url('/img/planback2.png') center/cover;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+	}
+
+	.plan-title__diamond {
+        span {
+            background: url('/img/planback3.png') center/cover;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+
+
+    .plan-list {
+        //padding-top: 40px;
+        max-width: 240px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .plan-list__item {
+        height: 30px;
+        padding-left: 25px;
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        border-bottom: 1px solid $space;
+        span {
+            color: $pink;
+            margin-right: 8px;
+            font-family: $fbold;
+            width: 16px;
+            text-align: right;
+        }
+    }
+
+    .plan-list__item__last {
+		border: 0;
+		margin-bottom: 20px;
+    }
+
+    .plan-price {
+        font-size: 18px;
+        text-align: center;
+        padding-bottom: 50px;
+    }
+	
+    .form-plan-submit,
+	.coor-plan-submit
+	{
+        bottom: -25px;
+        position: absolute;
+        width: 100%;
+        display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		
+        button:not(.ns),
+		a.button,
+		.card-form__button		
+		{
+
+            border: 0;
+            background-color: $pink;
+            border-radius: 25px;
+            color: white;
+            width: 160px;
+            font-size: 18px;
+            font-family: $fbold;
+            text-transform: uppercase;
+            height: 48px;
+			padding-top: 9px;
+			text-align: center;
+        }
+    }
+	
+	.coor-plan-submit
+	{
+		bottom: 0;
+        position: static;
+		
+		button:not(.ns)
+		{
+			margin-left: 15px;
+		}
+	}
+	
+	.first-plan-btns{
+		// padding-top: 20px;
+	}
+
+    .plan-btns {
+		height: 40px;
+		padding-top: 20px;
+		// padding-bottom: 14px;
+        .plan-btn__wrapper {
+            position: relative;
+            border-bottom: 1px solid;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .plan-btn {
+                width: 236px;
+                height: 30px;
+                border-radius: 30px;
+                border: 2px solid;
+                display: flex;
+				justify-content: center;
+				font-family: $fbold;
+                align-items: center;
+                position: absolute;
+                bottom: -17px;
+				background-color: white;
+				span{
+					margin-right: 9px;
+				}
+            }
+            .plan-btn__gold {
+                border-color: #f8aa27;
+			}
+			.plan-btn__diamond {
+                border-color: $dia;
+            }
+		}
+
+		.plan-btn__wrapper__silver{
+			border-bottom: 1px solid $space;
+		}
+	}
+
+	.plan-big-btn{
+
+
+		margin-top: 120px;
+    	margin-bottom: -35px;
+        .plan-btn__wrapper {
+            position: relative;
+            border-bottom: 2px solid $space;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            .plan-btn {
+                width: 300px;
+                height: 50px;
+                border-radius: 30px;
+                border: 2px solid;
+                display: flex;
+				justify-content: center;
+				font-family: $fbold;
+                align-items: center;
+                position: absolute;
+                bottom: -26px;
+				background-color: white;
+				color: $pink;
+                font-size: 25px;
+                @include media-breakpoint-up(md) {
+                    width: 300px !important;
+                    font-size: 25px;;
+                }
+                @include media-breakpoint-down(lg) {
+                    width: 270px !important;
+                    font-size: 22px;
+                }
+
+
+            }
+            .plan-btn__gold {
+                border-color: #f8aa27;
+			}
+			.plan-btn__diamond {
+                border-color: $dia;
+            }
+		}
+
+		.plan-btn__wrapper__gold{
+			border-bottom: 2px solid #f8aa27;
+		}
+		.plan-btn__wrapper__diamond {
+			border-bottom: 2px solid $dia;
+		}
+	}
+
+	.recomended{
+		text-align: center;
+		color:	$pink;
+		font-size: 12px;
+		font-family: $fbold;
+		padding-top: 14px;
+		text-transform: uppercase;
+	}
+
+	.form-plan-submit__gold{
+		bottom: -58px;
+	}
+
+	.plan-big-btn__dia{
+		margin-top: 40px;
+	}
+
+    .btn-cross-plan{
+        justify-content: flex-start !important;
+        .cross-n{
+
+        padding-left: 32px;
+            min-width: 16px;
+            text-align: right;
+            margin-right: 8px;
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .swiper-button-prev::after {
+        position: absolute;
+        left: 30px;
+      }
+      .swiper-button-next::after {
+        position: absolute;
+        right: 30px;
+      }
+    }

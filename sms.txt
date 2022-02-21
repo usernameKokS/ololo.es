@@ -1,0 +1,1 @@
+{"balance":653.4,"batch_id":1388389893,"cost":1,"num_messages":1,"message":{"num_parts":1,"sender":"AlmejaRosa","content":"Code Almeja Rosa: 389670"},"receipt_url":"","custom":"","messages":[{"id":"12068289542","recipient":34602058809}],"status":"success"} - 602058809 - 389670
