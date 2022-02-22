@@ -8,7 +8,7 @@ disable-md-down
 			<div class="wrapper">
 				<div class="nav-left" onclick="window.location.href = '/personal'">
 					<img src="/img/logo.png" alt="Almeja Rosa" title="Almeja Rosa">
-					<span class="site-name">Almeja Rosa</span>
+					<span class="site-name">O L O L O.es</span>
 				</div>
 				@if (Request::path() != 'login')
 				<div class="nav-right">

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Almeja Rosa</title>
+	<title>ololo.es</title>
 	<link rel="stylesheet" href="/css/app.css?r={{ date("Ymd") }}">
     <link rel="icon" type="image/png" href="/img/logo.png">
 	<meta name="csrf-token" content="{{ csrf_token() }}">

@@ -73,7 +73,7 @@
           <div class="modal-body">
             <form class="policymodal" @submit.prevent="checkpolicy">
                 <p>Desde el 25 de mayo de 2018, aplica en toda Europa el nuevo Reglamento General de Protección de Datos de la UE, la GDPR (General Data Protection Regulation, EU 679/2016).</p>
-                <p>Debido a este cambio, y para que puedas disfrutar de las ventajas de Almejarosa.es con las mayores garantías de protección, debes aceptar nuestras Condiciones de uso y Política de privacidad.</p>
+                <p>Debido a este cambio, y para que puedas disfrutar de las ventajas de OLOLO.es con las mayores garantías de protección, debes aceptar nuestras Condiciones de uso y Política de privacidad.</p>
                 <div class="policy-area">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" id="policy" class="custom-control-input" v-model="policy" />
@@ -88,7 +88,7 @@
                   <label
                     class="custom-control-label"
                     for="com"
-                  >Acepto recibir comunicados comerciales y boletines de Almejarosa.es.</label>
+                  >Acepto recibir comunicados comerciales y boletines de OLOLO.es.</label>
                 </div>
               </div>
 
