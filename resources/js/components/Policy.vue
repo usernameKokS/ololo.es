@@ -28,7 +28,7 @@
                   <label
                     class="custom-control-label"
                     for="com"
-                  >Acepto recibir comunicados comerciales y boletines de Almejarosa.es</label>
+                  >Acepto recibir comunicados comerciales y boletines de OLOLO.es</label>
                 </div>
               </div>
 			  <div v-if="policyError" class="policyError">Para continuar hay que aceptar las condiciones de uso y política de privacidad.</div>
