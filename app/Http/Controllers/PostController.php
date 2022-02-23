@@ -409,7 +409,7 @@ class PostController extends Controller
 
         $places = Place::where('string', '!=', null)->where('province', '!=', null)->where('town', '!=', null)->get();
 
-        $cats = Category::orderBy('sort', 'asc')->distinct('title')->pluck('title');
+        $cats = Category::orderBy('sort', 'asc')->distinct('description')->pluck('description');
         
         $rates = Rate::where('post_id', $post->id)->get();
 
