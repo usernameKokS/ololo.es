@@ -61,7 +61,7 @@
                     </div>
                     <div class="row input-padding">
                         <span class="note-text">
-                            <b>Nota:</b>  En cada línea la frase que escribes tiene que ser completa y tener un sentido. Ya que para publicarse y tener varios anuncios en portales de sexo, nuestros algoritmos cambian frases de orden, de esta forma obteniendo siempre las descripciones únicas. Ver el ejemplo en cada línea.
+                            <b>Nota:</b>  En cada línea la frase que escribes tiene que ser completa y tener un sentido.
                         </span>
                     </div>
                     <div class="row frow-input-padding">
