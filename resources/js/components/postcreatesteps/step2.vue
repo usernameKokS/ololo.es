@@ -12,7 +12,7 @@
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="select-area">
                                 <div class="label-wrap__leftp">
-                                    <span class="input-label">Categoría:</span>
+                                    <span class="input-label">Elige el tipo de inmueble:</span>
                                 </div>
                                 <v-select
                                     :options="$parent.$parent.cats"
