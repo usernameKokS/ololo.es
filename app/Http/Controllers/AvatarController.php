@@ -60,7 +60,7 @@ class AvatarController extends Controller
         $imageName = Str::random(6) . 'de' . time().'.'.$request->avatar->extension();  
             
 		
-        $r = Storage::putFileAs('public/avatar/', new File($request->avatar), $imageName);
+        $r = Storage::putFileAs('public/avatar', new File($request->avatar), $imageName);
 		
         try
         {
@@ -97,7 +97,7 @@ class AvatarController extends Controller
 
     function convertImage($originalImage)
     {
-		$rootDir = $_SERVER['DOCUMENT_ROOT'] . 'storage/app/public/avatar/';
+		$rootDir = $_SERVER['DOCUMENT_ROOT'] . '/storage/app/public/avatar/';
 		
         // jpg, png, gif or bmp?
         $exploded = explode('.', $originalImage);
