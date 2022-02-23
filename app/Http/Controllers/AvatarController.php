@@ -60,7 +60,7 @@ class AvatarController extends Controller
         $imageName = Str::random(6) . 'de' . time().'.'.$request->avatar->extension();  
             
 		
-        $r = Storage::putFileAs('app/public/avatar/', new File($request->avatar), $imageName);
+        $r = Storage::putFileAs('public/avatar/', new File($request->avatar), $imageName);
 		
         try
         {
