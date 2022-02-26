@@ -83,7 +83,7 @@
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="select-area">
                                 <div class="label-wrap__leftp">
-                                    <span class="input-label">Edad:</span>
+                                    <span class="input-label">¿Eres profesional inmobiliario?</span>
                                 </div>
                                 <v-select
                                     :options="ages"
