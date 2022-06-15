@@ -398,11 +398,11 @@ input[type=number] {
     align-items: flex-start;
 }
 
-
 .select-area {
     display: flex;
     align-items: center;
-    padding-bottom: 24px;
+    margin-bottom: 5px;
+    margin-top: 10px;
 }
 
 .style-chooser {
@@ -452,9 +452,9 @@ input[type=number] {
 }
 
 #vs1__listbox.vs__dropdown-menu {
-	
+
 	min-width: 250px !important;
-		
+
 	.vs__dropdown-option
 	{
 		min-width: 250px !important;
@@ -612,9 +612,19 @@ input[type=number] {
     display: inline-block;
 }
 
+.step1-factura label{
+    display: block;
+    font-family: "Semibold", sans-serif !important;
+    font-size: 14px;
+    padding-left: 16px;
+}
+.step1-factura input{
+    width: 100% !important;
+}
 
 .custom-radio {
     padding-left: 30px;
+    margin: 5px 0;
 
     .custom-control-input:checked~.custom-control-label::before {
         color: $grey;
@@ -843,7 +853,7 @@ input[type=number] {
         max-height: 150px;
         overflow: auto;
         border: 1px solid #dfdfdf;
-        
+
         .radio-wrap-area {
             padding-bottom: 12px;
             position: relative;

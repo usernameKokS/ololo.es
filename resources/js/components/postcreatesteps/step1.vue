@@ -55,7 +55,37 @@
                                 <input type="text" v-model="form.zona" class="input input-fullwidth"/>
                             </div>
                         </div>
+
                     </div>
+
+                    <h3>Ubicacion del inmueble</h3>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-4">
+                            <div class="select-area">
+                                <div class="label-wrap__leftp">
+                                    <span class="input-label">Localidad</span>
+                                </div>
+                                <input type="text" v-model="form.zona" class="input input-fullwidth"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="select-area">
+                                <div class="label-wrap__leftp">
+                                    <span class="input-label">Nombre de la via</span>
+                                </div>
+                                <input type="text" v-model="form.zona" class="input input-fullwidth"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="select-area">
+                                <div class="label-wrap__leftp">
+                                    <span class="input-label">Numero de via</span>
+                                </div>
+                                <input type="text" v-model="form.zona" class="input input-fullwidth"/>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-12">&nbsp;</div>
                     </div>
@@ -79,10 +109,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row frow-input-padding">
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="select-area">
-                                <div class="label-wrap__leftp">
+
+                    <div class="row">
+
+                        <div class="col-md-12 col-md-6 col-lg-4">
+                                <div class="select-area">
                                     <span class="input-label">¿Eres profesional inmobiliario?</span>
                                 </div>
                                 <v-select
@@ -92,9 +123,260 @@
                                     v-model.trim="$v.form.age.$model"
                                     :class="{ 'input-error': $v.form.age.$error }"
                                 />
+                        </div>
+
+                        <div class="col-md-12 col-md-6 col-lg-4">
+                            <div class="select-area">
+                                <span class="input-label">Elige el tipo de inmueble:</span>
+                            </div>
+                            <v-select
+                                v-model.trim="$v.form.town.$model"
+                                :class="{ 'input-error': $v.form.town.$error }"
+                                :options="townoption"
+                                :searchable="false"
+                                class="style-chooser"
+                            />
+                        </div>
+
+                        <div class="col-md-12 col-md-6 col-lg-4">
+                            <div class="select-area">
+                                <span class="input-label">Operacion:</span>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    id="customRadio1"
+                                    name="customRadio"
+                                    v-model="$v.form.town.$model"
+                                    :value="'Venta'"
+                                    class="custom-control-input"
+                                    :class="{ 'input-error': $v.form.town.$error }"
+                                    v-on:change="pressKey"
+                                />
+                                <label
+                                    class="custom-control-label semibold radio-padd"
+                                    for="customRadio1"
+                                >Venta</label>
+                            </div>
+                            <div class="custom-control custom-radio center-radio">
+                                <input
+                                    type="radio"
+                                    id="customRadio2"
+                                    name="customRadio"
+                                    v-model="$v.form.town.$model"
+                                    :value="'Alquiler'"
+                                    class="custom-control-input"
+                                    :class="{ 'input-error': $v.form.town.$error }"
+                                    v-on:change="pressKey"
+                                />
+                                <label
+                                    class="custom-control-label semibold radio-padd"
+                                    for="customRadio2"
+                                >Alquiler</label>
                             </div>
                         </div>
+
+                        <div class="col-md-12 col-md-6 col-lg-4">
+                            <div class="select-area">
+                                <span class="input-label">Planta</span>
+                            </div>
+                            <v-select
+                                v-model.trim="$v.form.town.$model"
+                                :class="{ 'input-error': $v.form.town.$error }"
+                                :options="townoption"
+                                :searchable="false"
+                                class="style-chooser"
+                            />
+                        </div>
+                        <div class="col-md-12 col-md-6 col-lg-4">
+                            <div class="select-area">
+                                <span class="input-label">Puerta</span>
+                            </div>
+                            <v-select
+                                v-model.trim="$v.form.town.$model"
+                                :class="{ 'input-error': $v.form.town.$error }"
+                                :options="townoption"
+                                :searchable="false"
+                                class="style-chooser"
+                            />
+                        </div>
+
+                        <div class="col-md-12 col-md-6 col-lg-4">
+                            <div class="select-area">
+                                <span class="input-label">Numero o kilometro</span>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    id="customRadio1"
+                                    name="customRadio"
+                                    v-model="$v.form.town.$model"
+                                    :value="'Numero'"
+                                    class="custom-control-input"
+                                    :class="{ 'input-error': $v.form.town.$error }"
+                                    v-on:change="pressKey"
+                                />
+                                <label
+                                    class="custom-control-label semibold radio-padd"
+                                    for="customRadio1"
+                                >Numero</label>
+                            </div>
+
+                            <div class="custom-control custom-radio center-radio">
+                                <input
+                                    type="radio"
+                                    id="customRadio2"
+                                    name="customRadio"
+                                    v-model="$v.form.town.$model"
+                                    :value="'Kilometro'"
+                                    class="custom-control-input"
+                                    :class="{ 'input-error': $v.form.town.$error }"
+                                    v-on:change="pressKey"
+                                />
+                                <label
+                                    class="custom-control-label semibold radio-padd"
+                                    for="customRadio2"
+                                >Kilometro</label>
+                            </div>
+                            <div class="form-group form-group-input"
+                            >
+                                <label for="numero_de_via">Numero de via</label>
+                                <input
+                                    type="text"
+                                    class="input input-fullwidth"
+                                    id="numero_de_via"
+                                    v-model="form.zona"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-md-6 col-lg-4">
+                            <div class="select-area">
+                                <span class="input-label">Necesita una factura?</span>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    id="facturaRadio1"
+                                    v-model="$v.form.town.$model"
+                                    :value="'Venta'"
+                                    class="custom-control-input"
+                                    v-on:change="needFacturaBlockShow"
+                                />
+                                <label
+                                    class="custom-control-label semibold radio-padd"
+                                    for="customRadio1"
+                                >Si</label>
+                            </div>
+
+                            <div class="custom-control custom-radio center-radio">
+                                <input
+                                    type="radio"
+                                    id="facturaRadio2"
+                                    v-model="$v.form.town.$model"
+                                    :value="'Alquiler'"
+                                    class="custom-control-input"
+                                    v-on:change="needFacturaBlockShow"
+                                />
+                                <label
+                                    class="custom-control-label semibold radio-padd"
+                                    for="customRadio2"
+                                >No</label>
+                            </div>
+                        </div>
+
+                        <!--If factura radiobutton is 'Si'-->
+                        <div class="col-sm-12 col-md-8 offset-md-2 col-lg-8 offset-lg-2 step1-factura">
+                            <h2>Factura</h2>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="form-group form-group-input"
+                                    >
+                                        <label for="social">Empresa o razón social:</label>
+                                        <input
+                                            type="text"
+                                            class="input input-fullwidth"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <!--                                        <small class="form-text text-muted" v-if="$v.form.social.$error">Este campo es
+                                                                                    obligatorio</small>-->
+                                    </div>
+                                    <div class="form-group form-group-input">
+                                        <label for="name">Nombre:</label>
+                                        <input
+                                            type="text"
+                                            class="input input-fullwidth"
+                                            id="name"
+                                            v-model="form.zona"
+                                        />
+                                    </div>
+                                    <div class="form-group form-group-input">
+                                        <label for="postal">Dirección postal:</label>
+                                        <input
+                                            class="input input-fullwidth"
+                                            id="postal"
+                                            v-model="form.zona"
+                                        />
+                                    </div>
+
+                                    <div
+                                        class="form-group form-group-input"
+                                    >
+                                        <label for="inputEmail">Email:</label>
+                                        <input
+                                            type="email"
+                                            class="input input-fullwidth"
+                                            id="inputEmail"
+                                            v-model="form.zona"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div
+                                        class="form-group form-group-input"
+                                    >
+                                        <label for="cif">CIF:</label>
+                                        <div class="check-cif">
+                                            <input
+                                                class="input input-fullwidth"
+                                                id="cif"
+                                                v-model="form.zona"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="form-group form-group-input"
+                                    >
+                                        <label for="surname">Apellidos:</label>
+                                        <input
+                                            type="text"
+                                            class="input input-fullwidth"
+                                            id="surname"
+                                            v-model="form.zona"
+                                        />
+                                    </div>
+
+                                    <div
+                                        class="form-group form-group-input"
+                                    >
+                                        <label for="country">País:</label>
+                                        <v-select
+                                            :options="['España']"
+                                            :searchable="false"
+                                            id="country"
+                                            class="style-chooser select-full-width"
+                                            v-model="form.zona"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
+
                 </div>
             </div>
         </div>
@@ -116,7 +398,7 @@
         data() {
             return {
                 ages: _.range(18, 91, 1),
-                
+                needFactura: false,
                 places: [],
                 form: {
                     town: this.$parent.$parent.post.town ? this.$parent.$parent.post.town : "",
@@ -214,6 +496,9 @@
             async clickedNext(val) {}
         },
         methods: {
+            pressKey(){
+                this.setIsModify()
+            },
             setIsModify()
             {
                 if(this.$parent.$parent.post.status != "creating")
@@ -237,6 +522,10 @@
                 value = value.charAt(0).toUpperCase() + value.slice(1);
 				return value;
 			},
+            needFacturaBlockShow() {
+                this.needFactura = !this.needFactura;
+                this.pressKey();
+            },
             saveStep(){
                 return new Promise((resolve, reject) => {
 
@@ -244,7 +533,7 @@
 
                     const cf = this.$refs.checkphone.phoneSuccess;
 
-                    if (cf == false) 
+                    if (cf == false)
                     {
                         const element = document.getElementById("edit-phone");
                         const options = { offset: -120 };
@@ -269,7 +558,7 @@
                     }
 
                     this.$v.form.$touch();
-                    
+
                     if(this.$v.form.$error)
                     {
                         this.$nextTick(() => {
@@ -289,7 +578,7 @@
                         axios
                         .post("/post/store-step1", form)
                         .then(response => {
-                            
+
                             if(response.data.type == 'error')
                             {
                                 this.$modal.show(
@@ -308,7 +597,7 @@
 
                                 reject("error");
                             }
-                            
+
                             resolve("success");
                         })
                         .catch(error => {
@@ -330,7 +619,7 @@
                         });
                     }
                 });
-            }    
+            }
         },
         mounted() {
 

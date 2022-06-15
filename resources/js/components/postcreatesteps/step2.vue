@@ -7,6 +7,326 @@
             <div class="container">
                 <!--div class="wrap-icon2"></div-->
                 <div class="container-two">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 col-lg-5 offset-lg-1">
+                            <div class="row">
+                                <h2>Caracteristicas del piso</h2>
+                                <div class="col-12">
+                                    <h3>Tipo de piso</h3>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Piso</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Atico</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Duplex</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Estudio/Loft</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="select-area">
+                                        <h3>Estado</h3>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input
+                                            type="radio"
+                                            id="customRadio1"
+                                            name="customRadio"
+                                            v-model="$v.form.title.$model"
+                                            :value="'A reformar'"
+                                            class="custom-control-input"
+                                        />
+                                        <label
+                                            class="custom-control-label semibold radio-padd"
+                                            for="customRadio1"
+                                        >A reformar</label>
+                                    </div>
+                                    <div class="custom-control custom-radio center-radio">
+                                        <input
+                                            type="radio"
+                                            id="customRadio2"
+                                            name="customRadio"
+                                            v-model="$v.form.title.$model"
+                                            :value="'Buen estado'"
+                                            class="custom-control-input"
+                                        />
+                                        <label
+                                            class="custom-control-label semibold radio-padd"
+                                            for="customRadio2"
+                                        >Buen estado</label>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="row">
+                                <div class="select-area">
+                                    <span class="input-label">m<sup><small>2</small></sup> construidos</span>
+                                </div>
+                                <input
+                                    class="input input-fullwidth"
+                                    id="consti"
+                                    v-model="form.zona"
+                                />
+                            </div>
+                            <div class="row">
+                                <div class="select-area">
+                                    <span class="input-label">m<sup><small>2</small></sup> utiles (opcional)</span>
+                                </div>
+                                <input
+                                    class="input input-fullwidth"
+                                    id="consti"
+                                    v-model="form.zona"
+                                />
+                            </div>
+                            <div class="row">
+                                <div class="select-area">
+                                    <span class="input-label">Numero de habitaciones en la vivienda</span>
+                                </div>
+                                <span class="minusBtn">-</span>
+                                <span class="btw-min-plu">
+                                    <input
+                                        type="text"
+                                        class="input input-fullwidth"
+                                        v-model="$v.form.category.$model"
+                                    />
+                                </span>
+                                <span class="plusBtn">+</span>
+                            </div>
+                            <div class="row">
+                                <div class="select-area">
+                                    <span class="input-label">Numero de banos y aseos</span>
+                                </div>
+                                <span class="minusBtn">-</span>
+                                <span class="btw-min-plu">
+                                    <input
+                                        type="text"
+                                        class="input input-fullwidth"
+                                        v-model="$v.form.category.$model"
+                                    />
+                                </span>
+                                <span class="plusBtn">-</span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-lg-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="select-area">
+                                        <h3>Fachada del inmueble</h3>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input
+                                            type="radio"
+                                            id="customRadio11"
+                                            name="customRadio11"
+                                            v-model="$v.form.title.$model"
+                                            :value="'Exterior'"
+                                            class="custom-control-input"
+                                        />
+                                        <label
+                                            class="custom-control-label semibold radio-padd"
+                                            for="customRadio11"
+                                        >Exterior</label>
+                                    </div>
+                                    <div class="custom-control custom-radio center-radio">
+                                        <input
+                                            type="radio"
+                                            id="customRadio22"
+                                            name="customRadio11"
+                                            v-model="$v.form.title.$model"
+                                            :value="'Interior'"
+                                            class="custom-control-input"
+                                        />
+                                        <label
+                                            class="custom-control-label semibold radio-padd"
+                                            for="customRadio22"
+                                        >Interior</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="select-area">
+                                        <h3>Tiene ascensor</h3>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input
+                                            type="radio"
+                                            id="customRadio11"
+                                            name="customRadio11"
+                                            v-model="$v.form.title.$model"
+                                            :value="'Si tiene'"
+                                            class="custom-control-input"
+                                        />
+                                        <label
+                                            class="custom-control-label semibold radio-padd"
+                                            for="customRadio11"
+                                        >Si tiene</label>
+                                    </div>
+                                    <div class="custom-control custom-radio center-radio">
+                                        <input
+                                            type="radio"
+                                            id="customRadio22"
+                                            name="customRadio11"
+                                            v-model="$v.form.title.$model"
+                                            :value="'No tiene'"
+                                            class="custom-control-input"
+                                        />
+                                        <label
+                                            class="custom-control-label semibold radio-padd"
+                                            for="customRadio22"
+                                        >No tiene</label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Title</h3>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 1</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 2</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 3</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 4</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Title</h3>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 1</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 2</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 3</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 4</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 5</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 6</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Title</h3>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 1</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input
+                                            type="checkbox"
+                                            id="social"
+                                            v-model="form.zona"
+                                        />
+                                        <label for="social">Opt 2</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
                     <h2>Datos del anuncio</h2>
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-lg-4">
@@ -367,7 +687,7 @@
 </template>
 
 <script>
-    
+
     import {maxLength, minLength, minValue, numeric, required} from "vuelidate/lib/validators";
     import Notify from "./../Notify";
 
@@ -429,7 +749,7 @@
                         axios
                         .post("/post/store-step3", form)
                         .then(response => {
-                            
+
                             if(response.data.type == 'error')
                             {
                                 this.$modal.show(
@@ -448,7 +768,7 @@
 
                                 reject("error");
                             }
-                            
+
                             resolve("success");
                         })
                         .catch(error => {
@@ -475,7 +795,7 @@
             {
                 value = this.filterLatinSymbols(value);
 
-                
+
 
                 this.setText();
                 return value;
@@ -593,7 +913,7 @@
             },
             clickedNext(val) {
                 if(val === true) {
-                    
+
                 }
             },
             "form.category": function(val) {
@@ -668,16 +988,16 @@
                 // this.$v.form.text_10.$model = this.form.text_10;
 			},
             "form.text": function(val){
-                
+
                 this.setIsModify()
             },
             "form.sex": function(val){
                 this.$parent.$parent.post.sex = val;
-                
+
                 for(let item of this.$parent.$children)
                     if(item.currentStep.name == 'services')
                         item.storeRemains()
-                
+
                 this.setIsModify()
             }
         },
@@ -687,7 +1007,7 @@
             } else {
                 this.$emit('can-continue', {value: false});
             }
-            
+
             if(this.$parent.$parent.post.text.length > 0)
             {
                 this.$parent.$parent.post.text.split('###').forEach((value, index) => {
