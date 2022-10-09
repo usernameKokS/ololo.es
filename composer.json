@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "barryvdh/laravel-debugbar": "^3.7",
         "cardinity/cardinity-sdk-php": "v3.0.2",
         "doctrine/dbal": "^2.0",
         "fideloper/proxy": "^4.2",
@@ -20,8 +21,7 @@
         "nao-pon/flysystem-google-drive": "~1.1",
         "paypal/rest-api-sdk-php": "^1.14",
         "spatie/laravel-backup": "^6.13",
-        "spatie/laravel-image-optimizer": "^1.6",
-        "twilio/sdk": "^6.3"
+        "spatie/laravel-image-optimizer": "^1.6"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -33,7 +33,8 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform-check": false
     },
     "extra": {
         "laravel": {
@@ -56,6 +57,7 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

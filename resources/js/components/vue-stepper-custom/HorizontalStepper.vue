@@ -169,18 +169,21 @@ export default {
       this.$forceUpdate();
     },
     nextStep() {
-      
+
       let result = this.$children[this.currentStep.index].saveStep();
-      
+
       result.then((res) => {
           this.canContinue = false;
-          
+
           if(res == 'success')
           {
             this.canContinue = true;
             this.nextStepAction()
           }
       })
+          .catch((err) => {
+              console.log(err);
+          });
 
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -188,7 +191,7 @@ export default {
       /*if (!this.$listeners || !this.$listeners['before-next-step']) {
         this.nextStepAction()
       }
-      
+
       this.canContinue = false;
 
       this.$emit("before-next-step", { currentStep: this.currentStep }, (next = true) => {

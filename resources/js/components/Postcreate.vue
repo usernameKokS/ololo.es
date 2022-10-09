@@ -1,11 +1,11 @@
 <template>
     <div class="post-create-zone">
         <form @submit.prevent="sendform">
-            <horizontal-stepper 
-                :steps="steps" 
-                @completed-step="completeStep" 
+            <horizontal-stepper
+                :steps="steps"
+                @completed-step="completeStep"
                 :top-buttons="true"
-                @active-step="isStepActive" 
+                @active-step="isStepActive"
                 @stepper-finished="sendform"
                 locale="es"
             ></horizontal-stepper>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    
+
     import {maxLength, minLength, minValue, numeric, required} from "vuelidate/lib/validators";
 
     import HorizontalStepper from './vue-stepper-custom';
@@ -52,7 +52,7 @@
                     {
                         icon: 'message',
                         name: 'description',
-                        title: 'Descripción',
+                        title: 'Caracteristicas',
                         subtitle: '',
                         component: step2,
                         completed: false
@@ -60,7 +60,7 @@
                     {
                         icon: 'tune',
                         name: 'services',
-                        title: 'Servicios',
+                        title: 'Descripción',
                         subtitle: '',
                         component: step3,
                         completed: false
@@ -97,7 +97,7 @@
                 })
             },
             sendform(payload) {
-                
+
             },
         },
         mounted() {
@@ -163,12 +163,12 @@
 	{
 		display: flex;
 	}
-	
+
 	.input-indicator-box img
 	{
 		max-width: 25px;
 	}
-	
+
     .leaflet-marker-icon {
         margin-left: -13px !important;
         margin-top: -41px !important;
@@ -195,19 +195,19 @@
 		border-bottom: 1px dashed #dfdfdf;
 		padding-left: 0 !important;
 	}
-	
+
 	.block-box
 	{
 		border: 1px solid #dfdfdf;
 		width: 100%;
 		padding: 15px 5px;
 	}
-	
+
 	.block-box .w-100
 	{
 		width: 100%;
 	}
-	
+
 	.block-box .input-label-title
 	{
 		border-bottom: 1px solid #dfdfdf;
@@ -216,4 +216,4 @@
 		display: block;
 		font-size: 14px;
 	}
-</style>    
+</style>

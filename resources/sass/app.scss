@@ -31,7 +31,7 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
-// @import "~bootstrap/scss/root";
+ //@import "~bootstrap/scss/root";
 @import "~bootstrap/scss/reboot";
 // @import "~bootstrap/scss/type";
 // @import "~bootstrap/scss/images";
@@ -61,7 +61,7 @@
 // @import "~bootstrap/scss/tooltip";
 // @import "~bootstrap/scss/popover";
 // @import "~bootstrap/scss/carousel";
-// @import "~bootstrap/scss/utilities";
+ @import "~bootstrap/scss/utilities";
 // @import "~bootstrap/scss/print";
 
 
@@ -2252,4 +2252,34 @@ input[type=number] {
 	background-color: #FE6885;
 	color: #ffffff;
 	text-align: center;
+}
+
+.vs--unsearchable .vs__search{
+    color: #8b8b8b;
+}
+
+.modal-confirm-address{
+    .pac-target-input{
+        width: 100%;
+        height: 40px;
+        padding: 0 10px;
+        border: 1px solid;
+        border-color: #dfdfdf;
+        font-size: 14px;
+    }
+    .modal-title{
+        font-size: 16px;
+
+        font-family: "Bold", sans-serif;
+        margin-bottom: 20px;
+    }
+}
+
+.font-regular{
+    font-family: "Regular", sans-serif;
+}
+
+.font-sm{
+    font-size: 12px;
+    line-height: 1.2;
 }

@@ -19,7 +19,10 @@
                                         :class="{ 'input-error':  $v.phone.$error }"
                                         v-mask="'###-###-###'"
                                         v-model="phone"
+                                        :disabled="phoneSuccess"
                                     />
+
+
 
                                     <div class="input-inline-wrap__btn" v-if="!phoneSuccess">
                                         <button type="submit" class="btn btn-normal btn_green-hover non-fixed-btn2"
@@ -34,6 +37,13 @@
                                         <img src="/img/icon-success.svg" />
                                         Número de teléfono verificado
                                     </div>
+                                    <button v-if="phoneSuccess" type="button" @click="resetPhone()" class="btn btn-normal btn_green-hover ml-3"
+                                            title="Cambiar teléfono">
+                                        <div>
+                                            <img src="/img/checkedpink.svg" alt="svg"/>
+                                            <span>Cambiar teléfono</span>
+                                        </div>
+                                    </button>
                                 </form>
                             </div>
                             <div class="phone-area-improtant">
@@ -73,6 +83,7 @@
                                 </div>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -98,7 +109,7 @@
 		watch: {
 			"phone": function(val){
 				let phone = val.replaceAll('-', '');
-				
+
 				if(phone == this.post.phone)
 					this.phoneSuccess = true;
 				else
@@ -131,6 +142,10 @@
             }
         },
         methods: {
+            resetPhone() {
+                this.phone = "";
+                this.phoneSuccess = false;
+            },
             sendphone() {
                 this.$v.phone.$touch();
                 if (this.$v.phone.$invalid) {
