@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Avatar;
 use App\Category;
+use App\Http\Requests\PostStep1Request;
+use App\Http\Requests\PostStep2Request;
+use App\Http\Requests\PostStep3Request;
 use App\Post;
+use App\PostFactura;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -32,31 +36,31 @@ class PostController extends Controller
     {
         $open_create = OpenCreate::checkCreate();
 		$payMessage = false;
-		
+
         return view('post.index', compact('open_create', 'payMessage'));
     }
-	
+
 	public function indexWithSuccess()
     {
         // $open_create = OpenCreate::checkCreate();
-		
+
 		$payMessage = [
 			'type' => 'success',
 			'message' => '¡PAGO REALIZADO CON ÉXITO!'
 		];
-		
+
         return view('post.result', compact('payMessage'));
     }
-	
+
 	public function indexWithFailure()
     {
         // $open_create = OpenCreate::checkCreate();
-		
+
 		$payMessage = [
 			'type' => 'error',
 			'message' => '¡Pago cancelado!'
 		];
-		
+
         return view('post.result', compact('payMessage'));
     }
 
@@ -94,7 +98,7 @@ class PostController extends Controller
 
 
     public function delete($id){
-        
+
         $user = Auth::user();
 
         $post = Post::where('user_id', $user->id)->where('is_delete', 0)->where('id', $id)->first();
@@ -102,7 +106,7 @@ class PostController extends Controller
         $post->publish = false;
         // $post->eliminar = 1;
         // dd($post->tariffSetOneDelete());
-        
+
         // TODO
         $open_create = OpenCreate::checkCreate();
 
@@ -267,7 +271,7 @@ class PostController extends Controller
         $request->validate([
             'phone' => ['required'],
         ]);
-		
+
 		$time = time();
 		$validateTime = Session::get('phoneNumberTimer');
 
@@ -277,13 +281,13 @@ class PostController extends Controller
 		}
 		else
 			Session::put('phoneNumberTimer', $time);
-		
+
         if ($request['phone']) {
             $phoneNum = $request['phone'];
             $phoneNum = str_replace('-', '', $phoneNum);
 
             Session::put('phoneNum', $phoneNum);
-            
+
             $token = $this->sendToken($phoneNum);
             Session::put('code', $token);
             return Response::json(array('success' => 'Por favor revise su teléfono'));
@@ -355,9 +359,9 @@ class PostController extends Controller
 		$numbers = array('+34' . $phone_number);
 		$sender = urlencode('AlmejaRosa');
 		$message = rawurlencode('El codigó:' . rand(100000, 900000));
-	 
+
 		$numbers = implode(',', $numbers);
-	 
+
 		// Prepare data for POST request
 		$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => rawurlencode("Code Almeja Rosa: " . $token));
 
@@ -371,7 +375,7 @@ class PostController extends Controller
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. '/sms.txt', $response. ' - '. $phone_number . ' - ' . $token . "\n", FILE_APPEND);
 		// Process your response here
 		// echo $response;
-		
+
 		return $token;
     }
 
@@ -410,7 +414,7 @@ class PostController extends Controller
         $places = Place::where('string', '!=', null)->where('province', '!=', null)->where('town', '!=', null)->get();
 
         $cats = Category::orderBy('sort', 'asc')->distinct('title')->pluck('title');
-        
+
         $rates = Rate::where('post_id', $post->id)->get();
 
         $services = Service::where('post_id', $post->id)->with('childs')->get();
@@ -459,7 +463,7 @@ class PostController extends Controller
         ->where('id', $request['post_id'])
         ->latest()
         ->first();
-		
+
         // $post = Post::where('id', $request['post_id'])
         // ->latest()
         // ->first();
@@ -471,7 +475,7 @@ class PostController extends Controller
 				'type' => 'error'
 			]);
 		}
-		
+
 		if(
 			empty(trim($request['text_1']))
 			|| empty(trim($request['text_2']))
@@ -490,9 +494,9 @@ class PostController extends Controller
 				'type' => 'error'
 			]);
 		}
-		
+
         if(
-            $request['edit'] == 'true' 
+            $request['edit'] == 'true'
             && $post->status == 'create'
         )
         {
@@ -633,7 +637,7 @@ class PostController extends Controller
         return 'Success';
     }
 
-    public function storeStep1(Request $request)
+    public function storeStep1(PostStep1Request $request)
     {
         $open_create = OpenCreate::checkCreate();
         if($request['edit'] != 'true'){
@@ -642,69 +646,39 @@ class PostController extends Controller
             }
         }
 
-        $request->validate([
-            'province' => ['required'],
-            'town' => ['required'],
-            //'place' => ['required'],
-            'post_id' => ['required'],
-            // 'worktime' => ['required'],
-            // 'category' => ['required'],
-            // 'title' => ['required'],
-            // 'text' => ['required'],
-            'name' => ['required'],
-            'age' => ['required'],
-        ]);
-
-        $user = Auth::user();
-
-        $post = Post::where('user_id', $user->id)
+        $post = Post::where('user_id', \auth()->user()->id)
             ->where('is_delete', 0)
             ->where('id', $request['post_id'])
             ->latest()
             ->first();
 
-        $post->town = $request['town'];
-        $post->province = $request['province'];
-        // $post->place = $request['place'];
+        $post->fill($request->all());
         $post->place = $request['province'] . ', ' . $request['town'];
-        $post->zona = $request['zona'];
-        // $post->map = $request['currentPlace'];
-        $post->name = $request['name'];
-        $post->age = $request['age'];
 
         if(!$post->step || $post->step < 1)
             $post->step = 1;
 
         $post->save();
 
+        if($request->need_factura){
+           PostFactura::updateOrCreate(['post_id' => $post->id], $request->query('factura'));
+        }
+
         return response()->json(['type' => 'success']);
     }
 
-    public function storeStep2(Request $request)
+    public function storeStep2(PostStep2Request $request)
     {
-        $request->validate([
-            // 'province' => ['required'],
-            // 'town' => ['required'],
-            //'place' => ['required'],
-            'post_id' => ['required'],
-            'worktime' => ['required'],
-            // 'category' => ['required'],
-            // 'title' => ['required'],
-            // 'text' => ['required'],
-            // 'name' => ['required'],
-            // 'age' => ['required'],
-        ]);
-
         $user = Auth::user();
 
         $post = Post::where('user_id', $user->id)
             ->where('is_delete', 0)
             ->where('id', $request['post_id'])
             ->latest()
-            ->first();
+            ->firstOrFail();
 
-        $post->worktime = $request['worktime'];
-        
+        $post->fill($request->all());
+
         if($post->step < 2)
             $post->step = 2;
 
@@ -812,21 +786,8 @@ class PostController extends Controller
         return response()->json(['type' => 'success']);
     }
 
-    public function storeStep3(Request $request)
+    public function storeStep3(PostStep3Request $request)
     {
-        $request->validate([
-            // 'province' => ['required'],
-            // 'town' => ['required'],
-            //'place' => ['required'],
-            'post_id' => ['required'],
-            // 'worktime' => ['required'],
-            'category' => ['required'],
-            'title' => ['required'],
-            // 'text' => ['required'],
-            // 'name' => ['required'],
-            // 'age' => ['required'],
-        ]);
-
         $user = Auth::user();
 
         $post = Post::where('user_id', $user->id)
@@ -836,16 +797,16 @@ class PostController extends Controller
             ->first();
 
         if(
-            empty(trim($request['text_1']))
-            || empty(trim($request['text_2']))
-            || empty(trim($request['text_3']))
-            || empty(trim($request['text_4']))
-            || empty(trim($request['text_5']))
-            || empty(trim($request['text_6']))
-            || empty(trim($request['text_7']))
-            || empty(trim($request['text_8']))
-            || empty(trim($request['text_9']))
-            || empty(trim($request['text_10']))
+            empty(trim($request->input('adds.text_1')))
+            || empty(trim($request->input('adds.text_2')))
+            || empty(trim($request->input('adds.text_3')))
+            || empty(trim($request->input('adds.text_4')))
+            || empty(trim($request->input('adds.text_5')))
+            || empty(trim($request->input('adds.text_6')))
+            || empty(trim($request->input('adds.text_7')))
+            || empty(trim($request->input('adds.text_8')))
+            || empty(trim($request->input('adds.text_9')))
+            || empty(trim($request->input('adds.text_10')))
         )
         {
             return response()->json([
@@ -858,22 +819,28 @@ class PostController extends Controller
         $post->title = $request['title'];
         $post->sex = $request['sex'];
         $post->text = join('###', [
-			$request['text_1'],
-			$request['text_2'],
-			$request['text_3'],
-			$request['text_4'],
-			$request['text_5'],
-			$request['text_6'],
-			$request['text_7'],
-			$request['text_8'],
-			$request['text_9'],
-			$request['text_10']
+			$request->input('adds.text_1'),
+			$request->input('adds.text_2'),
+			$request->input('adds.text_3'),
+			$request->input('adds.text_4'),
+			$request->input('adds.text_5'),
+			$request->input('adds.text_6'),
+			$request->input('adds.text_7'),
+			$request->input('adds.text_1'),
+			$request->input('adds.text_1'),
+			$request->input('adds.text_1')
 		]);
-        
+
         if($post->step < 3)
             $post->step = 3;
 
         $post->save();
+
+        if(!empty($request->input('attributes'))){
+            foreach ($request->input('attributes') as $key => $value) {
+                $post->attributes()->updateOrCreate(['slug' => $key], ['value' => $value]);
+            }
+        }
 
         return response()->json(['type' => 'success']);
     }
@@ -914,7 +881,7 @@ class PostController extends Controller
         $postStatus = $post->status;
 
         if(
-            $request['edit'] == 'true' 
+            $request['edit'] == 'true'
             && $post->status == 'create'
         )
         {
@@ -930,7 +897,7 @@ class PostController extends Controller
             $post->step = 4;
 
         $post->save();
-        
+
         return response()->json(['type' => 'success', 'status' => $postStatus, 'post_id' => $request['post_id']]);
     }
 
@@ -950,11 +917,7 @@ class PostController extends Controller
 
         // $post = Post::where('user_id', $user->id)->where('id', $id)->latest()->first();
 
-        $post = Post::where('id', $id)->where('is_delete', 0)->latest()->first();
-        
-        if(!$post){
-            abort(404);
-        }
+        $post = Post::where('id', $id)->where('is_delete', 0)->with('attributes')->latest()->firstOrFail();
 
         $rates = Rate::where('post_id', $post->id)->get();
 
@@ -964,9 +927,9 @@ class PostController extends Controller
         $places = Place::where('string', '!=', null)->where('province', '!=', null)->where('town', '!=', null)->get();
 
         $countModify = $post->getCountAvailableForModify();
-		
+
 		$isCanEdit = false;
-		
+
 		$post->tarifa = 'No';
 		$tarif = Tariff::where('status', '!=', 'wait')
 		->where('post_id', $post->id)
@@ -978,14 +941,14 @@ class PostController extends Controller
 				$post->tarifa = $tarif['name'];
 			}
 		}
-		
+
 		if(
 			$post->publish == false
 			|| $post->tarifa == 'No'
 			|| !$post->end_pay
 		)
 			$isCanEdit = true;
-		
+
         if($countModify <= 0 && !$isCanEdit)
         {
             return redirect('/posts');

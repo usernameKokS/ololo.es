@@ -30,6 +30,7 @@
     "dependencies": {
         "@fingerprintjs/fingerprintjs": "^3.0.3",
         "@popperjs/core": "^2.5.3",
+        "caniuse-lite": "^1.0.30001418",
         "chart.js": "^2.9.3",
         "cropperjs": "^1.5.9",
         "leaflet": "^1.7.1",

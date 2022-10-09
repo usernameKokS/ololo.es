@@ -36,13 +36,13 @@ Route::view('/clubs/en', 'landing.clubs_en')->name('clubs-en');
 Route::view('/tariffs', 'public.tariffs')->name('tariffs');
 
 Route::get('/send-mail', function(){
-	
+
 	/*$email = 'ins-a050dhgc@isnotspam.com';
 	$subject = "Register form data";
 	// Unique boundary
 	$boundary = md5( uniqid() . microtime() );
 	$message = view('welcome')->render();
-	
+
 	// If no $headers sent
 	if (empty($headers))
 	{
@@ -54,7 +54,7 @@ Route::get('/send-mail', function(){
 		$headers .= "List-Unsubscribe: https://almejarosa.es/unsubscribe/7263517263517\r\n";
 		// Tell e-mail client this e-mail contains alternate versions
 		$headers .= "Content-Type: multipart/alternative; boundary=\"$boundary\"\r\n\r\n";
-		
+
 	}
 
 	// Plain text version of message
@@ -70,19 +70,19 @@ Route::get('/send-mail', function(){
 	$body .= chunk_split( base64_encode( $message ) );
 
 	$body .= "--$boundary--";
-	
+
 	mail($email, $subject, $body, $headers);*/
 	Mail::send(['welcome', 'welcome_txt'], [], function($message) {
-		// $message->to('4fQHBg4AwCTlGu@dkimvalidator.com')->subject('Register form data'); 
-		// dkimvalidator.com | mail-tester.com | isnotspam.com 
-		// $message->to('almejarosa.es@gmail.com')->subject('Register form data'); 
-		$message->to('test.services.ua@gmail.com')->subject('Register form data'); 
-		//$message->to('almejarosa.es@yandex.ru')->subject('Register form data'); 
+		// $message->to('4fQHBg4AwCTlGu@dkimvalidator.com')->subject('Register form data');
+		// dkimvalidator.com | mail-tester.com | isnotspam.com
+		// $message->to('almejarosa.es@gmail.com')->subject('Register form data');
+		$message->to('test.services.ua@gmail.com')->subject('Register form data');
+		//$message->to('almejarosa.es@yandex.ru')->subject('Register form data');
 
-		
+
 		$headers = $message->getHeaders();
 		$headers->addTextHeader('List-Unsubscribe', 'https://almejarosa.es/unsubscribe/7263517263517');
-		
+
 	});
 });
 
@@ -93,17 +93,17 @@ mail header  List-Unsubscribe
 Route::get('/send-sms', function(){
 	// Account details
 	/*$apiKey = urlencode('A9pdTNutjjw-h6B8PDfaQQS35OpoI2UVzOfRnJ3hkW');
-	
+
 	// Message details
 	$numbers = array();
 	$sender = urlencode('AlmejaRosa');
 	$message = rawurlencode('El codigó:' . rand(100000, 900000));
- 
+
 	$numbers = implode(',', $numbers);
- 
+
 	// Prepare data for POST request
 	$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
- 
+
 	// Send the POST request with cURL
 	$ch = curl_init('https://api.txtlocal.com/send/');
 	curl_setopt($ch, CURLOPT_POST, true);
@@ -111,7 +111,7 @@ Route::get('/send-sms', function(){
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	$response = curl_exec($ch);
 	curl_close($ch);
-	
+
 	// Process your response here
 	echo $response;*/
 });
@@ -166,14 +166,19 @@ Route::group(['middleware' => ['auth', 'blocked']], function () {
         Route::post('/post/active{id}', 'PostController@active');
         Route::post('/post/autopay{id}', 'PostController@autopay');
 
-        Route::post('/avatar/store{id}', 'AvatarController@store');
+        Route::post('/avatar/store{id}/{order}', 'AvatarController@store');
         Route::post('/avatar/destroy{id}', 'AvatarController@destroy');
 		Route::post('/avatar/active', 'AvatarController@setactive');
-		
+
+        Route::post('/attachments/store', 'AttachmentController@store');
+        Route::post('/attachment/set-cover', 'AttachmentController@set_cover');
+        Route::get('/attachments/{post_id}', 'AttachmentController@get_attachments');
+        Route::delete('/attachments/{id}', 'AttachmentController@delete');
+
         Route::post('/video/store{id}', 'VideoController@store');
         Route::delete('/video/destroy{id}', 'VideoController@destroy');
 		Route::post('/video/active', 'VideoController@setactive');
-		
+
         Route::get('/getimages{id}', 'AvatarController@getimages');
         Route::get('/getvideos{id}', 'VideoController@getvideos');
 
@@ -182,10 +187,10 @@ Route::group(['middleware' => ['auth', 'blocked']], function () {
 		Route::post('/tariff/pay-card', 'TariffController@payCard');
         Route::post('/tariff/pay/coor', 'TariffController@payCoor');
 		Route::post('/tariff/pay/coor-card', 'TariffController@payCoorCard');
-		
+
 		Route::post('/tariff/pay-card', 'TariffController@payCard');
 		Route::post('/tariff/pay/coor-card', 'TariffController@payCoorCard');
-		
+
         Route::get('/tariff/page', 'MainController@posttariff');
         Route::get('/tariff{id}', 'MainController@posttariff');
 		Route::get('/tariff/{id}/{plan}', 'TariffController@tariffDetail');
@@ -216,6 +221,8 @@ Route::group(['middleware' => ['auth', 'blocked']], function () {
 
         Route::get('/billing', 'BillingController@index');
         Route::post('/billing/store', 'BillingController@store');
+
+        Route::post('/user/change-email', 'EmailController@changeEmail');
     });
 
 });
@@ -224,6 +231,7 @@ Route::group(['middleware' => ['auth', 'blocked']], function () {
 Route::post('/email/store', 'EmailController@store');
 Route::get('/user/verify/{token}', 'EmailController@verifyUser');
 Route::post('/email/register', 'EmailController@register');
+
 
 Route::post('/email/forgot', 'EmailController@forgot');
 

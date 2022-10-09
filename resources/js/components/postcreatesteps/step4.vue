@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-12"><hr>&nbsp;</div>
         </div>
-        <photo :csrf="csrf" :post="$parent.$parent.post"></photo>
+        <videoupload :csrf="csrf" :post="$parent.$parent.post"></videoupload>
+
         <div class="row">
             <span class="note-text">
                 <b>Nota:</b> Las fotos tienen que ser de buena calidad, no tener marcas de agua. Esta prohibido utilizar fotos robadas o de terceros.
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-    
+
     import {maxLength, minLength, minValue, numeric, required} from "vuelidate/lib/validators";
     import Notify from "./../Notify";
 
@@ -25,7 +26,7 @@
             return {
                 isModify: false,
                 form: {
-                   
+
                 },
                 csrf: document
                     .querySelector('meta[name="csrf-token"]')
@@ -34,7 +35,7 @@
         },
         validations: {
             form: {
-                
+
             }
         },
         watch: {
@@ -68,7 +69,7 @@
                     axios
                     .post("/post/store-step4", form)
                     .then(response => {
-                        
+
                         if(response.data.type == 'error')
                         {
                             this.$modal.show(

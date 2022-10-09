@@ -11,7 +11,8 @@ use Illuminate\Validation\ValidationException;
 class EmailController extends Controller
 {
 
-    public function sendpolicy(Request $request) {
+    public function sendpolicy(Request $request)
+    {
         $request->validate([
             'policy' => ['required'],
         ]);
@@ -32,13 +33,15 @@ class EmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function policy() {
+    public function policy()
+    {
         $user = Auth::user();
 
         return view('pages.policy', compact('user'));
     }
 
-    public function forgot(Request $request) {
+    public function forgot(Request $request)
+    {
         $validatedData = $request->validate([
             'email' => ['required', 'email'],
         ]);
@@ -59,23 +62,23 @@ class EmailController extends Controller
 
         $sitename = env('APP_URL');
 
-        $token_url = $sitename.'/user/verify/'.$user->token;
+        $token_url = $sitename . '/user/verify/' . $user->token;
 
-        $icon = $sitename.'/img/key.png';
+        $icon = $sitename . '/img/key.png';
 
         $data = [
             'token' => $token_url,
             'icon' => $icon,
         ];
 
-        try{
+        try {
             $from = env('MAIL_FROM_ADDRESS');
             $send = $request['email'];
             Mail::send('mails.auth', $data, function ($message) use ($from, $send) {
                 $message->from($from, 'Reset email.');
                 $message->to($send, $send)->subject('Reset email on Almeja Rosa');
             });
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             report($e);
 
             return false;
@@ -87,7 +90,8 @@ class EmailController extends Controller
     }
 
 
-    public function verifyUser(Request $request, $token) {
+    public function verifyUser(Request $request, $token)
+    {
 
         // $value = $request->session()->get('token');
         // $email = $request->session()->get('email');
@@ -100,17 +104,18 @@ class EmailController extends Controller
             abort(404);
         }*/
 
-		$user = User::where('token', $token)->first();
+        $user = User::where('token', $token)->first();
 
-		if(!$user)
-			abort(404);
-		
-		$email = $user->email;
-		
+        if (!$user)
+            abort(404);
+
+        $email = $user->email;
+
         return view('pages.register', compact('email'));
     }
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
 
         $validatedData = $request->validate([
             'password' => ['required', 'min:6', 'max:16'],
@@ -147,23 +152,23 @@ class EmailController extends Controller
         // session(['token' => null]);
 
         Auth::login($user);
-        
+
         $sitename = env('APP_URL');
-        $icon = $sitename.'/img/key.png';
+        $icon = $sitename . '/img/key.png';
 
         $data = [
             'login' => $email,
             'password' => $request['password'],
             'icon' => $icon
         ];
-        try{
+        try {
             $from = env('MAIL_FROM_ADDRESS');
             $send = $request['email'];
             Mail::send('mails.register', $data, function ($message) use ($from, $send) {
                 $message->from($from, 'Almejarosa.es');
                 $message->to($send, $send)->subject('Tus datos de acceso a almejarosa.es');
             });
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             report($e);
 
             return false;
@@ -174,23 +179,24 @@ class EmailController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             'email' => ['required', 'email', 'unique:users'],
         ]);
 
         $user = User::where('email', $request['email'])->latest()->first();
 
-        if(!$user){
+        if (!$user) {
             $user = new User;
-			$user->email = $request['email'];
+            $user->email = $request['email'];
             $user->entity = 1;
         }
-		
-		$token = sha1(time());
+
+        $token = sha1(time());
         $user->token = $token;
         $user->save();
         // session(['email' => $request['email']]);
@@ -198,13 +204,13 @@ class EmailController extends Controller
 
         $sitename = env('APP_URL');
 
-        $token_url = $sitename.'/user/verify/'.$token;
-        $icon = $sitename.'/img/key.png';
+        $token_url = $sitename . '/user/verify/' . $token;
+        $icon = $sitename . '/img/key.png';
         $data = [
             'token' => $token_url,
             'icon' => $icon,
         ];
-		return response()->json($data);
+        return response()->json($data);
         /*try{
             $from = env('MAIL_FROM_ADDRESS');
             $send = $request['email'];
@@ -221,7 +227,8 @@ class EmailController extends Controller
         return 'SUCCESS';*/
     }
 
-    public function masanuncios() {
+    public function masanuncios()
+    {
         $data = [
             'name' => request()->post('name'),
             'tel' => request()->post('tel'),
@@ -241,20 +248,34 @@ class EmailController extends Controller
     {
         $ret = '';
 
-        foreach($array as $piece)
-        {
-            if(is_array($piece))
+        foreach ($array as $piece) {
+            if (is_array($piece))
                 $ret .= $glue . $this->joiner($glue, $piece);
             else
                 $ret .= $glue . $piece;
         }
 
-        $ret = str_replace($glue.$glue, '', $ret);
-        
-        if($ret[0] == $glue)
+        $ret = str_replace($glue . $glue, '', $ret);
+
+        if ($ret[0] == $glue)
             $ret = substr($ret, 1, strlen($ret));
 
         return $ret;
+    }
+
+    function changeEmail(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => ['required', 'email', 'unique:users'],
+            'user_id' => ['required', 'integer'],
+        ]);
+
+        auth()->user()->update(['email' => $validatedData['email']]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Email changed successfully'
+        ]);
     }
 
 }
