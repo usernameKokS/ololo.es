@@ -17,10 +17,10 @@
                                 <div>
                                     <label for="post-email" class="input-label mr-2 mb-0">Email para anuncio</label>
                                     <input type="text"
-                                           v-model.trim="$v.form.email.$model"
+                                           v-model.trim="email"
                                            class="input"
                                            :disabled="!canChangeEmail"
-                                           :class="{ 'input-error': $v.form.email.$error }"
+                                           :class="{ 'input-error': emailErrors.length>0 }"
                                            id="post-email" placeholder="Ingresa tu e-mail">
 
                                 </div>
@@ -39,9 +39,8 @@
                             <button type="button"
                                     @click="changeEmail"
                                     title="Guardar Email" class="btn btn-normal btn_green-hover">
-                                <div><img src="/img/checkedpink.svg" alt="svg"> <span>
-                                {{ canChangeEmail ? newEmailSaveBtnText : 'Guardar Email' }}
-                                </span>
+                                <div><img src="/img/checkedpink.svg" alt="svg">
+                                    <span>{{ canChangeEmail ? 'Guardado' : 'Guardar Email' }}</span>
                                 </div>
                             </button>
                         </div>
@@ -280,7 +279,6 @@
                             <div class="mt-2" v-if="form.gate=='Letra (A, B, C...)'">
                                 <v-select
                                     v-model.trim="form.gate_value"
-                                    :class="{ 'input-error': $v.form.gate.$error }"
                                     :options="gateAbc"
                                     :searchable="false"
                                     placeholder="Selecciona"
@@ -290,7 +288,6 @@
                             <div class="mt-2" v-if="form.gate=='Número (1, 2, 3...)'">
                                 <v-select
                                     v-model.trim="form.gate_value"
-                                    :class="{ 'input-error': $v.form.gate_value.$error }"
                                     :options="range(1, 100)"
                                     :searchable="false"
                                     placeholder="Selecciona"
@@ -590,8 +587,9 @@ export default {
             needFactura: false,
             places: [],
             canChangeEmail: false,
+            email: this.$parent.$parent.user.email,
+            emailErrors: [],
             newEmailIsEmpty: false,
-            newEmailSaveBtnText: 'Ahorrar',
             emailHasChanged: false,
             form: {
                 town: this.$parent.$parent.post.town ? this.$parent.$parent.post.town : "",
@@ -599,7 +597,6 @@ export default {
                 place: this.$parent.$parent.post.place ? this.$parent.$parent.post.place : "",
                 name: this.$parent.$parent.post.name ? this.$parent.$parent.post.name : "",
                 zona: this.$parent.$parent.post.zona ? this.$parent.$parent.post.zona : "",
-                email: this.$parent.$parent.user.email,
                 street: this.$parent.$parent.post.street ? this.$parent.$parent.post.street : "",
                 house_number: this.$parent.$parent.post.house_number ? this.$parent.$parent.post.house_number : "",
                 operation: this.$parent.$parent.post.operation ? this.$parent.$parent.post.operation : "Venta",
@@ -654,10 +651,6 @@ export default {
     validations() {
         return {
             form: {
-                email: {
-                    // validateEmail: this.validateEmail,
-                    // email
-                },
                 house_number: {
                     numeric
                 },
@@ -856,21 +849,40 @@ export default {
         async changeEmail() {
             if (!this.canChangeEmail) {
                 this.canChangeEmail = true;
-                this.form.email = "";
+                this.email = "";
             } else {
-                this.$v.form.$touch();
-                if (!this.$v.form.email.$error)
-                    axios
-                        .post('/user/change-email', {
-                            user_id: this.$parent.$parent.user.id,
-                            email: this.form.email
-                        })
-                        .then(response => {
-                            if (response.status == 200) {
-                                this.emailHasChanged = true;
-                                this.canChangeEmail = false;
-                            }
-                        });
+                axios
+                    .post('/user/change-email', {
+                        user_id: this.$parent.$parent.user.id,
+                        email: this.email
+                    })
+                    .then(response => {
+                        if (response.status == 200) {
+                            this.emailHasChanged = true;
+                            this.canChangeEmail = false;
+                            this.emailErrors=[]
+                        }
+                    })
+                    .catch(error => {
+                        if (error && error.response && error.response.data && error.response.data.errors) {
+                            console.log(error.response.data.errors);
+                            this.emailErrors = error.response.data.errors.email;
+                            this.$modal.show(
+                                Notify,
+                                {
+                                    title: "Error",
+                                    type: "error",
+                                    //   porterrors: error.response.data.errors,
+                                    message: error.response.data.errors.email[0]
+                                },
+                                {
+                                    width: "90%",
+                                    maxWidth: 400,
+                                    height: "auto"
+                                }
+                            );
+                        }
+                    });
             }
         },
         pressKey() {
@@ -888,13 +900,7 @@ export default {
 
             value = value.replaceAll('....', '...');
             value = value.replaceAll('... .', '...');
-
-            /*0const phoneRegex = /[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}/im;
-            value = value.replaceAll(phoneRegex, '');*/
-            value = value.trim()
-            value = value.toLocaleLowerCase()
-            value = value.charAt(0).toUpperCase() + value.slice(1);
-            return value;
+            return value.trim().replace(/\b\w/g, l => l.toUpperCase());
         },
         needFacturaBlockShow() {
             this.needFactura = !this.needFactura;
@@ -942,11 +948,11 @@ export default {
 
                         for (const i in self.form) {
 
-                                try {
-                                    console.log(i,this.$v.form[i].$error);
-                                }catch (e) {
-                                    console.log(e);
-                                }
+                            try {
+                                console.log(i, this.$v.form[i].$error);
+                            } catch (e) {
+                                console.log(e);
+                            }
 
                         }
 
@@ -1005,7 +1011,8 @@ export default {
                 }
             });
         }
-    },
+    }
+    ,
     mounted() {
 
         this.places = this.$parent.$parent.places;
