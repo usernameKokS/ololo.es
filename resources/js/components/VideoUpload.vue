@@ -3,7 +3,7 @@
         <div class="container">
             <div class="wrap-icon5"></div>
             <div class="container container-two">
-                <h2>Anadir fotos y videos a tu anuncio</h2>
+                <slot name="header"></slot>
                 <div class="photo-content">
                     <div class="photos-wrap">
                         <div class="item-wrapper" v-for="(attachment, index) in attachments"
@@ -40,6 +40,7 @@
 
                     </div>
                 </div>
+                <slot name="footer"></slot>
 
 
                 <div :class="{ 'select-file-lbl':true, bottom: attachments.length>0}">

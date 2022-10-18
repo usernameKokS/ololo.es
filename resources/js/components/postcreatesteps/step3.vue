@@ -10,6 +10,7 @@
                 <!--div class="wrap-icon2"></div-->
                 <div class="container-two">
                     <h2>Datos del anuncio</h2>
+                    <p class="mb-2">Aprovecha para comentar cosas que no te hayamos preguntado y no esten en las fotos; el suelo de parque, el tipo de calefaccion, ¿tiene tendedero?</p>
 
                     <div class="row frow-input-padding" v-if="form.category == 'Masajes'">
                         <div class="col-sm-12 col-md-6 col-lg-4">
@@ -44,6 +45,10 @@
                             <span :class="{'access-error': !$v.form.title.$error}">
                                 Llevas {{ form.title.length }} caracteres. El mínimo son 30, el máximo son 37.
                             </span>
+                            </div>
+                            <div class="blockquote mt-2">
+                                <img src="/img/icons8-info.svg" alt="" width="18" class="mr-2">
+                               <span>Los anuncios con comentarios racistas, homofobos y/o discriminatorios seran eliminados.</span>
                             </div>
                         </div>
                     </div>
@@ -373,6 +378,8 @@
                         <textarea v-model="form.description" class="form-control textarea w-100"
                                   id="exampleFormControlTextarea1"
                                   rows="3"></textarea>
+                        <p>Más tarde podras añadir otros idiomas</p>
+                        <p>Las mayúsculas son mas difíciles de leer, por lo que no permitimos toda la description en  mayúsculas.</p>
                     </div>
                 </div>
             </div>

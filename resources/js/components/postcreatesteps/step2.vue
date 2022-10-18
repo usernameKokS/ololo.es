@@ -7,101 +7,24 @@
         </div>
 
         <div class="container">
-            <div class="container-two">
+
                 <div class="row">
-                    <div class="col-xs-12 col-md-6 col-lg-5 offset-lg-1">
+                    <div class="col-xs-12 col-md-6 col-lg-5">
                         <div class="row">
                             <div class="col-lg-12">
                                 <h2>Características del piso</h2>
                                 <div class="row">
                                     <div class="col-12 mb-2">
-                                        <h3 class="mb-2">Tipo de piso</h3>
-
-                                        <div class="form-group custom-control custom-radio">
-                                            <input
-                                                name="floor_type"
-                                                type="radio"
-                                                id="floor-type-1"
-                                                v-model="form.attributes.floor_type"
-                                                class="custom-control-input"
-                                                value="Piso"
-                                            />
-                                            <label for="floor-type-1"
-                                                   class="custom-control-label semibold radio-padd">Piso</label>
-                                        </div>
-
-                                        <div class="form-group custom-control custom-radio">
-                                            <input
-                                                name="floor_type"
-                                                type="radio"
-                                                id="floor-type-2"
-                                                v-model="form.attributes.floor_type"
-                                                class="custom-control-input"
-                                                value="Atico"
-                                            />
-                                            <label for="floor-type-2"
-                                                   class="custom-control-label semibold radio-padd">Atico</label>
-                                        </div>
-
-                                        <div class="form-group custom-control custom-radio">
-                                            <input
-                                                name="floor_type"
-                                                type="radio"
-                                                id="floor-type-3"
-                                                v-model="form.attributes.floor_type"
-                                                class="custom-control-input"
-                                                value="Duplex"
-                                            />
-                                            <label for="floor-type-3"
-                                                   class="custom-control-label semibold radio-padd">Duplex</label>
-                                        </div>
-
-                                        <div class="form-group custom-control custom-radio">
-                                            <input
-                                                name="floor_type"
-                                                type="radio"
-                                                id="floor-type-4"
-                                                v-model="form.attributes.floor_type"
-                                                class="custom-control-input"
-                                                value="Estudio/Loft"
-                                            />
-                                            <label for="floor-type-4"
-                                                   class="custom-control-label semibold radio-padd">Estudio/Loft</label>
-                                        </div>
+                                        <input-radio
+                                            label="Tipo de piso"
+                                            :options="['Piso','Atico','Duplex','Estudio/Loft']"
+                                            v-model="form.attributes.floor_type"/>
                                     </div>
 
                                     <div class="col-12 mb-2">
-                                        <div class="select-area">
-                                            <h3>Estado</h3>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input
-                                                type="radio"
-                                                id="condition1"
-                                                name="condition"
-                                                v-model="form.attributes.condition"
-                                                :value="'A reformar'"
-                                                class="custom-control-input"
-                                            />
-                                            <label
-                                                class="custom-control-label semibold radio-padd"
-                                                for="condition1"
-                                            >A reformar</label>
-                                        </div>
-                                        <div class="custom-control custom-radio center-radio">
-                                            <input
-                                                type="radio"
-                                                id="condition2"
-                                                name="condition"
-                                                v-model="form.attributes.condition"
-                                                :value="'Buen estado'"
-                                                class="custom-control-input"
-                                            />
-                                            <label
-                                                class="custom-control-label semibold radio-padd"
-                                                for="condition2"
-                                            >Buen estado</label>
-                                        </div>
+                                        <input-radio label="Estado"
+                                                     :options="['A reformar','Buen estado']"
+                                                     v-model="form.attributes.condition"/>
                                     </div>
                                 </div>
                             </div>
@@ -231,32 +154,9 @@
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <h4 class="mb-3">Equipamento</h4>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" v-model="form.attributes.equipment"
-                                               value="Cocina no equipada y casa sin muebles"
-                                               id="equipamentoRadio1" name="equipamento" class="custom-control-input">
-                                        <label class="custom-control-label" for="equipamentoRadio1">Cocina no equipada y
-                                            casa sin
-                                            muebles</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" v-model="form.attributes.equipment"
-                                               value="Cocina equipada y casa sin muebles"
-                                               id="equipamentoRadio2" name="equipamento" class="custom-control-input">
-                                        <label class="custom-control-label" for="equipamentoRadio2">Cocina equipada y
-                                            casa sin
-                                            muebles</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" v-model="form.attributes.equipment"
-                                               id="equipamentoRadio3"
-                                               name="equipamento"
-                                               value="Cocina equipada y casa amueblada"
-                                               class="custom-control-input">
-                                        <label class="custom-control-label" for="equipamentoRadio3">Cocina equipada y
-                                            casa amueblada</label>
-                                    </div>
+                                    <input-radio label="Equipamento"
+                                                 :options="['Cocina no equipada y casa sin muebles','Cocina equipada y casa sin muebles','Cocina equipada y casa amueblada']"
+                                                 v-model="form.attributes.equipment"/>
                                 </div>
 
                                 <div class="form-group">
@@ -319,130 +219,24 @@
 
                     </div>
 
-                    <div class="col-xs-12 col-md-6 col-lg-5">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
                         <div class="row">
                             <div class="col-12 mb-2">
-                                <div class="select-area">
-                                    <h3 class="mb-2">Fachada del inmueble</h3>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input
-                                        type="radio"
-                                        id="customRadio11"
-                                        name="customRadio11"
-                                        v-model="form.attributes.building_facade"
-                                        :value="'Exterior'"
-                                        class="custom-control-input"
-                                    />
-                                    <label
-                                        class="custom-control-label semibold radio-padd"
-                                        for="customRadio11"
-                                    >Exterior</label>
-                                </div>
-                                <div class="custom-control custom-radio center-radio">
-                                    <input
-                                        type="radio"
-                                        id="customRadio22"
-                                        name="customRadio11"
-                                        v-model="form.attributes.building_facade"
-                                        :value="'Interior'"
-                                        class="custom-control-input"
-                                    />
-                                    <label
-                                        class="custom-control-label semibold radio-padd"
-                                        for="customRadio22"
-                                    >Interior</label>
-                                </div>
+                                <input-radio label="Fachada del inmueble"
+                                             :options="['Exterior','Interior']"
+                                             v-model="form.attributes.building_facade"/>
                             </div>
 
                             <div class="col-12 mb-2">
-                                <div class="select-area">
-                                    <h3 class="mb-2">Tiene ascensor</h3>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input
-                                        type="radio"
-                                        id="has_elevator_1"
-                                        name="has_elevator"
-                                        v-model="form.attributes.has_elevator"
-                                        :value="'Si tiene'"
-                                        class="custom-control-input"
-                                    />
-                                    <label
-                                        class="custom-control-label semibold radio-padd"
-                                        for="has_elevator_1"
-                                    >Si tiene</label>
-                                </div>
-                                <div class="custom-control custom-radio center-radio">
-                                    <input
-                                        type="radio"
-                                        id="has_elevator_2"
-                                        name="customRadio11"
-                                        v-model="form.attributes.has_elevator"
-                                        :value="'No tiene'"
-                                        class="custom-control-input"
-                                    />
-                                    <label
-                                        class="custom-control-label semibold radio-padd"
-                                        for="has_elevator_2"
-                                    >No tiene</label>
-                                </div>
+                                <input-radio label="Tiene ascensor"
+                                             :options="['Si tiene','No tiene']"
+                                             v-model="form.attributes.has_elevator"/>
                             </div>
 
-
                             <div class="col-12 mb-2">
-                                <div class="select-area">
-                                    <h3 class="mb-2">Orientación</h3>
-                                </div>
-                                <div class="custom-control custom-radio center-radio">
-                                    <input
-                                        type="radio"
-                                        id="orientation-1"
-                                        value="Norte"
-                                        v-model="form.attributes.orientation"
-                                        name="orientation"
-                                        class="custom-control-input"
-                                    />
-                                    <label for="orientation-1"
-                                           class="custom-control-label semibold radio-padd">Norte</label>
-                                </div>
-                                <div class="custom-control custom-radio center-radio">
-                                    <input
-                                        type="radio"
-                                        id="orientation-2"
-                                        value="Sur"
-                                        v-model="form.attributes.orientation"
-                                        name="orientation"
-                                        class="custom-control-input"
-                                    />
-                                    <label for="orientation-2"
-                                           class="custom-control-label semibold radio-padd">Sur</label>
-                                </div>
-                                <div class="custom-control custom-radio center-radio">
-                                    <input
-                                        type="radio"
-                                        id="orientation-3"
-                                        value="Este"
-                                        v-model="form.attributes.orientation"
-                                        name="orientation"
-                                        class="custom-control-input"
-                                    />
-                                    <label for="orientation-3"
-                                           class="custom-control-label semibold radio-padd">Este</label>
-                                </div>
-                                <div class="custom-control custom-radio center-radio">
-                                    <input
-                                        type="radio"
-                                        id="orientation-4"
-                                        value="Oeste"
-                                        v-model="form.attributes.orientation"
-                                        name="orientation"
-                                        class="custom-control-input"
-                                    />
-                                    <label for="orientation-4"
-                                           class="custom-control-label semibold radio-padd">Oeste</label>
-                                </div>
-
+                                <input-radio label="Orientación"
+                                             :options="['Norte','Sur','Este','Oeste']"
+                                             v-model="form.attributes.orientation"/>
                             </div>
 
                             <div class="col-12 mb-2">
@@ -451,53 +245,63 @@
                                 </div>
 
                                 <div>
-                                    <div class="custom-control custom-checkbox pl-4">
-                                        <input type="checkbox"
-                                               v-model="form.attributes.other_features"
-                                               name="other_feathures[]"
-                                               value="Armarios empotrados" class="custom-control-input"
-                                               id="other-feathures-1">
-                                        <label class="custom-control-label" for="other-feathures-1">Armarios
-                                            empotrados</label>
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-1">
+                                            <input type="checkbox"
+                                                   v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Armarios empotrados" class="custom-control-input"
+                                                   id="other-feathures-1">
+                                            <span class="custom-control-label" for="other-feathures-1">Armarios empotrados</span>
+                                        </label>
                                     </div>
 
-                                    <div class="custom-control custom-checkbox pl-4">
-                                        <input type="checkbox" v-model="form.attributes.other_features"
-                                               name="other_feathures[]"
-                                               value="Aire acondicionado" class="custom-control-input"
-                                               id="other-feathures-2">
-                                        <label class="custom-control-label" for="other-feathures-2">Aire
-                                            acondicionado</label>
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-2">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Aire acondicionado" class="custom-control-input"
+                                                   id="other-feathures-2">
+                                            <span class="custom-control-label" for="other-feathures-2">Aire acondicionado</span>
+                                        </label>
                                     </div>
 
-                                    <div class="custom-control custom-checkbox pl-4">
-                                        <input type="checkbox" v-model="form.attributes.other_features"
-                                               name="other_feathures[]"
-                                               value="Terraza" class="custom-control-input" id="other-feathures-3">
-                                        <label class="custom-control-label" for="other-feathures-3">Terraza</label>
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-3">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Terraza" class="custom-control-input" id="other-feathures-3">
+                                            <span class="custom-control-label" for="other-feathures-3">Terraza</span>
+                                        </label>
                                     </div>
 
-                                    <div class="custom-control custom-checkbox pl-4">
-                                        <input type="checkbox" v-model="form.attributes.other_features"
-                                               name="other_feathures[]"
-                                               value="Balcón" class="custom-control-input" id="other-feathures-4">
-                                        <label class="custom-control-label" for="other-feathures-4">Balcón</label>
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-4">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Balcón" class="custom-control-input" id="other-feathures-4">
+                                            <span class="custom-control-label" for="other-feathures-4">Balcón</span>
+                                        </label>
                                     </div>
 
-                                    <div class="custom-control custom-checkbox pl-4">
-                                        <input type="checkbox" v-model="form.attributes.other_features"
-                                               name="other_feathures[]"
-                                               value="Trastero" class="custom-control-input" id="other-feathures-5">
-                                        <label class="custom-control-label" for="other-feathures-5">Trastero</label>
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-5">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Trastero" class="custom-control-input" id="other-feathures-5">
+                                            <span class="custom-control-label" for="other-feathures-5">Trastero</span>
+                                        </label>
                                     </div>
 
-                                    <div class="custom-control custom-checkbox pl-4">
-                                        <input type="checkbox" v-model="form.attributes.other_features"
-                                               name="other_feathures[]"
-                                               value="Plaza de garaje" class="custom-control-input"
-                                               id="other-feathures-6">
-                                        <label class="custom-control-label" for="other-feathures-6">Plaza de
-                                            garaje</label>
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-6">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Plaza de garaje" class="custom-control-input"
+                                                   id="other-feathures-6">
+                                            <span class="custom-control-label"
+                                                  for="other-feathures-6">Plaza de garaje</span>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -509,18 +313,22 @@
                                     <h3 class="mb-2">Otras características de tu edificio</h3>
                                 </div>
 
-                                <div class="custom-control custom-checkbox pl-4">
-                                    <input type="checkbox" v-model="form.attributes.other_features"
-                                           name="other_features[]"
-                                           value="Piscina" class="custom-control-input" id="other-feathures-7">
-                                    <label class="custom-control-label" for="other-feathures-7">Piscina</label>
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="other-feathures-7">
+                                        <input type="checkbox" v-model="form.attributes.other_features"
+                                               name="other_features[]"
+                                               value="Piscina" class="custom-control-input" id="other-feathures-7">
+                                        <span class="custom-control-label" for="other-feathures-7">Piscina</span>
+                                    </label>
                                 </div>
 
-                                <div class="custom-control custom-checkbox pl-4">
-                                    <input type="checkbox" v-model="form.attributes.other_features"
-                                           name="other_features[]"
-                                           value="Zona verde" class="custom-control-input" id="other-feathures-8">
-                                    <label class="custom-control-label" for="other-feathures-8">Zona verde</label>
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="other-feathures-8">
+                                        <input type="checkbox" v-model="form.attributes.other_features"
+                                               name="other_features[]"
+                                               value="Zona verde" class="custom-control-input" id="other-feathures-8">
+                                        <span class="custom-control-label" for="other-feathures-8">Zona verde</span>
+                                    </label>
                                 </div>
 
                             </div>
@@ -529,7 +337,8 @@
                                 <div class="select-area">
                                     <h3 class="mb-2">¿Que inquilinos buscas?</h3>
                                 </div>
-                                <p class="font-regular font-sm mb-3">Esta sección ayuda a que te contacten los inquilinos que mas cuadran con tu vivienda.</p>
+                                <p class="font-regular font-sm mb-3">Esta sección ayuda a que te contacten los
+                                    inquilinos que mas cuadran con tu vivienda.</p>
 
                                 <div class="form-group">
                                     <label for="">Número máximo de inquilinos</label>
@@ -568,12 +377,13 @@
                                     <h4 class="mb-2">¿Apropiado para niños (0-12 años)?</h4>
                                 </div>
 
-                                <div class="custom-control custom-checkbox pl-4">
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="appropriate_children">
                                     <input type="checkbox" v-model="form.attributes.appropriate_children"
                                            name="appropriate_children"
                                            value="Piscina" class="custom-control-input" id="appropriate_children">
-                                    <label class="custom-control-label" for="appropriate_children">La vivienda es
-                                        apropiada para niños</label>
+                                        <span class="custom-control-label" for="appropriate_children">La vivienda es apropiada para niños</span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -583,12 +393,14 @@
                                     <h4 class="mb-2">¿Admiten mascotas?</h4>
                                 </div>
 
-                                <div class="custom-control custom-checkbox pl-4">
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="allow_pets">
                                     <input type="checkbox"
                                            v-model="form.attributes.allow_pets"
                                            name="attributes[allow_pets]"
                                            class="custom-control-input" id="allow_pets">
-                                    <label class="custom-control-label" for="allow_pets">Si, admito mascotas</label>
+                                        <span class="custom-control-label" for="allow_pets">Si, admito mascotas</span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -598,25 +410,35 @@
                                         reducida?</h4>
                                 </div>
 
-                                <div class="custom-control custom-checkbox pl-4">
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="exterior_adapted">
                                     <input type="checkbox"
                                            v-model="form.attributes.adapted_reduced"
                                            value="El acceso exterior a la viviensa esta adaptado para silla de ruedas"
                                            name="attributes[exterior_adapted]"
                                            class="custom-control-input" id="exterior_adapted">
-                                    <label class="custom-control-label" for="exterior_adapted">El acceso exterior a
-                                        la viviensa esta adaptado para silla de ruedas</label>
+                                        <span class="custom-control-label" for="allow_pets">El acceso exterior a la vivienda esta adaptado para silla de ruedas</span>
+                                    </label>
+                                    <div class="custom-control-append">
+                                        Tiene rampas y ascensor de 6 plazas o la vivienda  esta a pie de calle sin bordillos
+                                    </div>
                                 </div>
 
-                                <div class="custom-control custom-checkbox pl-4">
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="interior_adapted">
                                     <input type="checkbox"
                                            v-model="form.attributes.adapted_reduced"
                                            value="El interior de la vivienda esta adaptado para silla de ruedas"
                                            name="attributes[interior_adapted]"
                                            class="custom-control-input" id="interior_adapted">
-                                    <label class="custom-control-label" for="interior_adapted">El interior de la
-                                        vivienda esta adaptado para silla de ruedas</label>
+
+                                        <span class="custom-control-label" for="interior_adapted">
+                                            El interior de la vivienda esta adaptado para silla de ruedas
+                                        </span>
+                                    </label>
+                                    <div class="custom-control-append">Puertas y pasillos amplios, barras abatibles, suelos antideslizantes...</div>
                                 </div>
+
                             </div>
 
 
@@ -626,7 +448,7 @@
                     </div>
 
                 </div>
-            </div>
+
         </div>
 
 
@@ -641,6 +463,7 @@ import SobreWomen from "./../SobreWomen.js";
 import ServicesWomen from "./../ServicesWomen.js";
 import SobreMen from "./../SobreMen.js";
 import ServicesMen from "./../ServicesMen.js";
+import InputRadio from "../InputRadio";
 
 export default {
     props: ['clickedNext', 'currentStep'],
@@ -1030,11 +853,20 @@ export default {
             && this.$parent.$parent.post.status != "creating"
         )
             this.isModify = true
+    },
+    components:{
+        'input-radio': InputRadio,
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.custom-control-append {
+    font-size: 12px;
+    color: #9e9e9e;
+    margin-top: 3px;
+}
+
 .input-group-prepend .input-group-text {
     background-color: #FE6885 !important;
     color: #fff !important;
