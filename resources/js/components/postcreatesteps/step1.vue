@@ -108,27 +108,29 @@
 
                     <h3>Ubicacion del inmueble</h3>
                     <div class="row">
-                        <div class="col-md-12 col-lg-4">
+                        <div class="col-md-12 col-lg-3">
                             <div class="select-area">
                                 <div class="label-wrap__leftp">
-                                    <span class="input-label">Localidad</span>
+                                    <span class="input-label">Tipo de via</span>
                                 </div>
                                 <input type="text"
-                                       v-model.trim="$v.form.street.$model"
+                                       v-model.trim="$v.form.street_type.$model"
                                        class="input input-fullwidth"
-                                       :class="{ 'input-error': $v.form.street.$error }"
+                                       :class="{ 'input-error': $v.form.street_type.$error }"
                                 />
                             </div>
                         </div>
-                        <div class="col-md-12 col-lg-4">
+                        <div class="col-md-12 col-lg-6">
                             <div class="select-area">
                                 <div class="label-wrap__leftp">
                                     <span class="input-label">Nombre de la via</span>
                                 </div>
-                                <input type="text" v-model.trim="form.road_number" class="input input-fullwidth"/>
+                                <input type="text" v-model.trim="$v.form.street.$model"
+                                       class="input input-fullwidth"
+                                       :class="{ 'input-error': $v.form.street.$error }"/>
                             </div>
                         </div>
-                        <div class="col-md-12 col-lg-4">
+                        <div class="col-md-12 col-lg-3">
                             <div class="select-area">
                                 <div class="label-wrap__leftp">
                                     <span class="input-label">Numero de via</span>
@@ -144,7 +146,9 @@
                     <div class="row mt-3">
                         <div class="col-sm-12 d-flex justify-content-center">
                             <button class="btn btn-normal btn_green-hover"
-                                    @click.prevent="$modal.show('modal-confirm-address')">Confirmar dirección address
+                                    @click.prevent="$modal.show('modal-confirm-address')">
+                                <img src="/img/checkedpink.svg" alt="svg" v-if="form.location_lat!='' && form.location_lng!=''">
+                               <span>Confirmar dirección address</span>
                             </button>
                         </div>
                     </div>
@@ -536,10 +540,13 @@
             </div>
         </div>
         <span class="modify-text" v-if="isModify">Para guardar tus cambios tienes que llegar hasta el último paso y guardar tu anuncio.</span>
-        <modal name="modal-confirm-address" height="auto" class="modal-confirm-address">
+        <modal name="modal-confirm-address" height="auto" class="modal-confirm-address" @opened="modalHasOpened">
             <div class="modal-header p-3">
                 <h5 class="modal-title">¿Deseas guardar los cambios?</h5>
-                <gmap-autocomplete :value="placeText"
+                <gmap-autocomplete
+                    id="gmapAutocomplete"
+                    ref="gmapAutocomplete"
+                    :value="placeText"
                                    @place_changed="placeChanged">
                 </gmap-autocomplete>
             </div>
@@ -598,6 +605,7 @@ export default {
                 name: this.$parent.$parent.post.name ? this.$parent.$parent.post.name : "",
                 zona: this.$parent.$parent.post.zona ? this.$parent.$parent.post.zona : "",
                 street: this.$parent.$parent.post.street ? this.$parent.$parent.post.street : "",
+                street_type: this.$parent.$parent.post.street_type ? this.$parent.$parent.post.street_type : "",
                 house_number: this.$parent.$parent.post.house_number ? this.$parent.$parent.post.house_number : "",
                 operation: this.$parent.$parent.post.operation ? this.$parent.$parent.post.operation : "Venta",
                 number_kilometer: this.$parent.$parent.post.number_kilometer ? this.$parent.$parent.post.number_kilometer : "Numero",
@@ -651,6 +659,9 @@ export default {
     validations() {
         return {
             form: {
+                street_type:{
+
+                },
                 house_number: {
                     numeric
                 },
@@ -721,6 +732,11 @@ export default {
         },
         placeText() {
             let place = [];
+
+            if (this.form.street_type) {
+                place.push(this.form.street_type);
+            }
+
             if (this.form.street) {
                 place.push(this.form.street);
             }
@@ -821,6 +837,11 @@ export default {
         }
     },
     methods: {
+        modalHasOpened() {
+            setTimeout(() => {
+               $('#gmapAutocomplete').focus();
+            }, 1000);
+        },
         ifNeedFactura(value) {
             return !this.needFactura || (this.needFactura && value.length > 0);
         },

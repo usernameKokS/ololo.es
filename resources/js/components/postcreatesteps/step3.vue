@@ -10,7 +10,8 @@
                 <!--div class="wrap-icon2"></div-->
                 <div class="container-two">
                     <h2>Datos del anuncio</h2>
-                    <p class="mb-2">Aprovecha para comentar cosas que no te hayamos preguntado y no esten en las fotos; el suelo de parque, el tipo de calefaccion, ¿tiene tendedero?</p>
+                    <p class="mb-2">Aprovecha para comentar cosas que no te hayamos preguntado y no esten en las fotos;
+                        el suelo de parque, el tipo de calefaccion, ¿tiene tendedero?</p>
 
                     <div class="row frow-input-padding" v-if="form.category == 'Masajes'">
                         <div class="col-sm-12 col-md-6 col-lg-4">
@@ -48,7 +49,7 @@
                             </div>
                             <div class="blockquote mt-2">
                                 <img src="/img/icons8-info.svg" alt="" width="18" class="mr-2">
-                               <span>Los anuncios con comentarios racistas, homofobos y/o discriminatorios seran eliminados.</span>
+                                <span>Los anuncios con comentarios racistas, homofobos y/o discriminatorios seran eliminados.</span>
                             </div>
                         </div>
                     </div>
@@ -379,7 +380,8 @@
                                   id="exampleFormControlTextarea1"
                                   rows="3"></textarea>
                         <p>Más tarde podras añadir otros idiomas</p>
-                        <p>Las mayúsculas son mas difíciles de leer, por lo que no permitimos toda la description en  mayúsculas.</p>
+                        <p>Las mayúsculas son mas difíciles de leer, por lo que no permitimos toda la description en
+                            mayúsculas.</p>
                     </div>
                 </div>
             </div>
@@ -402,7 +404,6 @@ export default {
             sex: ['Mujer', 'Hombre'],
             form: {
                 bail: '',
-
                 appropriate_children: false,
                 max_tenants: '',
                 other_feathures: [],
@@ -411,18 +412,18 @@ export default {
                 text: this.$parent.$parent.post.text ? this.$parent.$parent.post.text : "",
                 sex: this.$parent.$parent.post.sex ? this.$parent.$parent.post.sex : 'Mujer',
                 num_rooms: this.$parent.$parent.post.num_rooms ? this.$parent.$parent.post.num_rooms : 1,
-                description: "",
+                description: this.$parent.$parent.post.description ? this.$parent.$parent.post.description : "",
                 adds: {
-                    text_1: this.$parent.$parent.post.text[0] ? this.$parent.$parent.post.text[0] : "",
-                    text_2: this.$parent.$parent.post.text[1] ? this.$parent.$parent.post.text[1] : "",
-                    text_3: this.$parent.$parent.post.text[2] ? this.$parent.$parent.post.text[2] : "",
-                    text_4: this.$parent.$parent.post.text[3] ? this.$parent.$parent.post.text[3] : "",
-                    text_5: this.$parent.$parent.post.text[4] ? this.$parent.$parent.post.text[4] : "",
-                    text_6: this.$parent.$parent.post.text[5] ? this.$parent.$parent.post.text[5] : "",
-                    text_7: this.$parent.$parent.post.text[6] ? this.$parent.$parent.post.text[6] : "",
-                    text_8: this.$parent.$parent.post.text[7] ? this.$parent.$parent.post.text[7] : "",
-                    text_9: this.$parent.$parent.post.text[8] ? this.$parent.$parent.post.text[8] : "",
-                    text_10: this.$parent.$parent.post.text[9] ? this.$parent.$parent.post.text[9] : "",
+                    text_1: typeof this.$parent.$parent.post.text[0] !== "undefined" ? this.$parent.$parent.post.text[0] : "",
+                    text_2: typeof this.$parent.$parent.post.text[1] !== "undefined" ? this.$parent.$parent.post.text[1] : "",
+                    text_3: typeof this.$parent.$parent.post.text[2] !== "undefined" ? this.$parent.$parent.post.text[2] : "",
+                    text_4: typeof this.$parent.$parent.post.text[3] !== "undefined" ? this.$parent.$parent.post.text[3] : "",
+                    text_5: typeof this.$parent.$parent.post.text[4] !== "undefined" ? this.$parent.$parent.post.text[4] : "",
+                    text_6: typeof this.$parent.$parent.post.text[5] !== "undefined" ? this.$parent.$parent.post.text[5] : "",
+                    text_7: typeof this.$parent.$parent.post.text[6] !== "undefined" ? this.$parent.$parent.post.text[6] : "",
+                    text_8: typeof this.$parent.$parent.post.text[7] !== "undefined" ? this.$parent.$parent.post.text[7] : "",
+                    text_9: typeof this.$parent.$parent.post.text[8] !== "undefined" ? this.$parent.$parent.post.text[8] : "",
+                    text_10: typeof this.$parent.$parent.post.text[9] !== "undefined" ? this.$parent.$parent.post.text[9] : "",
                 }
             }
         }

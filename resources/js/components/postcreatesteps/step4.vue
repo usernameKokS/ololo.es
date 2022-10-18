@@ -10,7 +10,7 @@
                 <h2>Anadir fotos y videos a tu anuncio</h2>
             </template>
             <template v-slot:footer>
-                <p class="mt-2">40 fotos de hasta 32 megas cada una (gif, jpeg, png)</p>
+                <p class="mt-3">40 fotos de hasta 32 megas cada una (gif, jpeg, png)</p>
                 <p>6 vídeos de hasta 600 megas, formatos validos: avi, mov, wmv, mpeg, rm, mp4, flv, m2t y 3gp (videos
                     de moviles)</p>
             </template>

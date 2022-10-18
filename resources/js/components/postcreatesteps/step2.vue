@@ -472,8 +472,8 @@ export default {
         return {
             isModify: false,
             form: {
-                price: '',
-                bail: '',
+                price: this.$parent.$parent.post.price ? this.$parent.$parent.post.price : '',
+                bail: this.$parent.$parent.post.bail ? this.$parent.$parent.post.bail : '',
                 max_tenants: 1,
                 attributes: this.$parent.$parent.post.attributes_short ? {
                     floor_type: "Piso",

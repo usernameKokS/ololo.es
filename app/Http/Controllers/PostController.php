@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Attachment;
 use App\Avatar;
 use App\Category;
 use App\Http\Requests\PostStep1Request;
@@ -35,31 +36,31 @@ class PostController extends Controller
     public function index()
     {
         $open_create = OpenCreate::checkCreate();
-		$payMessage = false;
+        $payMessage = false;
 
         return view('post.index', compact('open_create', 'payMessage'));
     }
 
-	public function indexWithSuccess()
+    public function indexWithSuccess()
     {
         // $open_create = OpenCreate::checkCreate();
 
-		$payMessage = [
-			'type' => 'success',
-			'message' => '¡PAGO REALIZADO CON ÉXITO!'
-		];
+        $payMessage = [
+            'type' => 'success',
+            'message' => '¡PAGO REALIZADO CON ÉXITO!'
+        ];
 
         return view('post.result', compact('payMessage'));
     }
 
-	public function indexWithFailure()
+    public function indexWithFailure()
     {
         // $open_create = OpenCreate::checkCreate();
 
-		$payMessage = [
-			'type' => 'error',
-			'message' => '¡Pago cancelado!'
-		];
+        $payMessage = [
+            'type' => 'error',
+            'message' => '¡Pago cancelado!'
+        ];
 
         return view('post.result', compact('payMessage'));
     }
@@ -71,7 +72,7 @@ class PostController extends Controller
 
         $post = Post::where('user_id', $user->id)->where('id', $id)->where('is_delete', 0)->first();
 
-        if($post->publish == true){
+        if ($post->publish == true) {
             $post->publish = false;
             $post->tariffActive();
             $message = 'Пост деактерирован';
@@ -97,7 +98,8 @@ class PostController extends Controller
     }
 
 
-    public function delete($id){
+    public function delete($id)
+    {
 
         $user = Auth::user();
 
@@ -110,7 +112,7 @@ class PostController extends Controller
         // TODO
         $open_create = OpenCreate::checkCreate();
 
-        if(!$post->tariffSetOneDelete())
+        if (!$post->tariffSetOneDelete())
             return Response::json(array('success' => 'Error', 'opencreate' => $open_create));
 
         $post->save();
@@ -120,11 +122,12 @@ class PostController extends Controller
         return Response::json(array('success' => 'Anuncio esta desactivado y guardado en "ELIMINADOS"', 'opencreate' => $open_create));
     }
 
-    public function restore($id){
+    public function restore($id)
+    {
 
         $open_create = OpenCreate::checkCreate();
 
-        if($open_create == false){
+        if ($open_create == false) {
             throw ValidationException::withMessages(['error1' => 'Error, many posts.']);
         }
 
@@ -147,17 +150,17 @@ class PostController extends Controller
         $user = Auth::user();
 
         $posts = Post::where('user_id', $user->id)->where('is_delete', 0)
-        ->where('status', '!=', 'creating');
+            ->where('status', '!=', 'creating');
 
-        if($request['archive'] == 'true'){
+        if ($request['archive'] == 'true') {
             $posts->where('archive', true);
-        } else{
+        } else {
             $posts->where('archive', false);
         }
 
         $posts->orderByDesc('publish');
 
-        if($request['sort'] == 'updated_at'){
+        if ($request['sort'] == 'updated_at') {
             $posts->orderBy('updated_at', 'desc');
         } else {
             $posts->orderBy('name');
@@ -166,23 +169,23 @@ class PostController extends Controller
         $posts = $posts->get();
         $archived_count = Post::whereUserId($user->id)->where('is_delete', 0)->where('status', '!=', 'creating')->whereArchive(1)->count();
 
-        foreach($posts as $post){
+        foreach ($posts as $post) {
             $avatar = Avatar::where('user_id', $user->id)
-            ->where('post_id', $post->id)
-            ->where('active', 1)
-            ->latest()
-            ->first();
+                ->where('post_id', $post->id)
+                ->where('active', 1)
+                ->latest()
+                ->first();
 
             $post->avatar = $avatar ? $avatar['url'] : null;
 
             $post->tarifa = 'No';
             $tarif = Tariff::where('status', '!=', 'wait')
-            ->where('post_id', $post->id)
-            ->where('user_id', $user->id)->latest()->first();
+                ->where('post_id', $post->id)
+                ->where('user_id', $user->id)->latest()->first();
 
-            if($tarif){
+            if ($tarif) {
                 $post->end_pay = $tarif->end;
-                if(Carbon::parse($tarif->end)->timestamp > Carbon::now()->timestamp){
+                if (Carbon::parse($tarif->end)->timestamp > Carbon::now()->timestamp) {
                     $post->tarifa = $tarif['name'];
 
                 }
@@ -190,21 +193,20 @@ class PostController extends Controller
 
             $post->colorpay = 'green';
 
-            if(Carbon::parse($post->end_pay)->isBefore(Carbon::now())){
+            if (Carbon::parse($post->end_pay)->isBefore(Carbon::now())) {
                 $post->last_end_pay = $post->end_pay ?? 'No';
                 $post->colorpay = 'red';
                 $post->end_pay = null;
             } else {
 
-                if(Carbon::parse($post->end_pay)->lt(Carbon::now()->addDays(3))){
+                if (Carbon::parse($post->end_pay)->lt(Carbon::now()->addDays(3))) {
                     $post->colorpay = 'yellow';
                 } else {
                     $post->colorpay = 'green';
                 }
-                if(Carbon::parse($post->end_pay)->lt(Carbon::now()->addDays(1))){
+                if (Carbon::parse($post->end_pay)->lt(Carbon::now()->addDays(1))) {
                     $post->colorpay = 'red';
                 }
-
 
 
                 $post->end_pay = Carbon::parse($post->end_pay)->format('d.m.Y H:i:s');
@@ -218,7 +220,8 @@ class PostController extends Controller
         return response()->json(['data' => $posts, 'archive_count' => $archived_count]);
     }
 
-    public function getpost(Request $request){
+    public function getpost(Request $request)
+    {
         $post_id = $request->post('id');
         $user_id = auth()->user()->id;
 
@@ -228,37 +231,35 @@ class PostController extends Controller
             ->where('post_id', $post->id)
             ->where('user_id', $user_id)->latest()->first();
 
-        if($tarif){
+        if ($tarif) {
             $post->end_pay = $tarif->end;
-            if(Carbon::parse($tarif->end)->timestamp > Carbon::now()->timestamp){
+            if (Carbon::parse($tarif->end)->timestamp > Carbon::now()->timestamp) {
                 $post->tariff = $tarif['name'];
             }
-        }else{
+        } else {
             $post->tariff = 'No';
         }
 
         $post->colorpay = 'red';
 
-        if(Carbon::parse($post->end_pay)->timestamp < Carbon::now()->timestamp){
+        if (Carbon::parse($post->end_pay)->timestamp < Carbon::now()->timestamp) {
             $post->last_end_pay = $post->end_pay;
             $post->colorpay = 'red';
             $post->end_pay = null;
-        } else if($post->end_pay != null) {
-            if(Carbon::parse($post->end_pay)->lt(Carbon::now()->addDays(3))){
+        } else if ($post->end_pay != null) {
+            if (Carbon::parse($post->end_pay)->lt(Carbon::now()->addDays(3))) {
                 $post->colorpay = 'yellow';
             } else {
                 $post->colorpay = 'green';
             }
-            if(Carbon::parse($post->end_pay)->lt(Carbon::now()->addDays(1))){
+            if (Carbon::parse($post->end_pay)->lt(Carbon::now()->addDays(1))) {
                 $post->colorpay = 'red';
             }
-
 
 
             $post->end_pay = Carbon::parse($post->end_pay)->format('d.m.Y H:i:s');
 
         }
-
 
 
         return response()->json($post);
@@ -272,15 +273,13 @@ class PostController extends Controller
             'phone' => ['required'],
         ]);
 
-		$time = time();
-		$validateTime = Session::get('phoneNumberTimer');
+        $time = time();
+        $validateTime = Session::get('phoneNumberTimer');
 
-		if($validateTime && ($validateTime + 180) >= $time)
-		{
-			throw ValidationException::withMessages(['error1' => 'Espere 3 minutos antes de volver a pedir otro mensaje de confirmación de teléfono.']);
-		}
-		else
-			Session::put('phoneNumberTimer', $time);
+        if ($validateTime && ($validateTime + 180) >= $time) {
+            throw ValidationException::withMessages(['error1' => 'Espere 3 minutos antes de volver a pedir otro mensaje de confirmación de teléfono.']);
+        } else
+            Session::put('phoneNumberTimer', $time);
 
         if ($request['phone']) {
             $phoneNum = $request['phone'];
@@ -318,14 +317,14 @@ class PostController extends Controller
 
         if ($this->validateToken($token)) {
 
-            $user =  Auth::user();
+            $user = Auth::user();
             // $user->phone = $phoneNum;
             // $user->save();
 
             $post = Post::where('id', $request['post_id'])
-            ->where('is_delete', 0)
-            ->where('user_id', $user->id)
-            ->latest()->first();
+                ->where('is_delete', 0)
+                ->where('user_id', $user->id)
+                ->latest()->first();
             // dd($post);
             $post->phone = $phoneNum;
             $post->save();
@@ -352,31 +351,31 @@ class PostController extends Controller
             ]
         );
 		*/
-		// Account details
-		$apiKey = urlencode('A9pdTNutjjw-h6B8PDfaQQS35OpoI2UVzOfRnJ3hkW');
-		$phone_number = str_replace('-', '', $phone_number);
-		// Message details
-		$numbers = array('+34' . $phone_number);
-		$sender = urlencode('AlmejaRosa');
-		$message = rawurlencode('El codigó:' . rand(100000, 900000));
+        // Account details
+        $apiKey = urlencode('A9pdTNutjjw-h6B8PDfaQQS35OpoI2UVzOfRnJ3hkW');
+        $phone_number = str_replace('-', '', $phone_number);
+        // Message details
+        $numbers = array('+34' . $phone_number);
+        $sender = urlencode('AlmejaRosa');
+        $message = rawurlencode('El codigó:' . rand(100000, 900000));
 
-		$numbers = implode(',', $numbers);
+        $numbers = implode(',', $numbers);
 
-		// Prepare data for POST request
-		$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => rawurlencode("Code Almeja Rosa: " . $token));
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => rawurlencode("Code Almeja Rosa: " . $token));
 
-		// Send the POST request with cURL
-		$ch = curl_init('https://api.txtlocal.com/send/');
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$response = curl_exec($ch);
-		curl_close($ch);
-		file_put_contents($_SERVER['DOCUMENT_ROOT']. '/sms.txt', $response. ' - '. $phone_number . ' - ' . $token . "\n", FILE_APPEND);
-		// Process your response here
-		// echo $response;
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.txtlocal.com/send/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/sms.txt', $response . ' - ' . $phone_number . ' - ' . $token . "\n", FILE_APPEND);
+        // Process your response here
+        // echo $response;
 
-		return $token;
+        return $token;
     }
 
     /**
@@ -386,11 +385,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        if(isset($_GET['code']))
+        if (isset($_GET['code']))
             dd(Session::get('code'));
         $open_create = OpenCreate::checkCreate();
 
-        if($open_create == false){
+        if ($open_create == false) {
             abort(404);
         }
 
@@ -398,12 +397,12 @@ class PostController extends Controller
         // $mapkey = env('GOOGLE_MAP');
 
         $post = Post::where('user_id', $user->id)
-        ->where('is_delete', 0)
-        ->where('status', 'creating')
-        ->latest()
-        ->first();
+            ->where('is_delete', 0)
+            ->where('status', 'creating')
+            ->latest()
+            ->first();
 
-        if(!$post){
+        if (!$post) {
             $post = new Post();
             $post->user_id = $user->id;
             $post->status = 'creating';
@@ -421,9 +420,9 @@ class PostController extends Controller
 
         $remains = Remain::where('post_id', $post->id)->with('childs')->get();
 
-        if(!$rates) $rates = [];
-        if(!$services) $services = [];
-        if(!$remains) $remains = [];
+        if (!$rates) $rates = [];
+        if (!$services) $services = [];
+        if (!$remains) $remains = [];
 
         return view('post.create', compact('user', 'cats', 'post', 'places', 'rates', 'services', 'remains'));
     }
@@ -431,14 +430,14 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $open_create = OpenCreate::checkCreate();
-        if($request['edit'] != 'true'){
-            if($open_create == false){
+        if ($request['edit'] != 'true') {
+            if ($open_create == false) {
                 return 'Error';
             }
         }
@@ -459,48 +458,45 @@ class PostController extends Controller
         $user = Auth::user();
 
         $post = Post::where('user_id', $user->id)
-        ->where('is_delete', 0)
-        ->where('id', $request['post_id'])
-        ->latest()
-        ->first();
+            ->where('is_delete', 0)
+            ->where('id', $request['post_id'])
+            ->latest()
+            ->first();
 
         // $post = Post::where('id', $request['post_id'])
         // ->latest()
         // ->first();
         $avatar = Avatar::where('post_id', $request['post_id'])->count();
-		if(!$avatar || $avatar < 3)
-		{
-			return response()->json([
-				'message' => 'Como mínimo tienes que subir 3 fotos.',
-				'type' => 'error'
-			]);
-		}
+        if (!$avatar || $avatar < 3) {
+            return response()->json([
+                'message' => 'Como mínimo tienes que subir 3 fotos.',
+                'type' => 'error'
+            ]);
+        }
 
-		if(
-			empty(trim($request['text_1']))
-			|| empty(trim($request['text_2']))
-			|| empty(trim($request['text_3']))
-			|| empty(trim($request['text_4']))
-			|| empty(trim($request['text_5']))
-			|| empty(trim($request['text_6']))
-			|| empty(trim($request['text_7']))
-			|| empty(trim($request['text_8']))
-			|| empty(trim($request['text_9']))
-			|| empty(trim($request['text_10']))
-		)
-		{
-			return response()->json([
-				'message' => 'Descripción tiene que ser mínimo de 300 y máximo de 1000 dígitos en las 10 líneas.',
-				'type' => 'error'
-			]);
-		}
+        if (
+            empty(trim($request['text_1']))
+            || empty(trim($request['text_2']))
+            || empty(trim($request['text_3']))
+            || empty(trim($request['text_4']))
+            || empty(trim($request['text_5']))
+            || empty(trim($request['text_6']))
+            || empty(trim($request['text_7']))
+            || empty(trim($request['text_8']))
+            || empty(trim($request['text_9']))
+            || empty(trim($request['text_10']))
+        ) {
+            return response()->json([
+                'message' => 'Descripción tiene que ser mínimo de 300 y máximo de 1000 dígitos en las 10 líneas.',
+                'type' => 'error'
+            ]);
+        }
 
-        if(
+        if (
             $request['edit'] == 'true'
             && $post->status == 'create'
-        )
-        {
-            if(!$post->tariffSetOneEdit())
+        ) {
+            if (!$post->tariffSetOneEdit())
                 return 'Error';
 
             // $post->modificar = 1;
@@ -518,17 +514,17 @@ class PostController extends Controller
         $post->category = $request['category'];
         $post->title = $request['title'];
         $post->text = join('###', [
-			$request['text_1'],
-			$request['text_2'],
-			$request['text_3'],
-			$request['text_4'],
-			$request['text_5'],
-			$request['text_6'],
-			$request['text_7'],
-			$request['text_8'],
-			$request['text_9'],
-			$request['text_10']
-		]);
+            $request['text_1'],
+            $request['text_2'],
+            $request['text_3'],
+            $request['text_4'],
+            $request['text_5'],
+            $request['text_6'],
+            $request['text_7'],
+            $request['text_8'],
+            $request['text_9'],
+            $request['text_10']
+        ]);
         $post->name = $request['name'];
         $post->age = $request['age'];
         $post->whatsapp = $request['whatsapp'];
@@ -574,8 +570,8 @@ class PostController extends Controller
             foreach ($request['services'] as $rate) {
 
                 if ($rate['active'] == true) {
-                    if(($rate['name'] == 'activas') or ($rate['name'] == 'pasivas')){
-                        if($post->category == 'Travesti'){
+                    if (($rate['name'] == 'activas') or ($rate['name'] == 'pasivas')) {
+                        if ($post->category == 'Travesti') {
                             $new_rate = new Service;
                             $new_rate->user_id = $user->id;
                             $new_rate->post_id = $post->id;
@@ -594,16 +590,16 @@ class PostController extends Controller
 
                 // if (count($rate['options']) > 0) {
 
-                    foreach ($rate['options'] as $minoption) {
-                        if ($minoption['active'] == true) {
-                            $new_serv = new Service;
-                            $new_serv->user_id = $user->id;
-                            $new_serv->post_id = $post->id;
-                            $new_serv->parent = $new_rate->id;
-                            $new_serv->name = $minoption['name'];
-                            $new_serv->save();
-                        }
+                foreach ($rate['options'] as $minoption) {
+                    if ($minoption['active'] == true) {
+                        $new_serv = new Service;
+                        $new_serv->user_id = $user->id;
+                        $new_serv->post_id = $post->id;
+                        $new_serv->parent = $new_rate->id;
+                        $new_serv->name = $minoption['name'];
+                        $new_serv->save();
                     }
+                }
                 // }
             }
         }
@@ -640,8 +636,8 @@ class PostController extends Controller
     public function storeStep1(PostStep1Request $request)
     {
         $open_create = OpenCreate::checkCreate();
-        if($request['edit'] != 'true'){
-            if($open_create == false){
+        if ($request['edit'] != 'true') {
+            if ($open_create == false) {
                 return 'Error';
             }
         }
@@ -655,13 +651,13 @@ class PostController extends Controller
         $post->fill($request->all());
         $post->place = $request['province'] . ', ' . $request['town'];
 
-        if(!$post->step || $post->step < 1)
+        if (!$post->step || $post->step < 1)
             $post->step = 1;
 
         $post->save();
 
-        if($request->need_factura){
-           PostFactura::updateOrCreate(['post_id' => $post->id], $request->query('factura'));
+        if ($request->need_factura) {
+            PostFactura::updateOrCreate(['post_id' => $post->id], $request->query('factura'));
         }
 
         return response()->json(['type' => 'success']);
@@ -679,7 +675,7 @@ class PostController extends Controller
 
         $post->fill($request->all());
 
-        if($post->step < 2)
+        if ($post->step < 2)
             $post->step = 2;
 
         $post->save();
@@ -723,8 +719,8 @@ class PostController extends Controller
             foreach ($request['services'] as $rate) {
 
                 if ($rate['active'] == true) {
-                    if(($rate['name'] == 'activas') or ($rate['name'] == 'pasivas')){
-                        if($post->category == 'Travesti'){
+                    if (($rate['name'] == 'activas') or ($rate['name'] == 'pasivas')) {
+                        if ($post->category == 'Travesti') {
                             $new_rate = new Service;
                             $new_rate->user_id = $user->id;
                             $new_rate->post_id = $post->id;
@@ -743,16 +739,16 @@ class PostController extends Controller
 
                 // if (count($rate['options']) > 0) {
 
-                    foreach ($rate['options'] as $minoption) {
-                        if ($minoption['active'] == true) {
-                            $new_serv = new Service;
-                            $new_serv->user_id = $user->id;
-                            $new_serv->post_id = $post->id;
-                            $new_serv->parent = $new_rate->id;
-                            $new_serv->name = $minoption['name'];
-                            $new_serv->save();
-                        }
+                foreach ($rate['options'] as $minoption) {
+                    if ($minoption['active'] == true) {
+                        $new_serv = new Service;
+                        $new_serv->user_id = $user->id;
+                        $new_serv->post_id = $post->id;
+                        $new_serv->parent = $new_rate->id;
+                        $new_serv->name = $minoption['name'];
+                        $new_serv->save();
                     }
+                }
                 // }
             }
         }
@@ -783,6 +779,15 @@ class PostController extends Controller
             }
         }
 
+
+        if (!empty($request->input('attributes'))) {
+            foreach ($request->input('attributes') as $key => $value) {
+                $post->attributes()->updateOrCreate(['slug' => $key], [
+                    'value' => is_array($value) ? json_encode($value) : $value
+                ]);
+            }
+        }
+
         return response()->json(['type' => 'success']);
     }
 
@@ -796,7 +801,7 @@ class PostController extends Controller
             ->latest()
             ->first();
 
-        if(
+        if (
             empty(trim($request->input('adds.text_1')))
             || empty(trim($request->input('adds.text_2')))
             || empty(trim($request->input('adds.text_3')))
@@ -807,8 +812,7 @@ class PostController extends Controller
             || empty(trim($request->input('adds.text_8')))
             || empty(trim($request->input('adds.text_9')))
             || empty(trim($request->input('adds.text_10')))
-        )
-        {
+        ) {
             return response()->json([
                 'message' => 'Descripción tiene que ser mínimo de 300 y máximo de 1000 dígitos en las 10 líneas.',
                 'type' => 'error'
@@ -817,30 +821,24 @@ class PostController extends Controller
 
         $post->category = $request['category'];
         $post->title = $request['title'];
-        $post->sex = $request['sex'];
+        $post->description = $request['description'];
         $post->text = join('###', [
-			$request->input('adds.text_1'),
-			$request->input('adds.text_2'),
-			$request->input('adds.text_3'),
-			$request->input('adds.text_4'),
-			$request->input('adds.text_5'),
-			$request->input('adds.text_6'),
-			$request->input('adds.text_7'),
-			$request->input('adds.text_1'),
-			$request->input('adds.text_1'),
-			$request->input('adds.text_1')
-		]);
+            $request->input('adds.text_1'),
+            $request->input('adds.text_2'),
+            $request->input('adds.text_3'),
+            $request->input('adds.text_4'),
+            $request->input('adds.text_5'),
+            $request->input('adds.text_6'),
+            $request->input('adds.text_7'),
+            $request->input('adds.text_1'),
+            $request->input('adds.text_1'),
+            $request->input('adds.text_1')
+        ]);
 
-        if($post->step < 3)
+        if ($post->step < 3)
             $post->step = 3;
 
         $post->save();
-
-        if(!empty($request->input('attributes'))){
-            foreach ($request->input('attributes') as $key => $value) {
-                $post->attributes()->updateOrCreate(['slug' => $key], ['value' => $value]);
-            }
-        }
 
         return response()->json(['type' => 'success']);
     }
@@ -868,10 +866,9 @@ class PostController extends Controller
             ->latest()
             ->first();
 
-        $avatar = Avatar::where('post_id', $request['post_id'])->count();
+        $avatar = Attachment::where('post_id', $request['post_id'])->count();
 
-        if(!$avatar || $avatar < 3)
-        {
+        if (!$avatar || $avatar < 3) {
             return response()->json([
                 'message' => 'Como mínimo tienes que subir 3 fotos.',
                 'type' => 'error'
@@ -880,12 +877,11 @@ class PostController extends Controller
 
         $postStatus = $post->status;
 
-        if(
+        if (
             $request['edit'] == 'true'
             && $post->status == 'create'
-        )
-        {
-            if(!$post->tariffSetOneEdit())
+        ) {
+            if (!$post->tariffSetOneEdit())
                 return 'Error';
 
             // $post->modificar = 1;
@@ -893,7 +889,7 @@ class PostController extends Controller
 
         $post->status = 'create';
 
-        if($post->step < 4)
+        if ($post->step < 4)
             $post->step = 4;
 
         $post->save();
@@ -904,12 +900,12 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param \App\Post $post
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        if(isset($_GET['code']))
+        if (isset($_GET['code']))
             dd(Session::get('code'));
 
         $cats = Category::orderBy('sort', 'asc')->distinct('title')->pluck('title');
@@ -928,29 +924,28 @@ class PostController extends Controller
 
         $countModify = $post->getCountAvailableForModify();
 
-		$isCanEdit = false;
+        $isCanEdit = false;
 
-		$post->tarifa = 'No';
-		$tarif = Tariff::where('status', '!=', 'wait')
-		->where('post_id', $post->id)
-		->where('user_id', $user->id)->latest()->first();
+        $post->tarifa = 'No';
+        $tarif = Tariff::where('status', '!=', 'wait')
+            ->where('post_id', $post->id)
+            ->where('user_id', $user->id)->latest()->first();
 
-		if($tarif){
-			$post->end_pay = $tarif->end;
-			if(Carbon::parse($tarif->end)->timestamp > Carbon::now()->timestamp){
-				$post->tarifa = $tarif['name'];
-			}
-		}
+        if ($tarif) {
+            $post->end_pay = $tarif->end;
+            if (Carbon::parse($tarif->end)->timestamp > Carbon::now()->timestamp) {
+                $post->tarifa = $tarif['name'];
+            }
+        }
 
-		if(
-			$post->publish == false
-			|| $post->tarifa == 'No'
-			|| !$post->end_pay
-		)
-			$isCanEdit = true;
+        if (
+            $post->publish == false
+            || $post->tarifa == 'No'
+            || !$post->end_pay
+        )
+            $isCanEdit = true;
 
-        if($countModify <= 0 && !$isCanEdit)
-        {
+        if ($countModify <= 0 && !$isCanEdit) {
             return redirect('/posts');
         }
 
@@ -962,7 +957,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Post  $post
+     * @param \App\Post $post
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -970,8 +965,8 @@ class PostController extends Controller
         $user = Auth::user();
 
         $avatars = Avatar::where('user_id', $user->id)
-        ->where('post_id', $id)
-        ->get();
+            ->where('post_id', $id)
+            ->get();
 
         /*foreach($avatars as $avatar){
             Storage::delete('/public/' . $avatar->url);

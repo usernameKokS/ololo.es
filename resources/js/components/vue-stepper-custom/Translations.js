@@ -7,7 +7,7 @@ export default {
     es: {
         next: 'Siguiente',
         back: 'Atrás',
-        finish: 'Finalizar'
+        finish: 'Finalizar y pagar'
     },
     pt: {
         next: 'Próximo',
