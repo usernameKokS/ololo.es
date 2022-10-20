@@ -142,7 +142,7 @@
                 <div class="avatar-wrapper">
                   <div
                     class="main-avatar"
-                    :style="`background: url(/storage/` + post.avatar + `);
+                    :style="`background: url(` + post.avatar + `);
                   	background-position: center center;
                     background-size: cover;
                     background-repeat: no-repeat;`"
@@ -726,7 +726,7 @@ export default {
     {
       let count = 0;
       if(
-        this.currentPost == null 
+        this.currentPost == null
         || this.posts.length == 0
       )
         return count;
@@ -741,7 +741,7 @@ export default {
     {
       let count = 0;
       if(
-        this.currentPost == null 
+        this.currentPost == null
         || this.posts.length == 0
       )
         return count;
@@ -772,7 +772,7 @@ export default {
       let count = this.getCountModify;
 	  let post = this.posts.filter(post => (post.id == postId) ?? post)
       let isCanEdit = false;
-	  
+
 	  if(
 		post[0] != undefined
 		&& (
@@ -782,7 +782,7 @@ export default {
 		)
 	  )
 		isCanEdit = true;
-	  
+
       if(count <= 0 && !isCanEdit)
         this.$modal.show("editLockModal");
       else
@@ -910,9 +910,9 @@ export default {
       this.currentPost = id;
 
       let count = this.getCountDelete;
-	  
+
 	  let post = this.posts.filter(post => (post.id == id) ?? post)
-	  
+
 	  if(
 		post[0] != undefined
 		&& (

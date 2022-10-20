@@ -56,6 +56,10 @@ class Post extends Model
         'power_consumption',
         'emissions_rating',
         'emissions_consumption',
+        'street_type',
+        'price',
+        'bail',
+        'description',
     ];
 
     protected $casts = [
@@ -316,6 +320,18 @@ class Post extends Model
             $result[$attribute->slug] = $attribute->value;
         }
         return $result ?? [];
+    }
+
+    // get avatar attribute
+    public function getAvatarAttribute()
+    {
+        $attachment = Attachment::where('post_id', $this->id)->where('as_cover', 1)->first() ;
+
+        if(!$attachment) {
+            $attachment = Attachment::where('post_id', $this->id)->first();
+        }
+
+        return $attachment ? $attachment->url : '/img/photo.svg';
     }
 
 }

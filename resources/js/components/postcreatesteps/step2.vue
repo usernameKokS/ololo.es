@@ -5,602 +5,452 @@
                 <hr>&nbsp;
             </div>
         </div>
-        <div class="edit-wrap-section-tarif">
-            <div class="container">
-                <!--div class="wrap-icon3"></div-->
-                <div class="container-two">
-                    <div class="row">
-                        <div class="col-12 col-md-8">
-                            <h2>Tarifas</h2>
-                            <div class="tarifform">
-                                <div
-                                    class="row tarif-input-area"
-                                    v-for="(rate, index) in  $v.form.rates.$each.$iter"
-                                    :key="index + 'rate'"
-                                    :class="{ 'form-group-rate__error': rate.$error }"
-                                >
-                                    <div class="col-5">
-                                        <input
-                                            type="text"
-                                            class="input input-rates"
-                                            v-model.trim="rate.title.$model"
-                                            :class="{ 'input-error': rate.title.$error }"
-                                            :disabled="true"
+
+        <div class="container">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-5">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h2>Características del piso</h2>
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <input-radio
+                                            label="Tipo de piso"
+                                            :options="['Piso','Atico','Duplex','Estudio/Loft']"
+                                            v-model="form.attributes.floor_type"/>
+                                    </div>
+
+                                    <div class="col-12 mb-2">
+                                        <input-radio label="Estado"
+                                                     :options="['A reformar','Buen estado']"
+                                                     v-model="form.attributes.condition"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="select-area">
+                                    <span class="input-label">m<sup><small>2</small></sup> construidos</span>
+                                </div>
+                                <input
+                                    class="input input-fullwidth"
+                                    id="consti"
+                                    v-model="form.attributes.m2_built"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="select-area">
+                                    <span class="input-label">m<sup><small>2</small></sup> utiles (opcional)</span>
+                                </div>
+                                <input
+                                    class="input input-fullwidth"
+                                    id="consti"
+                                    v-model="form.attributes.m2_useful"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="select-area">
+                                    <span class="input-label">Numero de habitaciones en la vivienda</span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="input-group mb-1">
+                                            <div class="input-group-prepend">
+                                                <button class="input-group-text"
+                                                        @click.prevent="form.attributes.number_rooms>1 ? form.attributes.number_rooms--: ''">
+                                                    <img
+                                                        src="/img/icons/minus_icon.svg"
+                                                        alt="minus" width="10">
+                                                </button>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                class="form-control input"
+                                                v-model="form.attributes.number_rooms"
+                                            />
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" min="1"
+                                                        @click.prevent="form.attributes.number_rooms++">
+                                                    <img src="/img/icons/plus_icon.svg"
+                                                         alt="plus"
+                                                         width="10">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="select-area">
+                                    <span class="input-label">Numero de banos y aseos</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="input-group mb-1">
+                                            <div class="input-group-prepend">
+                                                <button class="input-group-text"
+                                                        @click.prevent="form.attributes.num_bathrooms >1 ? form.attributes.num_bathrooms-- : ''">
+                                                    <img
+                                                        src="/img/icons/minus_icon.svg"
+                                                        alt="minus" width="10">
+                                                </button>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                class="form-control input"
+                                                v-model="form.attributes.num_bathrooms"
+                                            />
+                                            <div class="input-group-append">
+                                                <button class="input-group-text"
+                                                        @click.prevent="form.attributes.num_bathrooms++">
+                                                    <img src="/img/icons/plus_icon.svg"
+                                                         alt="plus"
+                                                         width="10">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <div class="select-area">
+                                    <h3 class="mb-2">Precio del inmueble</h3>
+                                </div>
+
+
+                                <div class="form-group mb-3">
+                                    <label for="price">Precio</label>
+                                    <input type="text" v-model="form.price"
+                                           name="price"
+                                           class="input input-fullwidth"
+                                           id="price">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="bail">Fianza (optional)</label>
+                                    <v-select
+                                        :options="['1 mes', '2 meses', '3 meses']"
+                                        :searchable="false"
+                                        placeholder="Selecciona"
+                                        id="bail"
+                                        class="style-chooser select-full-width"
+                                        v-model="form.bail"
+                                    />
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <input-radio label="Equipamento"
+                                                 :options="['Cocina no equipada y casa sin muebles','Cocina equipada y casa sin muebles','Cocina equipada y casa amueblada']"
+                                                 v-model="form.attributes.equipment"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <h4 class="mb-3">Certificado energético</h4>
+                                    <p class="mb-2 text-primary font-regular">¿Que información debes rellenar?</p>
+
+                                    <div class="form-group mb-3">
+                                        <label for="power_rating">Calificación de consumo de energía</label>
+                                        <v-select
+                                            :options="['Aún no dispone','A', 'B', 'C', 'D', 'E', 'F', 'G','En trámite','Inmueble exento']"
+                                            :searchable="false"
+                                            placeholder="Selecciona"
+                                            id="power_rating"
+                                            class="style-chooser select-full-width"
+                                            v-model="form.power_rating"
                                         />
                                     </div>
-                                    <div class="col-5 col-lg-3">
-                                        <div class="quit-area">
-                                            <div class="input-group mb-2">
-                                                <div class="input-with-dis">
-                                                    <input
-                                                        type="text"
-                                                        min="0"
-                                                        class="input"
-                                                        v-model.trim="rate.price.$model"
-                                                        v-mask="'######'"
-                                                        placeholder="0"
-                                                        :class="{ 'input-error': rate.price.$error }"
-                                                        v-on:keyup="pressKey"
-                                                    />
-                                                </div>
+
+                                    <div class="form-group form-group-input mb-3">
+                                        <label for="power_consumption">Consumo de energia (opcional)</label>
+                                        <div class="input-group group-a">
+                                            <input type="text" v-model="form.power_consumption" id="power_consumption"
+                                                   class="input form-control">
+                                            <div class="input-group-append">
+                                                kWh/m<sup>2</sup> año
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="emissions_rating">Calificación de emisiónes</label>
+                                        <v-select
+                                            :options="['A', 'B', 'C', 'D', 'E', 'F', 'G']"
+                                            :searchable="false"
+                                            placeholder="Selecciona"
+                                            id="emissions_rating"
+                                            class="style-chooser select-full-width"
+                                            v-model="form.emissions_rating"
+                                        />
+                                    </div>
+
+                                    <div class="form-group form-group-input mb-3">
+                                        <label for="emissions_consumption">Consumo de emisiónes (opcional)</label>
+                                        <div class="input-group group-a">
+                                            <input type="text" v-model="form.emissions_consumption"
+                                                   id="emissions_consumption"
+                                                   class="input form-control">
+                                            <div class="input-group-append">
+                                                kg CO2/m<sup>2</sup> año
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <input-radio label="Fachada del inmueble"
+                                             :options="['Exterior','Interior']"
+                                             v-model="form.attributes.building_facade"/>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <input-radio label="Tiene ascensor"
+                                             :options="['Si tiene','No tiene']"
+                                             v-model="form.attributes.has_elevator"/>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <input-radio label="Orientación"
+                                             :options="['Norte','Sur','Este','Oeste']"
+                                             v-model="form.attributes.orientation"/>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <div class="select-area">
+                                    <h3 class="mb-2">Otras características de tu vivienda</h3>
+                                </div>
+
+                                <div>
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-1">
+                                            <input type="checkbox"
+                                                   v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Armarios empotrados" class="custom-control-input"
+                                                   id="other-feathures-1">
+                                            <span class="custom-control-label" for="other-feathures-1">Armarios empotrados</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-2">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Aire acondicionado" class="custom-control-input"
+                                                   id="other-feathures-2">
+                                            <span class="custom-control-label" for="other-feathures-2">Aire acondicionado</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-3">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Terraza" class="custom-control-input" id="other-feathures-3">
+                                            <span class="custom-control-label" for="other-feathures-3">Terraza</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-4">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Balcón" class="custom-control-input" id="other-feathures-4">
+                                            <span class="custom-control-label" for="other-feathures-4">Balcón</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-5">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Trastero" class="custom-control-input" id="other-feathures-5">
+                                            <span class="custom-control-label" for="other-feathures-5">Trastero</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="radio-wrap-area radio-wrap-area-editer">
+                                        <label class="custom-control custom-radio" for="other-feathures-6">
+                                            <input type="checkbox" v-model="form.attributes.other_features"
+                                                   name="other_feathures[]"
+                                                   value="Plaza de garaje" class="custom-control-input"
+                                                   id="other-feathures-6">
+                                            <span class="custom-control-label"
+                                                  for="other-feathures-6">Plaza de garaje</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-12">
+                                <div class="select-area">
+                                    <h3 class="mb-2">Otras características de tu edificio</h3>
+                                </div>
+
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="other-feathures-7">
+                                        <input type="checkbox" v-model="form.attributes.other_features"
+                                               name="other_features[]"
+                                               value="Piscina" class="custom-control-input" id="other-feathures-7">
+                                        <span class="custom-control-label" for="other-feathures-7">Piscina</span>
+                                    </label>
+                                </div>
+
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="other-feathures-8">
+                                        <input type="checkbox" v-model="form.attributes.other_features"
+                                               name="other_features[]"
+                                               value="Zona verde" class="custom-control-input" id="other-feathures-8">
+                                        <span class="custom-control-label" for="other-feathures-8">Zona verde</span>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <div class="select-area">
+                                    <h3 class="mb-2">¿Que inquilinos buscas?</h3>
+                                </div>
+                                <p class="font-regular font-sm mb-3">Esta sección ayuda a que te contacten los
+                                    inquilinos que mas cuadran con tu vivienda.</p>
+
+                                <div class="form-group">
+                                    <label for="">Número máximo de inquilinos</label>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="input-group mb-1">
                                                 <div class="input-group-prepend">
-                                                    <div class="input-group-text">&euro;</div>
+                                                    <button class="input-group-text"
+                                                            @click.prevent="(form.max_tenants!='' && form.max_tenants>1) ? --form.max_tenants : ''; ">
+                                                        <img src="/img/icons/minus_icon.svg" alt="minus"
+                                                             width="10">
+                                                    </button>
+                                                </div>
+                                                <input type="number" min="1" v-model="form.max_tenants"
+                                                       size="4"
+                                                       class="form-control input" step="1">
+                                                <div class="input-group-append">
+                                                    <button class="input-group-text"
+                                                            @click.prevent="++form.max_tenants">
+                                                        <img src="/img/icons/plus_icon.svg" alt="plus"
+                                                             width="10">
+                                                    </button>
                                                 </div>
                                             </div>
-                                            <!-- <img src="/img/quit.svg" alt="quit" class="quit" @click="removeRate(index)" v-if="index > 1" /> -->
                                         </div>
                                     </div>
+                                    <p class="font-regular font-sm">Si no quieres poner maximo, dejalo
+                                        vacio</p>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <div class="select-area">
+                                    <h4 class="mb-2">¿Apropiado para niños (0-12 años)?</h4>
+                                </div>
+
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="appropriate_children">
+                                    <input type="checkbox" v-model="form.attributes.appropriate_children"
+                                           name="appropriate_children"
+                                           value="Piscina" class="custom-control-input" id="appropriate_children">
+                                        <span class="custom-control-label" for="appropriate_children">La vivienda es apropiada para niños</span>
+                                    </label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-4 edit-wrap-section-horario">
-                            <h2>Horario</h2>
-                            <div class="horario-wrap">
-                                <div class="custom-control custom-radio">
-                                    <input
-                                        type="radio"
-                                        id="customRadio1"
-                                        name="customRadio"
-                                        v-model="form.worktime"
-                                        :value="'Mañana (10:00 - 22:00)'"
-                                        class="custom-control-input"
-                                        :class="{ 'input-error': $v.form.worktime.$error }"
-                                        v-on:change="pressKey"
-                                    />
-                                    <label
-                                        class="custom-control-label semibold radio-padd"
-                                        for="customRadio1"
-                                    >Mañana (10:00 - 22:00)</label>
+
+
+                            <div class="col-12 mb-2">
+                                <div class="select-area">
+                                    <h4 class="mb-2">¿Admiten mascotas?</h4>
                                 </div>
-                                <div class="custom-control custom-radio center-radio">
-                                    <input
-                                        type="radio"
-                                        id="customRadio2"
-                                        name="customRadio"
-                                        v-model="form.worktime"
-                                        :value="'Tarde (22:00 - 10:00)'"
-                                        class="custom-control-input"
-                                        :class="{ 'input-error': $v.form.worktime.$error }"
-                                        v-on:change="pressKey"
-                                    />
-                                    <label
-                                        class="custom-control-label semibold radio-padd"
-                                        for="customRadio2"
-                                    >Tarde (22:00 - 10:00)</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input
-                                        type="radio"
-                                        id="customRadio3"
-                                        name="customRadio"
-                                        v-model="form.worktime"
-                                        class="custom-control-input"
-                                        :value="'24 Horas'"
-                                        :class="{ 'input-error': $v.form.worktime.$error }"
-                                        v-on:change="pressKey"
-                                    />
-                                    <label
-                                        class="custom-control-label semibold radio-padd"
-                                        for="customRadio3"
-                                    >24 Horas</label>
+
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="allow_pets">
+                                    <input type="checkbox"
+                                           v-model="form.attributes.allow_pets"
+                                           name="attributes[allow_pets]"
+                                           class="custom-control-input" id="allow_pets">
+                                        <span class="custom-control-label" for="allow_pets">Si, admito mascotas</span>
+                                    </label>
                                 </div>
                             </div>
+
+                            <div class="col-12 mb-2">
+                                <div class="select-area">
+                                    <h4 class="mb-2">¿La vivienda está adaptada para personas con movilidad
+                                        reducida?</h4>
+                                </div>
+
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="exterior_adapted">
+                                    <input type="checkbox"
+                                           v-model="form.attributes.adapted_reduced"
+                                           value="El acceso exterior a la viviensa esta adaptado para silla de ruedas"
+                                           name="attributes[exterior_adapted]"
+                                           class="custom-control-input" id="exterior_adapted">
+                                        <span class="custom-control-label" for="allow_pets">El acceso exterior a la vivienda esta adaptado para silla de ruedas</span>
+                                    </label>
+                                    <div class="custom-control-append">
+                                        Tiene rampas y ascensor de 6 plazas o la vivienda  esta a pie de calle sin bordillos
+                                    </div>
+                                </div>
+
+                                <div class="radio-wrap-area radio-wrap-area-editer">
+                                    <label class="custom-control custom-radio" for="interior_adapted">
+                                    <input type="checkbox"
+                                           v-model="form.attributes.adapted_reduced"
+                                           value="El interior de la vivienda esta adaptado para silla de ruedas"
+                                           name="attributes[interior_adapted]"
+                                           class="custom-control-input" id="interior_adapted">
+
+                                        <span class="custom-control-label" for="interior_adapted">
+                                            El interior de la vivienda esta adaptado para silla de ruedas
+                                        </span>
+                                    </label>
+                                    <div class="custom-control-append">Puertas y pasillos amplios, barras abatibles, suelos antideslizantes...</div>
+                                </div>
+
+                            </div>
+
+
                         </div>
+
+
                     </div>
 
                 </div>
-            </div>
-        </div>
-        <div class="edit-wrap-section-sobre">
-            <div class="container">
-                <!--div class="wrap-icon7"></div-->
-                <div class="container-two">
-                    <h2>Sobre ti</h2>
-                    <div class="sobre-wrapper">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div
-                                    class="radio-wrap-area radio-wrap-area-editer"
-                                    v-for="(sobre, index) in form.sobres.slice(0, 6)"
-                                    :key="index + '-sobre1'"
-                                >
-                                    <label
-                                        class="custom-control custom-radio"
-                                        :class="{'pink-activ': (sobre.active == true)}"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            :id="'sobre' + index"
-                                            :name="sobre.group"
-                                            v-model="sobre.active"
-                                            class="custom-control-input"
-                                            @click="uncheck(sobre.name)"
-                                        />
-                                        <span class="custom-control-label" :for="'sobre' + index">
-                    {{ sobre.name }}
-                    <img
-                        class="arrow-down"
-                        v-if="sobre.options.length > 0"
-                        src="/img/down.svg"
-                        width="20"
-                        alt="down"
-                    />
-                </span>
-                                    </label>
-                                    <div
-                                        class="custom-options-wrapper"
-                                        v-if="(sobre.options.length > 0) && (sobre.active)"
-                                    >
-                                        <div class="option-border-left">
-                                            <div
-                                                class="radio-wrap-area"
-                                                v-for="(option, index1) in sobre.options"
-                                                :key="index1 + '-option1'"
-                                            >
-                                                <label
-                                                    class="custom-control custom-radio"
-                                                    :class="{'pink-activ': (option.active == true)}"
-                                                >
-                                                    <input
-                                                        :name="sobre.group"
-                                                        type="checkbox"
-                                                        :id="'option1' + index1"
-                                                        v-model="option.active"
-                                                        class="custom-control-input"
-                                                        @click="uncheckOp(option.name, sobre.name)"
-                                                    />
-                                                    <span
-                                                        class="custom-control-label"
-                                                        :for="'option1' + index1"
-                                                    >{{ option.name }}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div
-                                    class="radio-wrap-area radio-wrap-area-editer"
-                                    v-for="(sobre, index) in form.sobres.slice(6, 12)"
-                                    :key="index + '-sobre2'"
-                                >
-                                    <label
-                                        class="custom-control custom-radio"
-                                        :class="{'pink-activ': (sobre.active == true)}"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            :id="'sobre' + index"
-                                            :name="sobre.group"
-                                            v-model="sobre.active"
-                                            class="custom-control-input"
-                                            @click="uncheck(sobre.name)"
-                                        />
-                                        <span class="custom-control-label" :for="'sobre' + index">
-                    {{ sobre.name }}
-                    <img
-                        class="arrow-down"
-                        v-if="sobre.options.length > 0"
-                        src="/img/down.svg"
-                        width="20"
-                        alt="down"
-                    />
-                </span>
-                                    </label>
-                                    <div
-                                        class="custom-options-wrapper"
-                                        v-if="(sobre.options.length > 0) && (sobre.active)"
-                                    >
-                                        <div class="option-border-left">
-                                            <div
-                                                class="radio-wrap-area"
-                                                v-for="(option, index2) in sobre.options"
-                                                :key="index2 + '-option2'"
-                                            >
-                                                <label
-                                                    class="custom-control custom-radio"
-                                                    :class="{'pink-activ': (option.active == true)}"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        :id="'option2' + index2"
-                                                        v-model="option.active"
-                                                        :name="sobre.group"
-                                                        class="custom-control-input"
-                                                        @click="uncheckOp(option.name, sobre.name)"
-                                                    />
-                                                    <span
-                                                        class="custom-control-label"
-                                                        :for="'option2' + index2"
-                                                    >{{ option.name }}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div
-                                    class="radio-wrap-area radio-wrap-area-editer"
-                                    v-for="(sobre, index) in form.sobres.slice(12, 19)"
-                                    :key="index + '-sobre3'"
-                                >
-                                    <label
-                                        class="custom-control custom-radio"
-                                        :class="{'pink-activ': (sobre.active == true) || sobre.options.find(elem => {return elem.active == true})}"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            :id="'sobre' + index"
-                                            :name="sobre.group"
-                                            v-model="sobre.active"
-                                            class="custom-control-input"
-                                            @click="uncheck(sobre.name)"
-                                        />
-                                        <span class="custom-control-label" :for="'sobre' + index">
-                    {{ sobre.name }}
-                    <img
-                        class="arrow-down"
-                        v-if="sobre.options.length > 0"
-                        src="/img/down.svg"
-                        width="20"
-                        alt="down"
-                    />
-                </span>
-                                    </label>
-                                    <div
-                                        class="custom-options-wrapper"
-                                        v-show="(sobre.options.length > 0) && (sobre.active)"
-                                    >
-                                        <div class="option-border-left">
-                                            <div
-                                                class="radio-wrap-area"
-                                                v-for="(option, index3) in sobre.options"
-                                                :key="index3 + '-option3'"
-                                            >
-                                                <label
-                                                    class="custom-control custom-radio"
-                                                    :class="{'pink-activ': (option.active == true)}"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        :id="'option3' + index3"
-                                                        :name="sobre.group"
-                                                        v-model="option.active"
-                                                        class="custom-control-input"
-                                                        @click="uncheckOp(option.name, sobre.name)"
-                                                    />
-                                                    <span
-                                                        class="custom-control-label"
-                                                        :for="'option3' + index3"
-                                                    >{{ option.name }}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-area-error">
-                        <span :class="{'access-error': isSobres}">
-                            Ha seleccionado {{ sobresCount }}, mínimo 4
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="edit-wrap-section-sobre edit-wrap-section-serv">
-            <div class="container">
-                <!--div class="wrap-icon7"></div-->
-                <div class="container-two">
-                    <h2>Servicios</h2>
-                    <div class="sobre-wrapper">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div
-                                    class="radio-wrap-area radio-wrap-area-editer"
-                                    v-for="(service, index) in form.services.slice(0, 4)"
-                                    :key="index + '-service1'"
-                                >
-                                    <label
-                                        class="custom-control custom-radio"
-                                        :class="{'pink-activ': (service.active == true)}"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            :id="'service' + index"
-                                            v-model="service.active"
-                                            @click="uncheck2(service.name)"
-                                            :name="service.group"
-                                            class="custom-control-input"
-                                        />
-                                        <span class="custom-control-label" :for="'service' + index">
-                    {{ service.name }}
-                    <img
-                        class="arrow-down"
-                        v-if="service.options.length > 0"
-                        src="/img/down.svg"
-                        width="20"
-                        alt="down"
-                    />
-                </span>
-                                    </label>
-                                    <div
-                                        class="custom-options-wrapper"
-                                        v-if="(service.options.length > 0) && (service.active)"
-                                    >
-                                        <div class="option-border-left">
-                                            <div
-                                                class="radio-wrap-area"
-                                                v-for="(option, index1) in service.options"
-                                                :key="index1 + '-option1'"
-                                            >
-                                                <label
-                                                    class="custom-control custom-radio"
-                                                    :class="{'pink-activ': (option.active == true)}"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        :id="'option1' + index1"
-                                                        v-model="option.active"
-                                                        :name="option.group"
-                                                        @click="uncheckOp2(option.name, service.name)"
-                                                        class="custom-control-input"
-                                                    />
-                                                    <span
-                                                        class="custom-control-label"
-                                                        :for="'option1' + index1"
-                                                    >{{ option.name }}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div
-                                    class="radio-wrap-area radio-wrap-area-editer"
-                                    v-for="(service, index) in form.services.slice(4, 8)"
-                                    :key="index + '-service2'"
-                                >
-                                    <label
-                                        class="custom-control custom-radio"
-                                        :class="{'pink-activ': (service.active == true)}"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            :id="'service' + index"
-                                            v-model="service.active"
-                                            class="custom-control-input"
-                                            :name="service.group"
-                                            @click="uncheck2(service.name)"
-                                        />
-                                        <span class="custom-control-label" :for="'service' + index">
-                    {{ service.name }}
-                    <img
-                        class="arrow-down"
-                        v-if="service.options.length > 0"
-                        src="/img/down.svg"
-                        width="20"
-                        alt="down"
-                    />
-                </span>
-                                    </label>
-                                    <div
-                                        class="custom-options-wrapper"
-                                        v-if="(service.options.length > 0) && (service.active)"
-                                    >
-                                        <div class="option-border-left">
-                                            <div
-                                                class="radio-wrap-area"
-                                                v-for="(option, index2) in service.options"
-                                                :key="index2 + '-option2'"
-                                            >
-                                                <label
-                                                    class="custom-control custom-radio"
-                                                    :class="{'pink-activ': (option.active == true)}"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        :id="'option2' + index2"
-                                                        :name="option.group"
-                                                        v-model="option.active"
-                                                        class="custom-control-input"
-                                                        @click="uncheckOp2(option.name, service.name)"
-                                                    />
-                                                    <span
-                                                        class="custom-control-label"
-                                                        :for="'option2' + index2"
-                                                    >{{ option.name }}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div
-                                    class="radio-wrap-area radio-wrap-area-editer"
-                                    v-for="(service, index) in form.services.slice(8, 11)"
-                                    :key="index + '-service3'"
-                                    v-if="(service.group != 'groupz10') || (form.category == 'Travesti')"
-                                >
-                                    <label
-                                        class="custom-control custom-radio"
-                                        :class="{'pink-activ': (service.active == true) || service.options.find(elem => {return elem.active == true})}"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            :id="'service' + index"
-                                            v-model="service.active"
-                                            class="custom-control-input"
-                                            :name="service.group"
-                                            @click="uncheck2(service.name)"
-                                        />
-                                        <span class="custom-control-label" :for="'service' + index">
-                    {{ service.name }}
-                    <img
-                        class="arrow-down"
-                        v-if="service.options.length > 0"
-                        src="/img/down.svg"
-                        width="20"
-                        alt="down"
-                    />
-                </span>
-                                    </label>
-                                    <div
-                                        class="custom-options-wrapper sdf4"
-                                        v-show="(service.options.length > 0) && (service.active)"
-                                    >
-                                        <div class="option-border-left">
-                                            <div
-                                                class="radio-wrap-area"
-                                                v-for="(option, index3) in service.options"
-                                                :key="index3 + '-option3'"
-                                            >
-                                                <label
-                                                    class="custom-control custom-radio"
-                                                    :class="{'pink-activ': (option.active == true)}"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        :id="'option3' + index3"
-                                                        v-model="option.active"
-                                                        class="custom-control-input"
-                                                        :name="option.group"
-                                                        @click="uncheckOp2(option.name, service.name)"
-                                                    />
-                                                    <span
-                                                        class="custom-control-label"
-                                                        :for="'option3' + index3"
-                                                    >{{ option.name }}</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input-area-error">
-                        <span :class="{'access-error': isServices}">
-                            Ha seleccionado {{ servicesCount }}, mínimo 2
-                        </span>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!--Equipamento-->
-        <div class="edit-wrap-section-sobre edit-wrap-section-serv">
-            <div class="container">
-                <!--div class="wrap-icon7"></div-->
-                <div class="container-two">
-                    <h4 class="mb-3">Equipamento</h4>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" v-model="form.equipment"
-                               value="Cocina no equipada y casa sin muebles"
-                               id="equipamentoRadio1" name="equipamento" class="custom-control-input">
-                        <label class="custom-control-label" for="equipamentoRadio1">Cocina no equipada y casa sin
-                            muebles</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" v-model="form.equipment"
-                               value="Cocina equipada y casa sin muebles"
-                               id="equipamentoRadio2" name="equipamento" class="custom-control-input">
-                        <label class="custom-control-label" for="equipamentoRadio2">Cocina equipada y casa sin
-                            muebles</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" v-model="form.equipment"
-                               id="equipamentoRadio3"
-                               name="equipamento"
-                               value="Cocina equipada y casa sin amueblada"
-                               class="custom-control-input">
-                        <label class="custom-control-label" for="equipamentoRadio3">Cocina equipada y casa sin
-                            amueblada</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Certificado energético-->
-        <div class="edit-wrap-section-sobre edit-wrap-section-serv">
-            <div class="container">
-                <!--div class="wrap-icon7"></div-->
-                <div class="container-two">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <h4 class="mb-3">Certificado energético</h4>
-                            <p class="mb-2 text-primary font-regular">¿Que información debes rellenar?</p>
-
-                            <div class="form-group mb-3">
-                                <label for="power_rating">Calificación de consumo de energía</label>
-                                <v-select
-                                    :options="['Aún no dispone','A', 'B', 'C', 'D', 'E', 'F', 'G','En trámite','Inmueble exento']"
-                                    :searchable="false"
-                                    placeholder="Selecciona"
-                                    id="power_rating"
-                                    class="style-chooser select-full-width"
-                                    v-model="form.power_rating"
-                                />
-                            </div>
-
-                            <div class="form-group form-group-input mb-3">
-                                <label for="power_consumption">Consumo de energia (opcional)</label>
-                                <input type="text" v-model="form.power_consumption" id="power_consumption"
-                                       class="input input-fullwidth">
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="emissions_rating">Calificación de emisiónes</label>
-                                <v-select
-                                    :options="['A', 'B', 'C', 'D', 'E', 'F', 'G']"
-                                    :searchable="false"
-                                    placeholder="Selecciona"
-                                    id="emissions_rating"
-                                    class="style-chooser select-full-width"
-                                    v-model="form.emissions_rating"
-                                />
-                            </div>
-
-                            <div class="form-group form-group-input mb-3">
-                                <label for="emissions_consumption">Consumo de emisiónes (opcional)</label>
-                                <input type="text" v-model="form.emissions_consumption" id="emissions_consumption"
-                                       class="input input-fullwidth">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <span class="modify-text" v-if="isModify">Tus cambios no están guardados, para guardar los tienes que llegar hasta el último paso y guardar el anuncio.</span>
     </section>
@@ -613,6 +463,7 @@ import SobreWomen from "./../SobreWomen.js";
 import ServicesWomen from "./../ServicesWomen.js";
 import SobreMen from "./../SobreMen.js";
 import ServicesMen from "./../ServicesMen.js";
+import InputRadio from "../InputRadio";
 
 export default {
     props: ['clickedNext', 'currentStep'],
@@ -621,29 +472,31 @@ export default {
         return {
             isModify: false,
             form: {
+                price: this.$parent.$parent.post.price ? this.$parent.$parent.post.price : '',
+                bail: this.$parent.$parent.post.bail ? this.$parent.$parent.post.bail : '',
+                max_tenants: 1,
+                attributes: this.$parent.$parent.post.attributes_short ? {
+                    floor_type: "Piso",
+                    has_elevator: "Si tiene",
+                    building_facade: "Exterior",
+                    orientation: "Norte",
+                    condition: 'A reformar',
+                    other_features: [],
+                    m2_built: '',
+                    m2_useful: '',
+                    number_rooms: 1,
+                    num_bathrooms: 1,
+                    appropriate_children: false,
+                    allow_pets: false,
+                    adapted_reduced: [],
+                    equipment: '',
+                    ...this.$parent.$parent.post.attributes_short
+                } : {},
                 equipment: this.$parent.$parent.post.equipment ? this.$parent.$parent.post.equipment : '',
                 power_rating: this.$parent.$parent.post.power_rating ? this.$parent.$parent.post.power_rating : '',
                 power_consumption: this.$parent.$parent.post.power_consumption ? this.$parent.$parent.post.power_consumption : '',
                 emissions_rating: this.$parent.$parent.post.emissions_rating ? this.$parent.$parent.post.emissions_rating : '',
                 emissions_consumption: this.$parent.$parent.post.emissions_consumption ? this.$parent.$parent.post.emissions_consumption : '',
-                rates: [
-                    {
-                        title: "30 Minutos",
-                        price: ''
-                    },
-                    {
-                        title: "1 Hora",
-                        price: ''
-                    },
-                    {
-                        title: "2 Horas",
-                        price: ''
-                    },
-                    {
-                        title: "Noche",
-                        price: ''
-                    }
-                ],
                 worktime: 'Mañana (10:00 - 22:00)',
                 sobres: SobreWomen.sobr,
                 services: ServicesWomen.serv,
@@ -653,27 +506,7 @@ export default {
         }
     },
     validations: {
-        form: {
-            rates: {
-                required,
-                // minLength: minLength(1),
-                $each: {
-                    title: {
-                        required,
-                        minLength: minLength(2),
-                        maxLength: maxLength(50)
-                    },
-                    price: {
-                        required,
-                        minValue: minValue(1), // TODO > 20
-                        numeric
-                    }
-                }
-            },
-            worktime: {
-                required,
-            }
-        }
+        form: {}
     },
     methods: {
         pressKey() {
@@ -696,30 +529,6 @@ export default {
                         const options = {offset: -120};
                         this.$scrollTo(element, 200, options);
                     });
-
-                    reject("error");
-                } else if (this.sobresCount < 4 || this.servicesCount < 2) {
-
-                    this.$nextTick(() => {
-                        const element = document.querySelector(".sobre-wrapper");
-                        const options = {offset: -120};
-                        this.$scrollTo(element, 200, options);
-                    });
-
-                    this.$modal.show(
-                        Notify,
-                        {
-                            title: "Error",
-                            type: "error",
-                            //   porterrors: error.response.data.errors,
-                            message: "Tienes algunos campos mal redactados, corrígelos antes de guardar."
-                        },
-                        {
-                            width: "90%",
-                            maxWidth: 400,
-                            height: "auto"
-                        }
-                    );
 
                     reject("error");
                 } else {
@@ -1044,13 +853,42 @@ export default {
             && this.$parent.$parent.post.status != "creating"
         )
             this.isModify = true
+    },
+    components:{
+        'input-radio': InputRadio,
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.custom-control-append {
+    font-size: 12px;
+    color: #9e9e9e;
+    margin-top: 3px;
+}
+
 .input-group-prepend .input-group-text {
     background-color: #FE6885 !important;
     color: #fff !important;
+}
+
+.input-group.group-a {
+    align-items: center;
+
+    .input {
+        padding-right: 121px;
+    }
+
+    sup {
+        top: 7px;
+        margin-right: 6px;
+    }
+
+    .input-group-append {
+        margin-left: -1px;
+        position: absolute;
+        right: 10px;
+        z-index: 99999;
+    }
 }
 </style>
