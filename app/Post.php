@@ -60,6 +60,8 @@ class Post extends Model
         'price',
         'bail',
         'description',
+        'action',
+        'pay_status'
     ];
 
     protected $casts = [
@@ -325,9 +327,9 @@ class Post extends Model
     // get avatar attribute
     public function getAvatarAttribute()
     {
-        $attachment = Attachment::where('post_id', $this->id)->where('as_cover', 1)->first() ;
+        $attachment = Attachment::where('post_id', $this->id)->where('as_cover', 1)->first();
 
-        if(!$attachment) {
+        if (!$attachment) {
             $attachment = Attachment::where('post_id', $this->id)->first();
         }
 

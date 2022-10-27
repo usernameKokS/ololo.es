@@ -18,7 +18,7 @@
                                     <label for="post-email" class="input-label mr-2 mb-0">Email para anuncio</label>
                                     <input type="text"
                                            v-model.trim="email"
-                                           class="input"
+                                           class="input w-2x"
                                            :disabled="!canChangeEmail"
                                            :class="{ 'input-error': emailErrors.length>0 }"
                                            id="post-email" placeholder="Ingresa tu e-mail">
@@ -26,7 +26,7 @@
                                 </div>
 
 
-                                <div class="phone-is-confirm" v-if="emailHasChanged">
+                                <div class="phone-is-confirm" v-if="!canChangeEmail">
                                     <img src="/img/icon-success.svg"/>
                                     Dirección de correo electrónico cambiada
                                 </div>
@@ -147,8 +147,9 @@
                         <div class="col-sm-12 d-flex justify-content-center">
                             <button class="btn btn-normal btn_green-hover"
                                     @click.prevent="$modal.show('modal-confirm-address')">
-                                <img src="/img/checkedpink.svg" alt="svg" v-if="form.location_lat!='' && form.location_lng!=''">
-                               <span>Confirmar dirección address</span>
+                                <img src="/img/checkedpink.svg" alt="svg"
+                                     v-if="form.location_lat!='' && form.location_lng!=''">
+                                <span>Confirmar dirección address</span>
                             </button>
                         </div>
                     </div>
@@ -547,7 +548,7 @@
                     id="gmapAutocomplete"
                     ref="gmapAutocomplete"
                     :value="placeText"
-                                   @place_changed="placeChanged">
+                    @place_changed="placeChanged">
                 </gmap-autocomplete>
             </div>
             <div class="modal-body">
@@ -659,9 +660,7 @@ export default {
     validations() {
         return {
             form: {
-                street_type:{
-
-                },
+                street_type: {},
                 house_number: {
                     numeric
                 },
@@ -839,7 +838,7 @@ export default {
     methods: {
         modalHasOpened() {
             setTimeout(() => {
-               $('#gmapAutocomplete').focus();
+                $('#gmapAutocomplete').focus();
             }, 1000);
         },
         ifNeedFactura(value) {
@@ -881,7 +880,7 @@ export default {
                         if (response.status == 200) {
                             this.emailHasChanged = true;
                             this.canChangeEmail = false;
-                            this.emailErrors=[]
+                            this.emailErrors = []
                         }
                     })
                     .catch(error => {
@@ -1052,3 +1051,9 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.input.w-2x {
+    width: 250px;
+}
+</style>

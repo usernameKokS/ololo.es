@@ -188,9 +188,6 @@ Route::group(['middleware' => ['auth', 'blocked']], function () {
         Route::post('/tariff/pay/coor', 'TariffController@payCoor');
 		Route::post('/tariff/pay/coor-card', 'TariffController@payCoorCard');
 
-		Route::post('/tariff/pay-card', 'TariffController@payCard');
-		Route::post('/tariff/pay/coor-card', 'TariffController@payCoorCard');
-
         Route::get('/tariff/page', 'MainController@posttariff');
         Route::get('/tariff{id}', 'MainController@posttariff');
 		Route::get('/tariff/{id}/{plan}', 'TariffController@tariffDetail');

@@ -214,8 +214,7 @@
                                             >{{ post.last_end_pay }}</span>
                                         <div class="wrap-btn-mobile-inline" style="margin-bottom: 15px; margin-top: 15px;" v-if="post.archive == false">
                                             <a
-                                                href="#"
-                                                @click.prevent="openActiveModal(post.id, post.publish)"
+                                                :href="'/tariff/'+post.id+'/silver/?action=publish'"
                                                 class="btn btn-normal btn_green-hover non-fixed-btn15 disable-mobile"
                                                 style="margin-left: 0; z-index: 1000; position: relative"
                                                 v-if="post.publish == false"
@@ -226,7 +225,7 @@
                                                 </div>
                                             </a>
                                             <a
-                                                :href="'/tariff' + post.id"
+                                                :href="'/tariff/'+post.id+'/silver'"
                                                 class="btn btn-normal btn_green-hover non-fixed-btn15 disable-mobile"
                                                 style="margin-left: 0; z-index: 1000; position: relative"
                                                 v-else-if="post.end_pay == null || post.tarifa == 'No'"
@@ -237,7 +236,7 @@
                                                 </div>
                                             </a>
                                             <a
-                                                :href="'/tariff' + post.id"
+                                                :href="'/tariff/'+post.id+'/silver'"
                                                 class="btn btn-normal btn_green-hover non-fixed-btn15 disable-mobile"
                                                 style="margin-left: 0; z-index: 1000; position: relative"
                                                 v-else
@@ -286,7 +285,7 @@
                                             </div>
                                             <div class="wrap-btn-mobile-inline">
                                                 <button
-                                                    @click="destroyPost(post.id)"
+                                                    @click="'/tariff/'+post.id+'/silver'"
                                                     class="btn btn-normal btn_green-hover btn-experts non-fixed-btn22"
                                                 >
                                                     <div>
@@ -302,8 +301,7 @@
                             <div class="item-content__right" style="justify-content: flex-start; z-index:400;" v-if="post.archive == false">
                                 <div class="wrap-btn-mobile-inline disable-desk" style="margin-bottom: 15px; margin-top: 84px;">
                                     <a
-                                        href="#"
-                                        @click.prevent="openActiveModal(post.id, post.publish)"
+                                        :href="'/tariff/'+post.id+'/silver/?action=publish'"
                                         class="btn btn-normal btn_green-hover non-fixed-btn15"
                                         v-if="post.publish == false"
                                     >
@@ -313,7 +311,7 @@
                                         </div>
                                     </a>
                                     <a
-                                        :href="'/tariff' + post.id"
+                                        :href="'/tariff/'+post.id+'/silver/?action=publish'"
                                         class="btn btn-normal btn_green-hover non-fixed-btn15"
                                         v-else-if="post.end_pay == null || post.tarifa == 'No'"
                                     >
@@ -382,15 +380,14 @@
                       </a>
                     </div>
                     <div class="wrap-btn-mobile-inline">
-                      <button
+                      <a :href="'/tariff/'+post.id+'/silver/?action=delete'"
                         class="btn btn-normal btn_green-hover btn-experts non-fixed-btn20"
-                        @click="openDeleteModal(post.id)"
                       >
                         <div>
                           <img src="/img/quit.svg" alt="espalda" />
                           <span>BORRAR ANUNCIO</span>
                         </div>
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -453,15 +450,14 @@
                     style="z-index: 1000; position: relative"
 					v-show="archive != true"
 					>
-                      <button
-                        @click="openDeleteModal(post.id)"
+                      <a :href="'/tariff/'+post.id+'/silver/?action=delete'"
                         class="btn btn-normal btn_green-hover btn-experts item-width-mobile non-fixed-btn20"
                       >
                         <div>
                           <img src="/img/quit.svg" alt="espalda" />
                           <span>BORRAR ANUNCIO</span>
                         </div>
-                      </button>
+                      </a>
                     </div>
                     <div
                       class="item_desc-right-wrapper disable-mobile zindex-btns"
@@ -483,15 +479,14 @@
                         </button>
                       </div>
                       <div class="wrap-btn-mobile-inline">
-                        <button
-                          @click="destroyPost(post.id)"
+                        <a :href="'/tariff/'+post.id+'/silver/?action=delete'"
                           class="btn btn-normal btn_green-hover btn-experts item-width-mobile non-fixed-btn20"
                         >
                           <div>
                             <img src="/img/quit.svg" alt="espalda" />
                             <span>BORRAR ANUNCIO</span>
                           </div>
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
