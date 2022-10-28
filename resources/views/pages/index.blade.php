@@ -85,8 +85,6 @@
 <section>
 	<div class="main-page">
 		<div class="container @if($show_video == 'false') container-two @endif">
-
-			@if($show_video == 'false')
 			<div class="dash-wrapper">
 				<div class="row">
 					<div class="wrap-icon-mainpage"></div>
@@ -154,40 +152,6 @@
 					</div>
 				</div>
 			</div>
-			@else
-			<div class="plans">
-				@include('pages.blocks.tariffs', ['showPrices' => false, 'coor' => isset($coor) ? $coor : false, 'postid' => isset($postid) ? $postid : false])
-			</div>
-			<!--div class="dash-wrapper__empty">
-				<p>Para saber como funciona nuestra plataforma, mira el video.</p>
-
-				<div class="video-wrapper">
-					<div class="row">
-						<div class="col-md-12 col-lg-8">
-							<div class="main-page__video">
-								<iframe width="100%" height="100%" src="https://drive.google.com/file/d/1jzHuQV2BTYgJgGlurVSpMULz2xIQVS0t/preview" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-							</div>
-						</div>
-						<div class="col-md-12 col-lg-4">
-							@if($open_create == true)
-							<div class="main-page__btn-wrap">
-								<a href="/post/create" class="btn btn-oversize non-fixed-btn10">
-									<div><img src="/img/pluswhite.svg" alt="espalda"><span>Publicar anuncio</span></div>
-								</a>
-							</div>
-							@else
-							<div class="main-page__btn-wrap">
-								<a href="#" @click="openModalCreate" class="btn btn-oversize non-fixed-btn10">
-									<div><img src="/img/pluswhite.svg" alt="espalda"><span>Publicar anuncio</span></div>
-								</a>
-							</div>
-							@endif
-
-						</div>
-					</div>
-				</div>
-			</div-->
-			@endif
 		</div>
 	</div>
 </section>
