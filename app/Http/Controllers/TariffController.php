@@ -49,6 +49,31 @@ class TariffController extends Controller
         return view('pages.tariffpay', compact('postId', 'plan'));
     }
 
+    public function payManual($postId)
+    {
+        return view('pages.pay-manual', compact('postId'));
+    }
+
+    function payApiManual(Request $request)
+    {
+        $post = Post::findOrFail($request->postId);
+        $post->pay_status = 'success';
+        if ($post->action == 'publish') {
+            $post->publish = 1;
+        } elseif ($post->action == 'edit') {
+            $post->status = 'edit';
+            $post->modificar = 1;
+        } elseif ($post->action == 'delete') {
+            $post->publish = 0;
+            $post->modificar = 0;
+            $post->eliminar = 1;
+        }
+
+        $post->save();
+
+        return response()->json(['status' => 'success', 'message' => __('El pago fue exitoso')]);
+    }
+
     public function payCardResult(Request $request)
     {
         Log::channel('payed')->info('payCardResult: start', [$request->all()]);

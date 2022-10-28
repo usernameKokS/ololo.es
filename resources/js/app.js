@@ -71,6 +71,7 @@ Vue.component('tariffpay', require('./components/TariffPay.vue').default);
 Vue.component('tariffdetail', require('./components/TariffDetail.vue').default);
 Vue.component('tariffpaycoor', require('./components/TariffPayCoor.vue').default);
 Vue.component('videolist-faq', require('./components/Videolistfaq.vue').default);
+Vue.component('pay-manual', require('./components/PayManual.vue').default);
 
 const VueUploadComponent = require('vue-upload-component');
 
