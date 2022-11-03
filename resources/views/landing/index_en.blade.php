@@ -155,7 +155,7 @@
             </div>
         </header>
         <div class="appContent___XwD6L spec-app-content">
-            <div class="teaser___2YASU">
+            <!-- <div class="teaser___2YASU">
 
                 <div class="title___3ftGr title-f">Продвигайте любимые бренды и получайте справедливое вознаграждение
                 </div>
@@ -173,7 +173,7 @@
                         <div
                             style="top:30rem;-webkit-animation-delay:3s;-moz-animation-delay:3s;-o-animation-delay:3s;animation-delay:3s"
                             class="step___GGcmi heart___2sAQN"></div>
-                        <!--  <div style="top:2rem;-webkit-animation-delay:5s;-moz-animation-delay:5s;-o-animation-delay:5s;animation-delay:5s" class="step___GGcmi heart___2sAQN"></div>-->
+                        <--  <div style="top:2rem;-webkit-animation-delay:5s;-moz-animation-delay:5s;-o-animation-delay:5s;animation-delay:5s" class="step___GGcmi heart___2sAQN"></div>--
                         <div
                             style="top:24rem;-webkit-animation-delay:7s;-moz-animation-delay:7s;-o-animation-delay:7s;animation-delay:7s"
                             class="step___GGcmi heart___2sAQN"></div>
@@ -183,7 +183,7 @@
                         <div
                             style="top:2rem;-webkit-animation-delay:2.5s;-moz-animation-delay:2.5s;-o-animation-delay:2.5s;animation-delay:2.5s"
                             class="step___GGcmi like___3En7h"></div>
-                        <!-- <div style="top:25rem;-webkit-animation-delay:13.5s;-moz-animation-delay:13.5s;-o-animation-delay:13.5s;animation-delay:13.5s" class="step___GGcmi like___3En7h"></div>-->
+                        <-- <div style="top:25rem;-webkit-animation-delay:13.5s;-moz-animation-delay:13.5s;-o-animation-delay:13.5s;animation-delay:13.5s" class="step___GGcmi like___3En7h"></div>--
                         <div
                             style="top:13rem;-webkit-animation-delay:5.5s;-moz-animation-delay:5.5s;-o-animation-delay:5.5s;animation-delay:5.5s"
                             class="step___GGcmi like___3En7h"></div>
@@ -228,9 +228,9 @@
                             data-type="iframe" data-src="https://embedr.flickr.com/photos/191307898@N07/50693727203/in/dateposted-public" href="javascript:;">
                         <div class="sampleCanvas___1rXmc transform-90">
                             <div class="textContainer___2nel8 lastStep___Q5QMX krb" class="">
-                                <div class="stepCardTitle___34mGW"><!--Как это работает?--></div>
+                                <div class="stepCardTitle___34mGW"><--Как это работает?--</div>
                                 <div class="stepCardDescription___2noBr"><span
-                                                                               data-video-id="FFfwTDN7a0I"><!--<i class="far fa-play-circle" style="color:#eab4c4"></i>--></span>
+                                                                               data-video-id="FFfwTDN7a0I"><--<i class="far fa-play-circle" style="color:#eab4c4"></i>--</span>
                                 </div>
                             </div>
 
@@ -247,7 +247,7 @@
 
                         </div>
                         </a>
-                    </div>
+                    </div> -->
 
 
                     <div class="content___3vwxh">
