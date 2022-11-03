@@ -11,9 +11,9 @@
         <div class="container mb-4">
             <div class="container container">
                 <div class="row">
-                    <div class="col-12 d-flex align-items-center">
-                        <div class="col-lg-auto">
-                            <div class="form-group d-flex align-items-center">
+                    <div class="col-12 d-flex align-items-center flex-lg-row flex-column step-1-email">
+                        <div class="form-group d-flex align-items-center flex-column flex-lg-row">
+                            <div class="d-flex flex-wrap align-items-center">
                                 <div>
                                     <label for="post-email" class="input-label mr-2 mb-0">Email para anuncio</label>
                                     <input type="text"
@@ -25,21 +25,20 @@
 
                                 </div>
 
-
-                                <div class="phone-is-confirm" v-if="!canChangeEmail">
+                                <div class="phone-is-confirm mr-2" v-if="!canChangeEmail">
                                     <img src="/img/icon-success.svg"/>
                                     Dirección de correo electrónico cambiada
                                 </div>
-
-
                             </div>
                         </div>
 
-                        <div class="col d-flex align-items-center" v-if="!emailHasChanged">
+                        <div class="d-flex align-items-center" v-if="!emailHasChanged">
                             <button type="button"
                                     @click="changeEmail"
-                                    title="Guardar Email" class="btn btn-normal btn_green-hover">
-                                <div><img src="/img/checkedpink.svg" alt="svg">
+                                    title="Guardar Email"
+                                    class="btn btn-normal btn_green-hover btn-change-email">
+                                <div>
+                                    <img src="/img/checkedpink.svg" alt="svg">
                                     <span>{{ canChangeEmail ? 'Guardado' : 'Guardar Email' }}</span>
                                 </div>
                             </button>
@@ -1055,5 +1054,19 @@ export default {
 <style lang="scss" scoped>
 .input.w-2x {
     width: 250px;
+}
+@media screen and (max-width: 992px) {
+
+    .input{
+        margin-bottom: 1rem;
+        &.w-2x{
+            width: 100%;
+        }
+    }
+    .step-1-email {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: flex-start!important;
+    }
 }
 </style>

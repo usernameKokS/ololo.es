@@ -57,13 +57,20 @@ class TariffController extends Controller
     function payApiManual(Request $request)
     {
         $post = Post::findOrFail($request->postId);
-        $post->pay_status = 'success';
-        if ($post->action == 'publish') {
+        $post->pay_status = $request->status;
+        if ($request->status == 'canceled') {
+            $post->save();
+            return response()->json(['status' => 'success', 'message' => __('Pago cancelado. Será redirigido a la página de anuncios.')]);
+        }
+
+        if ($request->status == 'success' && $post->action == 'publish') {
             $post->publish = 1;
-        } elseif ($post->action == 'edit') {
+            $post->modificar = 0;
+        } elseif ($request->status == 'success' && $post->action == 'edit') {
             $post->status = 'edit';
+            $post->publish = 1;
             $post->modificar = 1;
-        } elseif ($post->action == 'delete') {
+        } elseif ($request->status == 'success' && $post->action == 'delete') {
             $post->publish = 0;
             $post->modificar = 0;
             $post->eliminar = 1;
@@ -71,7 +78,7 @@ class TariffController extends Controller
 
         $post->save();
 
-        return response()->json(['status' => 'success', 'message' => __('El pago fue exitoso')]);
+        return response()->json(['status' => 'success', 'message' => __('El pago fue exitoso. Será redirigido a la página de anuncios.')]);
     }
 
     public function payCardResult(Request $request)

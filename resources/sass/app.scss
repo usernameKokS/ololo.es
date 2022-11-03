@@ -54,7 +54,7 @@
 // @import "~bootstrap/scss/jumbotron";
 // @import "~bootstrap/scss/alert";
 // @import "~bootstrap/scss/progress";
-// @import "~bootstrap/scss/media";
+ @import "~bootstrap/scss/media";
 // @import "~bootstrap/scss/list-group";
 // @import "~bootstrap/scss/close";
 // @import "~bootstrap/scss/modal";
@@ -2378,7 +2378,7 @@ input[type=number] {
 }
 
 
-@media screen and (max-width: 992px) {
+@media screener and (max-width: 992px) {
     .input-area__withbtn {
         flex-direction: column;
         align-items: flex-start;

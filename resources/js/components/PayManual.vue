@@ -5,7 +5,10 @@
                 <div class="alert alert-success">{{ alert }}</div>
             </div>
         </div>
-        <button class="btn btn-primary mt-3" @click.prevent="pay">Pagar</button>
+        <div class="d-flex mt-3 items-center">
+            <button class="btn btn-danger mr-2" @click.prevent="pay('canceled')">Cancelar</button>
+            <button class="btn btn-primary " @click.prevent="pay('success')">Pagar</button>
+        </div>
     </div>
 </template>
 
@@ -24,11 +27,17 @@ export default {
         }
     },
     methods: {
-        pay() {
+        pay(status) {
             axios.post('/api/pay/manual', {
-                postId: this.postId
+                postId: this.postId,
+                status: status
             }).then(response => {
                 this.alert = response.data.message;
+            }).finally(() => {
+                setTimeout(() => {
+                    this.alert = null;
+                    window.location.href='/posts';
+                }, 3000);
             });
         }
     }

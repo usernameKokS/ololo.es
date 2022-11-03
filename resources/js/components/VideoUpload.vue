@@ -208,4 +208,13 @@ export default {
     }
 }
 
+@media (max-width: 992px) {
+    .edit-section-photo .photos-wrap {
+        min-width: 0;
+
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
 </style>

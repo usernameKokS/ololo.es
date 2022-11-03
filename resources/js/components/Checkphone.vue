@@ -9,7 +9,7 @@
                                 <div class="label-wrap">
                                     <span class="input-label">Teléfono:</span>
                                 </div>
-                                <form class="input-area__withbtn" @submit.prevent="sendphone">
+                                <form class="input-area__withbtn d-flex flex-column flex-md-row gap-1" @submit.prevent="sendphone">
                                     <input
                                         type="text"
                                         name="phone"
@@ -32,12 +32,12 @@
                                             </div>
                                         </button>
                                     </div>
-                                    <div class="phone-is-confirm" v-if="phoneSuccess">
+                                    <div class="phone-is-confirm mr-2" v-if="phoneSuccess">
                                         <img src="/img/icon-success.svg"/>
                                         Número de teléfono verificado
                                     </div>
                                     <button v-if="phoneSuccess" type="button" @click="resetPhone()"
-                                            class="btn btn-normal btn_green-hover ml-3"
+                                            class="btn btn-normal btn_green-hover"
                                             title="Cambiar teléfono">
                                         <div>
                                             <img src="/img/checkedpink.svg" alt="svg"/>
@@ -258,6 +258,23 @@ export default {
 };
 </script>
 <style lang="scss">
+@media (max-width: 992px) {
+    .input-area__withbtn{
+        width: 100%;
+        .input {
+            width: 100%;
+        }
+    }
+    .edit-phone .phone-area {
+        padding-right: 0;
+    }
+    .input-area__withbtn {
+        align-items: flex-start;
+    }
+}
+.gap-1{
+    gap: 1rem;
+}
 .phone-is-confirm {
     padding-left: 5px;
     white-space: nowrap;
