@@ -91,10 +91,8 @@ export default {
                             );
 
                             reject("error");
-                        } else if (response.data.status && response.data.status == "creating") {
-                            window.location.href = "/tariff" + response.data.post_id;
-                        } else {
-                            window.location.href = "/posts";
+                        } else if (response.data.status) {
+                            window.location.href = "/tariff/"+response.data.post_id+"/silver"+(this.$parent.$parent.post.publish === 1 ? "?action=edit" : "?action=publish");
                         }
 
                         resolve("success");
@@ -135,3 +133,6 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+</style>

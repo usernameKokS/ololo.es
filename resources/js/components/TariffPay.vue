@@ -36,16 +36,16 @@
 		  </div>
 		</modal>
 		<!--modal @before-close="setDefaultPaysystem" draggable=".appmodal" :adaptive="true" :minWidth="320" :maxWidth="580" height="auto" :scrollable="true" :name="'card_windows' + plan">
-		  <div class="appmodal">	
+		  <div class="appmodal">
 			<div class="modal-container">
 			  <div class="modal-body">
 				<div class="notify-area">
-				  
+
 				</div>
 			  </div>
 			</div>
 		  </div>
-		</modal--> 
+		</modal-->
 		<div v-if="!runPayPlay">
 			<CardForm
 				:form-data="formData"
@@ -135,7 +135,7 @@
 			{
 				let object = this.formData;
 				// object._token = $('meta[name="csrf-token"]').attr('content');
-				
+
 				object.postid = this.post_id;
 				object.plan = this.plan;
 				object.screen_width = screen.availWidth;
@@ -143,16 +143,18 @@
 				object.browser_language = navigator.language;
 				object.color_depth = screen.colorDepth;
 				object.time_zone = new Date().getTimezoneOffset();
-				
+
 				let formData = new FormData();
 
-				for ( let key in object ) 
+				for ( let key in object )
 				{
 					formData.append(key, object[key]);
 				}
 				let _this = this;
 
 				this.runPayPlay = true;
+
+                window.location.href='/pay/manual/'+this.post_id;
 
 				fetch("/tariff/pay-card",
 				{
@@ -177,7 +179,7 @@
 					{
 						_this.pendingAcsUrl = response.pendingAcsUrl;
 						_this.pendingCreq = response.pendingCreq;
-						
+
 						this.$modal.hide('card_windows' + this.plan);
 						let pendingform = this.$refs['pendingform' + this.plan];
 						pendingform.action = response.pendingAcsUrl;
@@ -186,20 +188,20 @@
 						{
 							creqInput.value = response.pendingCreq;
 						}
-						
+
 						let threeDSSessionDataInput = pendingform.querySelector('input[name="threeDSSessionData"]')
 						if(threeDSSessionDataInput != undefined)
 						{
 							threeDSSessionDataInput.value = response.orderNumber;
 						}
-						
+
 						this.$refs['pendingform' + this.plan].submit();
 					}
 					else if(response.type == 'pending_v1')
 					{
 						_this.pendingAcsUrl = response.pendingAcsUrl;
 						_this.pendingCreq = response.pendingCreq;
-						
+
 						this.$modal.hide('card_windows' + this.plan);
 						let pendingform = this.$refs['pendingform_v1' + this.plan];
 						pendingform.action = response.url;
@@ -208,7 +210,7 @@
 						{
 							paReqInput.value = response.data;
 						}
-						
+
 						let termUrlInput = pendingform.querySelector('input[name="TermUrl"]')
 						if(termUrlInput != undefined)
 						{
@@ -220,7 +222,7 @@
 						{
 							mDInput.value = response.orderNumber;
 						}
-						
+
 						this.$refs['pendingform_v1' + this.plan].submit();
 					}
 					else
@@ -239,7 +241,7 @@
 			},
 			showPaysystemModal(){
 				// this.$modal.show('select_paysystem' + this.plan);
-				
+
 				// this.$modal.show('success_windows' + this.plan);
 			},
 			showCardModal(){
@@ -292,7 +294,7 @@
 
 <style lang="scss" scss>
     @import '../assets/style.scss';
-	
+
 	.request-error
 	{
 		text-align: center;
@@ -302,7 +304,7 @@
 		border: 1px solid #fe6885;
 		padding: 10px;
 	}
-	
+
 	.request-success{
 		display: block;
 		text-align: center;
@@ -310,12 +312,12 @@
 		font-size: 26px;
 		margin-top: 20px;
 	}
-	
+
 	.text-center
 	{
 		text-align: center;
 	}
-	
+
 	.text-center img
 	{
 		width: 100px;

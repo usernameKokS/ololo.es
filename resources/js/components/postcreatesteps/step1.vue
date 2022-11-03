@@ -11,35 +11,34 @@
         <div class="container mb-4">
             <div class="container container">
                 <div class="row">
-                    <div class="col-12 d-flex align-items-center">
-                        <div class="col-lg-auto">
-                            <div class="form-group d-flex align-items-center">
+                    <div class="col-12 d-flex align-items-center flex-lg-row flex-column step-1-email">
+                        <div class="form-group d-flex align-items-center flex-column flex-lg-row">
+                            <div class="d-flex flex-wrap align-items-center">
                                 <div>
                                     <label for="post-email" class="input-label mr-2 mb-0">Email para anuncio</label>
                                     <input type="text"
                                            v-model.trim="email"
-                                           class="input"
+                                           class="input w-2x"
                                            :disabled="!canChangeEmail"
                                            :class="{ 'input-error': emailErrors.length>0 }"
                                            id="post-email" placeholder="Ingresa tu e-mail">
 
                                 </div>
 
-
-                                <div class="phone-is-confirm" v-if="emailHasChanged">
+                                <div class="phone-is-confirm mr-2" v-if="!canChangeEmail">
                                     <img src="/img/icon-success.svg"/>
                                     Dirección de correo electrónico cambiada
                                 </div>
-
-
                             </div>
                         </div>
 
-                        <div class="col d-flex align-items-center" v-if="!emailHasChanged">
+                        <div class="d-flex align-items-center" v-if="!emailHasChanged">
                             <button type="button"
                                     @click="changeEmail"
-                                    title="Guardar Email" class="btn btn-normal btn_green-hover">
-                                <div><img src="/img/checkedpink.svg" alt="svg">
+                                    title="Guardar Email"
+                                    class="btn btn-normal btn_green-hover btn-change-email">
+                                <div>
+                                    <img src="/img/checkedpink.svg" alt="svg">
                                     <span>{{ canChangeEmail ? 'Guardado' : 'Guardar Email' }}</span>
                                 </div>
                             </button>
@@ -147,8 +146,9 @@
                         <div class="col-sm-12 d-flex justify-content-center">
                             <button class="btn btn-normal btn_green-hover"
                                     @click.prevent="$modal.show('modal-confirm-address')">
-                                <img src="/img/checkedpink.svg" alt="svg" v-if="form.location_lat!='' && form.location_lng!=''">
-                               <span>Confirmar dirección address</span>
+                                <img src="/img/checkedpink.svg" alt="svg"
+                                     v-if="form.location_lat!='' && form.location_lng!=''">
+                                <span>Confirmar dirección address</span>
                             </button>
                         </div>
                     </div>
@@ -547,7 +547,7 @@
                     id="gmapAutocomplete"
                     ref="gmapAutocomplete"
                     :value="placeText"
-                                   @place_changed="placeChanged">
+                    @place_changed="placeChanged">
                 </gmap-autocomplete>
             </div>
             <div class="modal-body">
@@ -659,9 +659,7 @@ export default {
     validations() {
         return {
             form: {
-                street_type:{
-
-                },
+                street_type: {},
                 house_number: {
                     numeric
                 },
@@ -839,7 +837,7 @@ export default {
     methods: {
         modalHasOpened() {
             setTimeout(() => {
-               $('#gmapAutocomplete').focus();
+                $('#gmapAutocomplete').focus();
             }, 1000);
         },
         ifNeedFactura(value) {
@@ -881,7 +879,7 @@ export default {
                         if (response.status == 200) {
                             this.emailHasChanged = true;
                             this.canChangeEmail = false;
-                            this.emailErrors=[]
+                            this.emailErrors = []
                         }
                     })
                     .catch(error => {
@@ -1052,3 +1050,23 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.input.w-2x {
+    width: 250px;
+}
+@media screen and (max-width: 992px) {
+
+    .input{
+        margin-bottom: 1rem;
+        &.w-2x{
+            width: 100%;
+        }
+    }
+    .step-1-email {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: flex-start!important;
+    }
+}
+</style>

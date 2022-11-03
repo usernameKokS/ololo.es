@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="edit-phone" id="edit-phone">
+        <div class="edit-phone mb-4" id="edit-phone">
             <div class="container">
                 <div class="container container-two">
                     <div class="phone-area__wrap">
@@ -9,7 +9,7 @@
                                 <div class="label-wrap">
                                     <span class="input-label">Teléfono:</span>
                                 </div>
-                                <form class="input-area__withbtn" @submit.prevent="sendphone">
+                                <form class="input-area__withbtn d-flex flex-column flex-md-row gap-1" @submit.prevent="sendphone">
                                     <input
                                         type="text"
                                         name="phone"
@@ -23,7 +23,6 @@
                                     />
 
 
-
                                     <div class="input-inline-wrap__btn" v-if="!phoneSuccess">
                                         <button type="submit" class="btn btn-normal btn_green-hover non-fixed-btn2"
                                                 title="Enviar sms">
@@ -33,11 +32,12 @@
                                             </div>
                                         </button>
                                     </div>
-                                    <div class="phone-is-confirm" v-if="phoneSuccess">
-                                        <img src="/img/icon-success.svg" />
+                                    <div class="phone-is-confirm mr-2" v-if="phoneSuccess">
+                                        <img src="/img/icon-success.svg"/>
                                         Número de teléfono verificado
                                     </div>
-                                    <button v-if="phoneSuccess" type="button" @click="resetPhone()" class="btn btn-normal btn_green-hover ml-3"
+                                    <button v-if="phoneSuccess" type="button" @click="resetPhone()"
+                                            class="btn btn-normal btn_green-hover"
                                             title="Cambiar teléfono">
                                         <div>
                                             <img src="/img/checkedpink.svg" alt="svg"/>
@@ -46,7 +46,7 @@
                                     </button>
                                 </form>
                             </div>
-                            <div class="phone-area-improtant">
+                            <div class="phone-area-improtant" v-show="!phoneSuccess">
                                 <div class="label-wrap disable-desk"></div>
                                 <div>
                                     <span>Importante!</span>
@@ -92,180 +92,199 @@
 </template>
 
 <script>
-    import {alphaNum, maxLength, minLength, required} from "vuelidate/lib/validators";
-    import Notify from "./Notify";
+import {alphaNum, maxLength, minLength, required} from "vuelidate/lib/validators";
+import Notify from "./Notify";
 
-    export default {
-        props: ["user", "post"],
-        data() {
-            return {
-                phone: this.post.phone,
-                code: "",
-                submitStatus: null,
-                post_id: this.post.id,
-                phoneSuccess: false,
-            };
-        },
-		watch: {
-			"phone": function(val){
-				let phone = val.replaceAll('-', '');
+export default {
+    props: ["user", "post"],
+    data() {
+        return {
+            phone: this.post.phone,
+            code: "",
+            submitStatus: null,
+            post_id: this.post.id,
+            phoneSuccess: false,
+        };
+    },
+    watch: {
+        "phone": function (val) {
+            let phone = val.replaceAll('-', '');
 
-				if(phone == this.post.phone)
-					this.phoneSuccess = true;
-				else
-                {
-					this.phoneSuccess = false;
-                    this.$parent.setIsModify()
-                }
-			}
-		},
-        computed: {
-            firstNum(){
-                const model = this.$v.phone.$model;
-                return (model === null || model === "" || model === undefined) ? '' : model[0];
-            }
-        },
-        validations: {
-            phone: {
-                required
-            },
-            code: {
-                required,
-                minLength: minLength(6),
-                maxLength: maxLength(6),
-                alphaNum
-            }
-        },
-        created() {
-            if (this.post.phone != null) {
+            if (phone == this.post.phone)
                 this.phoneSuccess = true;
-            }
-        },
-        methods: {
-            resetPhone() {
-                this.phone = "";
+            else {
                 this.phoneSuccess = false;
-            },
-            sendphone() {
-                this.$v.phone.$touch();
-                if (this.$v.phone.$invalid) {
-                    this.submitStatus = "ERROR";
-                } else {
-                    this.submitStatus = "OK";
-
-                    axios
-                        .post("/phone/create", {
-                            phone: this.phone,
-                            post_id: this.post_id,
-                        })
-                        .then(response => {
-                            this.$modal.show(
-                                Notify,
-                                {
-                                    title: "Éxito",
-                                    type: "success",
-                                    porterrors: null,
-                                    message: response.data.success
-                                },
-                                {
-                                    width: 380,
-                                    height: "auto"
-                                }
-                            );
-                        })
-                        .catch(error => {
-                            if (error.response.status === 422) {
-                                this.$modal.show(
-                                    Notify,
-                                    {
-                                        title: "Algo no exitoso",
-                                        type: "error",
-                                        porterrors: error.response.data.errors
-                                    },
-                                    {
-                                        width: 380,
-                                        height: "auto"
-                                    }
-                                );
-                            } else {
-                                this.$modal.show(
-                                    Notify,
-                                    {
-                                        title: "Algo no exitoso",
-                                        type: "error",
-                                        // porterrors: error.response.data.errors
-                                        message: "Error, Try again later"
-                                    },
-                                    {
-                                        width: 380,
-                                        height: "auto"
-                                    }
-                                );
-                            }
-                        });
-                }
-            },
-            checkcode() {
-                this.$v.code.$touch();
-                if (this.$v.code.$invalid) {
-                    this.submitStatus = "ERROR";
-                } else {
-                    this.submitStatus = "OK";
-                    axios
-                        .post("/phone/check", {
-                            code: this.code,
-                            post_id: this.post.id
-                        })
-                        .then(response => {
-                            this.phoneSuccess = true;
-                            this.code = "";
-                            // event.target.blur();
-                            this.$nextTick(() => {
-                                this.$v.code.$reset()
-                            })
-                            this.$modal.show(
-                                Notify,
-                                {
-                                    title: "Éxito",
-                                    type: "success",
-                                    porterrors: null,
-                                    message: response.data.success
-                                },
-                                {
-                                    width: 380,
-                                    height: "auto"
-                                }
-                            );
-                        })
-                        .catch(error => {
-                            if (error.response.status === 422) {
-                                this.$modal.show(
-                                    Notify,
-                                    {
-                                        title: "Algo no exitoso",
-                                        type: "error",
-                                        porterrors: error.response.data.errors
-                                    },
-                                    {
-                                        width: 380,
-                                        height: "auto"
-                                    }
-                                );
-                            }
-                        });
-                }
+                this.$parent.setIsModify()
             }
         }
-    };
+    },
+    computed: {
+        firstNum() {
+            const model = this.$v.phone.$model;
+            return (model === null || model === "" || model === undefined) ? '' : model[0];
+        }
+    },
+    validations: {
+        phone: {
+            required
+        },
+        code: {
+            required,
+            minLength: minLength(6),
+            maxLength: maxLength(6),
+            alphaNum
+        }
+    },
+    created() {
+        if (this.post.phone != null) {
+            this.phoneSuccess = true;
+        }
+    },
+    methods: {
+        resetPhone() {
+            this.phone = "";
+            this.phoneSuccess = false;
+        },
+        sendphone() {
+            this.$v.phone.$touch();
+            if (this.$v.phone.$invalid) {
+                this.submitStatus = "ERROR";
+            } else {
+                this.submitStatus = "OK";
+
+                axios
+                    .post("/phone/create", {
+                        phone: this.phone,
+                        post_id: this.post_id,
+                    })
+                    .then(response => {
+                        this.$modal.show(
+                            Notify,
+                            {
+                                title: "Éxito",
+                                type: "success",
+                                porterrors: null,
+                                message: response.data.success
+                            },
+                            {
+                                width: 380,
+                                height: "auto"
+                            }
+                        );
+                    })
+                    .catch(error => {
+                        if (error.response.status === 422) {
+                            this.$modal.show(
+                                Notify,
+                                {
+                                    title: "Algo no exitoso",
+                                    type: "error",
+                                    porterrors: error.response.data.errors
+                                },
+                                {
+                                    width: 380,
+                                    height: "auto"
+                                }
+                            );
+                        } else {
+                            this.$modal.show(
+                                Notify,
+                                {
+                                    title: "Algo no exitoso",
+                                    type: "error",
+                                    // porterrors: error.response.data.errors
+                                    message: "Error, Try again later"
+                                },
+                                {
+                                    width: 380,
+                                    height: "auto"
+                                }
+                            );
+                        }
+                    });
+            }
+        },
+        checkcode() {
+            this.$v.code.$touch();
+            if (this.$v.code.$invalid) {
+                this.submitStatus = "ERROR";
+            } else {
+                this.submitStatus = "OK";
+                axios
+                    .post("/phone/check", {
+                        code: this.code,
+                        post_id: this.post.id
+                    })
+                    .then(response => {
+                        this.phoneSuccess = true;
+                        this.code = "";
+                        // event.target.blur();
+                        this.$nextTick(() => {
+                            this.$v.code.$reset()
+                        })
+                        this.$modal.show(
+                            Notify,
+                            {
+                                title: "Éxito",
+                                type: "success",
+                                porterrors: null,
+                                message: response.data.success
+                            },
+                            {
+                                width: 380,
+                                height: "auto"
+                            }
+                        );
+                    })
+                    .catch(error => {
+                        if (error.response.status === 422) {
+                            this.$modal.show(
+                                Notify,
+                                {
+                                    title: "Algo no exitoso",
+                                    type: "error",
+                                    porterrors: error.response.data.errors
+                                },
+                                {
+                                    width: 380,
+                                    height: "auto"
+                                }
+                            );
+                        }
+                    });
+            }
+        }
+    }
+};
 </script>
-<style>
-.phone-is-confirm
-{
+<style lang="scss">
+@media (max-width: 992px) {
+    .input-area__withbtn{
+        width: 100%;
+        .input {
+            width: 100%;
+        }
+    }
+    .edit-phone .phone-area {
+        padding-right: 0;
+    }
+    .input-area__withbtn {
+        align-items: flex-start;
+    }
+}
+.gap-1{
+    gap: 1rem;
+}
+.phone-is-confirm {
     padding-left: 5px;
+    white-space: nowrap;
+    @media (max-width: 992px) {
+        padding-left: 0;
+    }
 }
 
-.phone-is-confirm img
-{
+
+.phone-is-confirm img {
     max-width: 24px;
     margin: 0 5px;
 }
